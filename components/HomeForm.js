@@ -50,7 +50,7 @@ class HomeForm extends React.Component {
 
 const styles = StyleSheet.create({
   header: {
-    color: '#385A94',
+    color: 'black',
     fontSize: 25,
     textAlign: 'center',
     fontWeight: 'bold',
@@ -75,7 +75,8 @@ const styles = StyleSheet.create({
     margin: 10,
   },
   pickerItems: {
-    height: 110,
+    fontSize: 26,
+    height: 150,
   },
   searchButton: {
     marginRight:40,
@@ -89,7 +90,7 @@ const styles = StyleSheet.create({
     borderColor: '#fff',
   },
   searchButtonText: {
-    fontSize: 19,
+    fontSize: 25,
     fontWeight: 'bold',
     color:'#fff',
     textAlign:'center',
