@@ -12,7 +12,9 @@ export default function BottomTabNavigator({ navigation, route }) {
   // Set the header title on the parent stack navigator depending on the
   // currently active tab. Learn more in the documentation:
   // https://reactnavigation.org/docs/en/screen-options-resolution.html
-  navigation.setOptions({ headerTitle: getHeaderTitle(route) });
+  navigation.setOptions({ headerTitle: getHeaderTitle(route), headerStyle: {
+    backgroundColor: '#0CE1C3',
+  }, });
 
   return (
     <BottomTab.Navigator initialRouteName={INITIAL_ROUTE_NAME}>
@@ -41,7 +43,7 @@ function getHeaderTitle(route) {
 
   switch (routeName) {
     case 'Home':
-      return 'How to get started';
+      return 'Welcome to Cup of Sugar!';
     case 'Links':
       return 'Links to learn more';
   }
