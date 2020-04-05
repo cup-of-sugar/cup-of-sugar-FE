@@ -8,6 +8,7 @@ cache:
     - .jest
 before_script:
   - npm install -g npm@latest
+  - yarn --frozen-lockfile
 script:
   - npm ci
   - npx jest --ci
