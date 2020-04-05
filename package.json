@@ -7,8 +7,6 @@
     "web": "expo start --web",
     "eject": "expo eject",
     "test": "jest --watchAll",
-    "start": "react-native-scripts start",
-    "build": "react-native-scripts build"
   },
   "jest": {
     "preset": "jest-expo"
