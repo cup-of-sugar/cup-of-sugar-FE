@@ -1,11 +1,14 @@
 import React, { Component } from 'react';
 import {Picker, Text, StyleSheet, View, TextInput, TouchableOpacity} from 'react-native';
-import ErrorBoundary from './ErrorBoundary'
 
 class HomeForm extends React.Component {
   constructor(props) {
     super(props);
-    this.state={ category: '', itemName: '' }
+    this.state={ category: '', itemName: '', error: ''}
+  }
+
+  checkInputs = () => {
+    !this.state.category || !this.state.itemName ? this.setState({error: 'Please complete both form fields!'}) : this.startSearch()
   }
 
   handleNameChange = itemName => {
@@ -16,11 +19,15 @@ class HomeForm extends React.Component {
     this.setState({ category })
   }
 
+  startSearch = () => {
+    this.setState({error: ''})
+    console.log('hi')
+  }
+
   render() {
     return (
       <View style={styles.formContainer}>
         <Text style={styles.header}>Select A Category:</Text>
-        <ErrorBoundary>
         <Picker
           style={styles.picker}
           itemStyle={styles.pickerItems}
@@ -31,9 +38,7 @@ class HomeForm extends React.Component {
           <Picker.Item label="Pantry" value="Pantry" />
           <Picker.Item label="Cleaning" value="Cleaning" />
         </Picker>
-        </ErrorBoundary>
         <Text style={styles.header}>Item Name:</Text>
-        <ErrorBoundary>
         <TextInput
           style={styles.textInput}
           name='itemName'
@@ -41,14 +46,25 @@ class HomeForm extends React.Component {
           onChangeText={this.handleNameChange}
           placeholder='Item name...'
         />
-        </ErrorBoundary>
-        <TouchableOpacity style={styles.searchButton}><Text style={styles.searchButtonText}>Search</Text></TouchableOpacity>
+        <TouchableOpacity style={styles.searchButton} onPress={this.checkInputs}><Text style={styles.searchButtonText}>Search</Text></TouchableOpacity>
+        <Text style={styles.errorText}>{this.state.error}</Text>
       </View>
     );
   }
 };
 
 const styles = StyleSheet.create({
+  errorText: {
+    alignSelf: 'center',
+    color: 'red',
+    fontSize: 20,
+    fontWeight: 'bold',
+    margin: 10,
+  },
+  formContainer: {
+    flex: 1,
+    paddingTop: 15
+  },
   header: {
     color: 'black',
     fontSize: 25,
@@ -56,10 +72,6 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginTop: 20,
     marginBottom: 5,
-  },
-  formContainer: {
-    flex: 1,
-    paddingTop: 15
   },
   textInput: {
     borderColor: '#CCCCCC',
