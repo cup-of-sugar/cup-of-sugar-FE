@@ -23,12 +23,11 @@ const styles = StyleSheet.create({
     borderColor: '#CCCCCC',
     justifyContent: 'center',
     paddingTop: 20,
-    width: 370,
+    width: '98%',
   },
   searchContainer: {
+    marginLeft: '1%',
     flex: 1,
-    margin: 10,
-    overflow: 'scroll',
   },
   resultsText: {
     alignSelf: 'center',
