@@ -1,3 +1,8 @@
 language: node_js
 node_js:
-  - 7
+- '10'
+warnings_are_errors: false
+install:
+- npm install
+script:
+- npm run build
