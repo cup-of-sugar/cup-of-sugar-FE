@@ -2,6 +2,7 @@ import * as WebBrowser from 'expo-web-browser';
 import * as React from 'react';
 import HomeForm from '../components/HomeForm';
 import ErrorBoundary from '../components/ErrorBoundary';
+import { SearchResultsContainer } from '../components/SearchResultsContainer';
 import { Image, Platform, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import { MonoText } from '../components/StyledText';
@@ -15,7 +16,10 @@ export default function HomeScreen() {
         <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
           <Text style={styles.welcomeText}> What would you like to borrow today?</Text>
           <ErrorBoundary>
-          <HomeForm />
+            <HomeForm />
+          </ErrorBoundary>
+          <ErrorBoundary>
+            <SearchResultsContainer />
           </ErrorBoundary>
         </ScrollView>
       </View>
@@ -30,6 +34,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
+    overflow: 'scroll',
   },
   contentContainer: {
     justifyContent: 'center',
