@@ -21,7 +21,7 @@ class HomeForm extends React.Component {
 
   startSearch = () => {
     this.setState({error: ''})
-    console.log('hi')
+    this.props.findMatchingItems(this.state.itemName, this.state.category)
   }
 
   render() {
@@ -34,6 +34,7 @@ class HomeForm extends React.Component {
           name='category'
           selectedValue={this.state.category}
           onValueChange={this.handleCategoryChange}>
+          <Picker.Item label="Choose a category..." />
           <Picker.Item label="Garden" value="Garden" />
           <Picker.Item label="Pantry" value="Pantry" />
           <Picker.Item label="Cleaning" value="Cleaning" />

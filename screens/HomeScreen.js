@@ -9,21 +9,31 @@ import { MonoText } from '../components/StyledText';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 
-export default function HomeScreen() {
+export default class HomeScreen extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state={searchResults: []}
+  }
 
-  return (
+  findMatchingItems = (itemName, category) => {
+    this.setState({searchResults: ['placeholder']});
+  }
+
+  render() {
+    return (
       <View style={styles.container}>
         <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
           <Text style={styles.welcomeText}> What would you like to borrow today?</Text>
           <ErrorBoundary>
-            <HomeForm />
+            <HomeForm findMatchingItems={this.findMatchingItems}/>
           </ErrorBoundary>
           <ErrorBoundary>
-            <SearchResultsContainer />
+            {this.state.searchResults.length ? <SearchResultsContainer items={this.state.searchResults}/> : null}
           </ErrorBoundary>
         </ScrollView>
       </View>
-  );
+    );
+  }
 }
 
 HomeScreen.navigationOptions = {
