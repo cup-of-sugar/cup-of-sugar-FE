@@ -4,6 +4,3 @@ node_js:
 warnings_are_errors: false
 install:
 - npm install
-script:
-- npm test
-- npm run build
