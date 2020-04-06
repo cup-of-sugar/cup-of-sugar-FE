@@ -2,13 +2,12 @@ import React from 'react';
 import {StyleSheet, View, Button, Text, TouchableOpacity, Image} from 'react-native';
 import Colors from '../constants/Colors'
 
-export function SearchResult({ name, lender, rating}) {
+export function SearchResult({ name, quantity, measurement}) {
   return (
     <TouchableOpacity style={styles.searchResult}>
       <Text style={styles.itemName}>{name}</Text>
-      <View style={styles.lenderInfo}>
-        <Text style={styles.lender}>Offered By: {lender}</Text>
-        <Text style={styles.lender}>Rating: {rating}</Text>
+      <View style={styles.itemInfo}>
+        <Text style={styles.amount}>{quantity} {measurement} available</Text>
       </View>
     </TouchableOpacity>
   )
@@ -32,10 +31,10 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginLeft: 15,
   },
-  lenderInfo: {
+  itemInfo: {
     marginRight: 10,
   },
-  lender: {
+  amount: {
     fontSize: 13,
     fontWeight: 'bold',
     padding: 3,
