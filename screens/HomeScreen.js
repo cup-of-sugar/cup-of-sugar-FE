@@ -6,20 +6,26 @@ import { Image, Platform, StyleSheet, Text, TouchableOpacity, View } from 'react
 import { ScrollView } from 'react-native-gesture-handler';
 import { MonoText } from '../components/StyledText';
 import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
 
-export default function HomeScreen() {
 
-  return (
-      <View style={styles.container}>
-        <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
-          <Text style={styles.welcomeText}> What would you like to borrow today?</Text>
-          <ErrorBoundary>
-          <HomeForm />
-          </ErrorBoundary>
-        </ScrollView>
-      </View>
-  );
+import { TestApollo } from '../components/ApolloTest';
+
+export default class HomeScreen extends React.Component {
+
+
+  render() {
+    return (
+        <View style={styles.container}>
+          <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
+            <Text style={styles.welcomeText}> What would you like to borrow today?</Text>
+            <ErrorBoundary>
+            <TestApollo />
+            <HomeForm />
+            </ErrorBoundary>
+          </ScrollView>
+        </View>
+    );
+  }
 }
 
 HomeScreen.navigationOptions = {
