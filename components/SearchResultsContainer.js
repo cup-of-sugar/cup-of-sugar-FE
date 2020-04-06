@@ -57,7 +57,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: "#CCCCCC",
     justifyContent: "center",
-    paddingTop: 20,
+    padding: 20,
     width: "98%"
   },
   searchContainer: {
