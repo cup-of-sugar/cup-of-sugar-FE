@@ -3,7 +3,14 @@ import * as React from 'react';
 import HomeForm from '../components/HomeForm';
 import ErrorBoundary from '../components/ErrorBoundary';
 import { SearchResultsContainer } from '../components/SearchResultsContainer';
-import { Image, Platform, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import {
+  Image,
+  Platform,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import { MonoText } from '../components/StyledText';
 import { NavigationContainer } from '@react-navigation/native';
@@ -12,23 +19,31 @@ import { createStackNavigator } from '@react-navigation/stack';
 export default class HomeScreen extends React.Component {
   constructor(props) {
     super(props);
-    this.state={searchQuery: {category: '', itemName: ''}}
+    this.state = { searchQuery: { category: '', itemName: '' } };
   }
 
   updateSearch = (itemName, category) => {
-    this.setState({searchQuery: {category: category, itemName: itemName}});
-  }
+    this.setState({ searchQuery: { category: category, itemName: itemName } });
+  };
 
   render() {
     return (
       <View style={styles.container}>
-        <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
-          <Text style={styles.welcomeText}> What would you like to borrow today?</Text>
+        <ScrollView
+          style={styles.container}
+          contentContainerStyle={styles.contentContainer}
+        >
+          <Text style={styles.welcomeText}>
+            {' '}
+            What would you like to borrow today?
+          </Text>
           <ErrorBoundary>
-            <HomeForm updateSearch={this.updateSearch}/>
+            <HomeForm updateSearch={this.updateSearch} />
           </ErrorBoundary>
           <ErrorBoundary>
-            {this.state.searchQuery.category ? <SearchResultsContainer items={this.state.searchQuery}/> : null}
+            {this.state.searchQuery.category ? (
+              <SearchResultsContainer items={this.state.searchQuery} />
+            ) : null}
           </ErrorBoundary>
         </ScrollView>
       </View>
