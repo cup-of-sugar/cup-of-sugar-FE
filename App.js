@@ -14,7 +14,15 @@ import cup from './assets/images/cup.png';
 import Colors from './constants/Colors';
 import MenuDrawer from './components/MenuDrawer'
 
+import { AppRegistry } from 'react-native';
+import ApolloClient from 'apollo-boost';
+import { ApolloProvider } from '@apollo/react-hooks';
+
 const Stack = createStackNavigator();
+
+const client = new ApolloClient({
+  uri: 'https://fierce-tundra-54482.herokuapp.com/graphql',
+});
 
 export default function App(props) {
   const [isLoadingComplete, setLoadingComplete] = React.useState(false);
@@ -22,7 +30,6 @@ export default function App(props) {
   const containerRef = React.useRef();
   const { getInitialState } = useLinking(containerRef);
   const [menuOpen, toggleMenuOpen] = React.useState(false)
-
 
   React.useEffect(() => {
     async function loadResourcesAndDataAsync() {
@@ -50,6 +57,7 @@ export default function App(props) {
     return null;
   } else {
     return (
+      <ApolloProvider client={client}>
       <View style={styles.container}>
         {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
         <NavigationContainer ref={containerRef} initialState={initialNavigationState}>
@@ -83,9 +91,12 @@ export default function App(props) {
           </Stack.Navigator>
         </NavigationContainer>
       </View>
+      </ApolloProvider>
     );
   }
 }
+
+AppRegistry.registerComponent('Cup of Sugar', () => App);
 
 
 
