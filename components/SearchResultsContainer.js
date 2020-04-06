@@ -2,15 +2,30 @@ import React from 'react';
 import {ScrollView, StyleSheet, View, Text, TouchableOpacity, Image} from 'react-native';
 import { SearchResult } from './SearchResult';
 import Colors from '../constants/Colors';
+import { gql } from "apollo-boost";
+import { useQuery } from '@apollo/react-hooks';
+
+const ITEMS = gql`
+  {
+    getAllItems {
+      name
+      quantity
+      measurement
+    }
+  }
+`;
 
 export function SearchResultsContainer() {
-  return (
+  const { loading, error, data } = useQuery(ITEMS);
+
+  if (loading) return <Text>Loading...</Text>
+  if (error) return <Text>Error</Text>
+
+  if (data) return (
     <View style={styles.searchContainer}>
       <ScrollView style={styles.searchContainer} contentContainerStyle={styles.contentContainer}>
         <Text style={styles.resultsText}>Results:</Text>
-        <SearchResult name={'Rake'} lender={'Carleigh'} rating={'*****'}/>
-        <SearchResult name={'Lawn Mower'} lender={'Lain'} rating={'***'}/>
-        <SearchResult name={'Sprinkler'} lender={'Tristan'} rating={'**'}/>
+        {data.getAllItems.map(item => <SearchResult name={item.name} quantity={item.quantity} measurement={item.measurement} /> )}
       </ScrollView>
     </View>
   )
