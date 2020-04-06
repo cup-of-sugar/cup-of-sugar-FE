@@ -15,16 +15,28 @@ import { ScrollView } from "react-native-gesture-handler";
 import { MonoText } from "../components/StyledText";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
+import Colors from "../constants/Colors";
 
 export default class HomeScreen extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { searchQuery: { category: "", itemName: "" } };
+    this.state = {
+      formVisible: true,
+      searchQuery: { category: "", itemName: "" }
+    };
   }
 
   updateSearch = (itemName, category) => {
     this.setState({
+      formVisible: false,
       searchQuery: { category: category, itemName: itemName.toLowerCase() }
+    });
+  };
+
+  resetSearch = () => {
+    this.setState({
+      formVisible: true,
+      searchQuery: { category: "", itemName: "" }
     });
   };
 
@@ -35,15 +47,29 @@ export default class HomeScreen extends React.Component {
           style={styles.container}
           contentContainerStyle={styles.contentContainer}
         >
-          <Text style={styles.welcomeText}>
-            What would you like to borrow today?
-          </Text>
           <ErrorBoundary>
-            <HomeForm updateSearch={this.updateSearch} />
+            {this.state.formVisible ? (
+              <>
+                <Text style={styles.welcomeText}>
+                  What would you like to borrow today?
+                </Text>
+                <HomeForm updateSearch={this.updateSearch} />
+              </>
+            ) : null}
           </ErrorBoundary>
           <ErrorBoundary>
             {this.state.searchQuery.category ? (
-              <SearchResultsContainer items={this.state.searchQuery} />
+              <>
+                <TouchableOpacity
+                  style={styles.searchButton}
+                  onPress={this.resetSearch}
+                >
+                  <Text style={styles.searchButtonText}>
+                    Try Another Search
+                  </Text>
+                </TouchableOpacity>
+                <SearchResultsContainer items={this.state.searchQuery} />
+              </>
             ) : null}
           </ErrorBoundary>
         </ScrollView>
@@ -73,6 +99,21 @@ const styles = StyleSheet.create({
     lineHeight: 35,
     margin: 10,
     marginTop: 20,
+    textAlign: "center"
+  },
+  searchButton: {
+    margin: 40,
+    paddingTop: 20,
+    paddingBottom: 20,
+    backgroundColor: Colors.lightBlue,
+    borderRadius: 10,
+    borderWidth: 1,
+    borderColor: "#fff"
+  },
+  searchButtonText: {
+    fontSize: 25,
+    fontWeight: "bold",
+    color: "#fff",
     textAlign: "center"
   }
 });
