@@ -1,57 +1,89 @@
-import React from 'react';
-import {ScrollView, StyleSheet, View, Text, TouchableOpacity, Image} from 'react-native';
-import { SearchResult } from './SearchResult';
-import Colors from '../constants/Colors';
+import React from "react";
+import {
+  ScrollView,
+  StyleSheet,
+  View,
+  Text,
+  TouchableOpacity,
+  Image
+} from "react-native";
+import { SearchResult } from "./SearchResult";
+import Colors from "../constants/Colors";
 import { gql } from "apollo-boost";
-import { useQuery } from '@apollo/react-hooks';
+import { useQuery } from "@apollo/react-hooks";
 
-const ITEMS = gql`
-  {
-    getAllItems {
-      name
-      quantity
-      measurement
-      description
-      category {
-        name
+export function SearchResultsContainer(props) {
+  let category = props.items.category;
+  let item = props.items.itemName;
+
+  const ITEMS = gql`
+      {
+        getAllItemsByName(name: "${category}", items: "${item}") {
+          name
+          quantity
+          description
+          measurement
+          category {
+            name
+          }
+        }
       }
-    }
-  }
-`;
+    `;
 
-export function SearchResultsContainer() {
   const { loading, error, data } = useQuery(ITEMS);
 
-  if (loading) return <Text>Loading...</Text>
-  if (error) return <Text>Error</Text>
+  if (loading) return <Text style={styles.loadingText}>Loading...</Text>;
+  if (error) return <Text style={styles.errorText}>No items found!</Text>;
 
-  if (data) return (
-    <View style={styles.searchContainer}>
-      <ScrollView style={styles.searchContainer} contentContainerStyle={styles.contentContainer}>
-        <Text style={styles.resultsText}>Results:</Text>
-        {data.getAllItems.map(item => <SearchResult key={item.name} item={item} /> )}
-      </ScrollView>
-    </View>
-  )
+  if (data) {
+    return (
+      <View style={styles.searchContainer}>
+        <ScrollView
+          style={styles.searchContainer}
+          contentContainerStyle={styles.contentContainer}
+        >
+          <Text style={styles.resultsText}>Results:</Text>
+          {data.getAllItemsByName.map(item => (
+            <SearchResult key={item.name} item={item} />
+          ))}
+        </ScrollView>
+      </View>
+    );
+  } else {
+    return <Text style={styles.errorText}>No items found!</Text>;
+  }
 }
 
 const styles = StyleSheet.create({
   contentContainer: {
-    borderRadius:10,
+    borderRadius: 10,
     borderWidth: 1,
-    borderColor: '#CCCCCC',
-    justifyContent: 'center',
-    paddingTop: 20,
-    width: '98%',
+    borderColor: "#CCCCCC",
+    justifyContent: "center",
+    padding: 20,
+    width: "98%"
   },
   searchContainer: {
-    marginLeft: '1%',
-    flex: 1,
+    marginLeft: "1%",
+    flex: 1
   },
   resultsText: {
-    alignSelf: 'center',
+    alignSelf: "center",
     fontSize: 25,
-    fontWeight: 'bold',
-    color: 'black',
+    fontWeight: "bold",
+    color: "black"
+  },
+  errorText: {
+    alignSelf: "center",
+    color: "red",
+    fontSize: 20,
+    fontWeight: "bold",
+    margin: 10
+  },
+  loadingText: {
+    alignSelf: "center",
+    fontSize: 20,
+    fontWeight: "bold",
+    margin: 10
   }
 });

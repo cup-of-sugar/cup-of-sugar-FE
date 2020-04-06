@@ -1,38 +1,35 @@
-import 'react-native-gesture-handler';
-import * as React from 'react';
+import "react-native-gesture-handler";
+import * as React from "react";
 import {
   TouchableOpacity,
   Image,
   Platform,
   StatusBar,
   StyleSheet,
-  View,
-} from 'react-native';
-import { SplashScreen } from 'expo';
-import * as Font from 'expo-font';
-import { Ionicons } from '@expo/vector-icons';
-import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
-
-import HomeScreen from './screens/HomeScreen';
-import LinksScreen from './screens/LinksScreen';
-import ItemDetailsScreen from './screens/ItemDetailsScreen';
-import BottomTabNavigator from './navigation/BottomTabNavigator';
-import useLinking from './navigation/useLinking';
-import cup from './assets/images/cup.png';
-import Colors from './constants/Colors';
-
-import MenuDrawer from './components/MenuDrawer';
-import { RequestScreen } from './screens/RequestScreen';
-
-import { AppRegistry } from 'react-native';
-import ApolloClient from 'apollo-boost';
-import { ApolloProvider } from '@apollo/react-hooks';
+  View
+} from "react-native";
+import { SplashScreen } from "expo";
+import * as Font from "expo-font";
+import { Ionicons } from "@expo/vector-icons";
+import { NavigationContainer } from "@react-navigation/native";
+import { createStackNavigator } from "@react-navigation/stack";
+import { RequestScreen } from "./screens/RequestScreen";
+import HomeScreen from "./screens/HomeScreen";
+import LinksScreen from "./screens/LinksScreen";
+import ItemDetailsScreen from "./screens/ItemDetailsScreen";
+import BottomTabNavigator from "./navigation/BottomTabNavigator";
+import useLinking from "./navigation/useLinking";
+import cup from "./assets/images/cup.png";
+import Colors from "./constants/Colors";
+import MenuDrawer from "./components/MenuDrawer";
+import { AppRegistry } from "react-native";
+import ApolloClient from "apollo-boost";
+import { ApolloProvider } from "@apollo/react-hooks";
 
 const Stack = createStackNavigator();
 
 const client = new ApolloClient({
-  uri: 'https://fierce-tundra-54482.herokuapp.com/graphql',
+  uri: "https://fierce-tundra-54482.herokuapp.com/graphql"
 });
 
 export default function App(props) {
@@ -40,7 +37,6 @@ export default function App(props) {
   const [initialNavigationState, setInitialNavigationState] = React.useState();
   const containerRef = React.useRef();
   const { getInitialState } = useLinking(containerRef);
-  const [menuOpen, toggleMenuOpen] = React.useState(false);
 
   React.useEffect(() => {
     async function loadResourcesAndDataAsync() {
@@ -51,7 +47,7 @@ export default function App(props) {
 
         await Font.loadAsync({
           ...Ionicons.font,
-          'space-mono': require('./assets/fonts/SpaceMono-Regular.ttf'),
+          "space-mono": require("./assets/fonts/SpaceMono-Regular.ttf")
         });
       } catch (e) {
         console.warn(e);
@@ -70,7 +66,7 @@ export default function App(props) {
     return (
       <ApolloProvider client={client}>
         <View style={styles.container}>
-          {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
+          {Platform.OS === "ios" && <StatusBar barStyle="default" />}
           <NavigationContainer
             ref={containerRef}
             initialState={initialNavigationState}
@@ -82,19 +78,34 @@ export default function App(props) {
                 options={{
                   headerStyle: {
                     backgroundColor: Colors.darkBlue,
-                    height: 120,
+                    height: 120
                   },
                   headerTitleStyle: {
-                    color: 'white',
-                    fontSize: 25,
+                    color: "white",
+                    fontSize: 25
                   },
-                  headerTitle: 'Cup of Sugar',
+                  headerTitle: "Cup of Sugar",
                   headerRight: () => <Image source={cup} style={styles.logo} />,
-                  headerLeft: () => <MenuDrawer />,
+                  headerLeft: () => <MenuDrawer />
                 }}
               />
               <Stack.Screen name="RequestScreen" component={RequestScreen} />
-              <Stack.Screen name="LinksScreen" component={LinksScreen} />
+              <Stack.Screen
+                name="Details"
+                component={ItemDetailsScreen}
+                options={{
+                  headerStyle: {
+                    backgroundColor: Colors.darkBlue,
+                    height: 120
+                  },
+                  headerTitleStyle: {
+                    color: "white",
+                    fontSize: 25
+                  },
+                  headerRight: () => <Image source={cup} style={styles.logo} />,
+                  headerTintColor: "white"
+                }}
+              />
             </Stack.Navigator>
           </NavigationContainer>
         </View>
@@ -103,16 +114,16 @@ export default function App(props) {
   }
 }
 
-AppRegistry.registerComponent('Cup of Sugar', () => App);
+AppRegistry.registerComponent("Cup of Sugar", () => App);
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: "#fff"
   },
   logo: {
     margin: 15,
     height: 42,
-    width: 57,
-  },
+    width: 57
+  }
 });
