@@ -94,7 +94,25 @@ export default function App(props) {
                 }}
               />
               <Stack.Screen name="RequestScreen" component={RequestScreen} />
-              <Stack.Screen name="LinksScreen" component={LinksScreen} />
+              <Stack.Screen
+                name="Details"
+                component={ItemDetailsScreen}
+                options={{
+                  headerStyle: {
+                    backgroundColor: Colors.darkBlue,
+                    height: 120,
+                  },
+                  headerTitleStyle: {
+                    color: 'white',
+                    fontSize: 25,
+                  },
+                  headerRight: () => (<Image
+                    source={cup}
+                    style={styles.logo} />
+                  ),
+                  headerTintColor: 'white',
+                }}
+              />
             </Stack.Navigator>
           </NavigationContainer>
         </View>
