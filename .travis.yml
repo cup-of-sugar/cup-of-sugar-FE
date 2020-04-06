@@ -1,0 +1,11 @@
+"scripts": {
+  "start": "react-scripts start",
+  "test" : "jest --forceExit",
+  "test:watch": "jest --watchAll"
+}
+
+language: node_js
+node_js:
+  - "node"
+notifications:
+  email: false
