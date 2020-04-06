@@ -12,11 +12,11 @@ import { createStackNavigator } from '@react-navigation/stack';
 export default class HomeScreen extends React.Component {
   constructor(props) {
     super(props);
-    this.state={searchResults: []}
+    this.state={searchQuery: {category: '', itemName: ''}}
   }
 
-  findMatchingItems = (itemName, category) => {
-    this.setState({searchResults: ['placeholder']});
+  updateSearch = (itemName, category) => {
+    this.setState({searchQuery: {category: category, itemName: itemName}});
   }
 
   render() {
@@ -25,10 +25,10 @@ export default class HomeScreen extends React.Component {
         <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
           <Text style={styles.welcomeText}> What would you like to borrow today?</Text>
           <ErrorBoundary>
-            <HomeForm findMatchingItems={this.findMatchingItems}/>
+            <HomeForm updateSearch={this.updateSearch}/>
           </ErrorBoundary>
           <ErrorBoundary>
-            {this.state.searchResults.length ? <SearchResultsContainer items={this.state.searchResults}/> : null}
+            {this.state.searchQuery.category ? <SearchResultsContainer items={this.state.searchQuery}/> : null}
           </ErrorBoundary>
         </ScrollView>
       </View>
