@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import {Picker, Text, StyleSheet, View, TextInput, TouchableOpacity} from 'react-native';
+import Colors from '../constants/Colors';
 
 class HomeForm extends React.Component {
   constructor(props) {
@@ -97,7 +98,7 @@ const styles = StyleSheet.create({
     marginTop:40,
     paddingTop:20,
     paddingBottom:20,
-    backgroundColor:'#0C94E1',
+    backgroundColor: Colors.lightBlue,
     borderRadius:10,
     borderWidth: 1,
     borderColor: '#fff',
