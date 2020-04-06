@@ -8,12 +8,12 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import HomeScreen from './screens/HomeScreen'
 import LinksScreen from './screens/LinksScreen'
+import ItemDetailsScreen from './screens/ItemDetailsScreen'
 import BottomTabNavigator from './navigation/BottomTabNavigator';
 import useLinking from './navigation/useLinking';
 import cup from './assets/images/cup.png';
 import Colors from './constants/Colors';
 import MenuDrawer from './components/MenuDrawer'
-
 import { AppRegistry } from 'react-native';
 import ApolloClient from 'apollo-boost';
 import { ApolloProvider } from '@apollo/react-hooks';
@@ -29,7 +29,6 @@ export default function App(props) {
   const [initialNavigationState, setInitialNavigationState] = React.useState();
   const containerRef = React.useRef();
   const { getInitialState } = useLinking(containerRef);
-  const [menuOpen, toggleMenuOpen] = React.useState(false)
 
   React.useEffect(() => {
     async function loadResourcesAndDataAsync() {
@@ -87,6 +86,25 @@ export default function App(props) {
             <Stack.Screen
               name="LinksScreen"
               component={LinksScreen}
+            />
+            <Stack.Screen
+              name="Details"
+              component={ItemDetailsScreen}
+              options={{
+                headerStyle: {
+                  backgroundColor: Colors.darkBlue,
+                  height: 120,
+                },
+                headerTitleStyle: {
+                  color: 'white',
+                  fontSize: 25,
+                },
+                headerRight: () => (<Image
+                  source={cup}
+                  style={styles.logo} />
+                ),
+                headerTintColor: 'white',
+              }}
             />
           </Stack.Navigator>
         </NavigationContainer>

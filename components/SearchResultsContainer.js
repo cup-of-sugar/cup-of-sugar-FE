@@ -11,6 +11,10 @@ const ITEMS = gql`
       name
       quantity
       measurement
+      description
+      category {
+        name
+      }
     }
   }
 `;
@@ -25,7 +29,7 @@ export function SearchResultsContainer() {
     <View style={styles.searchContainer}>
       <ScrollView style={styles.searchContainer} contentContainerStyle={styles.contentContainer}>
         <Text style={styles.resultsText}>Results:</Text>
-        {data.getAllItems.map(item => <SearchResult name={item.name} quantity={item.quantity} measurement={item.measurement} /> )}
+        {data.getAllItems.map(item => <SearchResult key={item.name} item={item} /> )}
       </ScrollView>
     </View>
   )
