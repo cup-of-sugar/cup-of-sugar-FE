@@ -8,10 +8,18 @@ import {
   TextInput,
   View,
   Button,
+  Platform,
 } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 
 export class RequestScreen extends Component {
+  state = {
+    category: '',
+    name: '',
+    description: '',
+    amount: 0,
+    time: '',
+  };
   render() {
     return (
       <View style={styles.container}>
@@ -31,7 +39,22 @@ export class RequestScreen extends Component {
           <Text style={styles.label}>Select a category*</Text>
           <Picker
             selectedValue=""
-            style={{ height: 40, marginBottom: 8 }}
+            style={{
+              ...Platform.select({
+                ios: {
+                  color: '#fff',
+                  marginBottom: 200,
+                },
+                android: {
+                  height: 40,
+                  marginBottom: 200,
+                },
+                default: {
+                  height: 40,
+                  marginBottom: 8,
+                },
+              }),
+            }}
             onValueChange={() => {}}
           >
             <Picker.Item label="Garden" value="garden" />
