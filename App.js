@@ -13,7 +13,7 @@ import * as Font from 'expo-font';
 import { Ionicons } from '@expo/vector-icons';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-
+import { RequestScreen } from './screens/RequestScreen';
 import HomeScreen from './screens/HomeScreen';
 import LinksScreen from './screens/LinksScreen';
 import ItemDetailsScreen from './screens/ItemDetailsScreen';
@@ -21,10 +21,7 @@ import BottomTabNavigator from './navigation/BottomTabNavigator';
 import useLinking from './navigation/useLinking';
 import cup from './assets/images/cup.png';
 import Colors from './constants/Colors';
-
 import MenuDrawer from './components/MenuDrawer';
-import { RequestScreen } from './screens/RequestScreen';
-
 import { AppRegistry } from 'react-native';
 import ApolloClient from 'apollo-boost';
 import { ApolloProvider } from '@apollo/react-hooks';
@@ -40,7 +37,6 @@ export default function App(props) {
   const [initialNavigationState, setInitialNavigationState] = React.useState();
   const containerRef = React.useRef();
   const { getInitialState } = useLinking(containerRef);
-  const [menuOpen, toggleMenuOpen] = React.useState(false);
 
   React.useEffect(() => {
     async function loadResourcesAndDataAsync() {
