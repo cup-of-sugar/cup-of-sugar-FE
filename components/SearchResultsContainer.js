@@ -35,7 +35,7 @@ export function SearchResultsContainer(props) {
   if (loading) return <Text style={styles.loadingText}>Loading...</Text>;
   if (error) return <Text style={styles.errorText}>No items found!</Text>;
 
-  if (data)
+  if (data) {
     return (
       <View style={styles.searchContainer}>
         <ScrollView
@@ -49,6 +49,9 @@ export function SearchResultsContainer(props) {
         </ScrollView>
       </View>
     );
+  } else {
+    return <Text style={styles.errorText}>No items found!</Text>;
+  }
 }
 
 const styles = StyleSheet.create({
