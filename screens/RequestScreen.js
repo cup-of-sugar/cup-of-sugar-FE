@@ -1,5 +1,6 @@
 import * as WebBrowser from 'expo-web-browser';
 import * as React from 'react';
+import { Component } from 'react';
 import {
   Picker,
   StyleSheet,
@@ -9,78 +10,83 @@ import {
   Button,
 } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
-import { MonoText } from '../components/StyledText';
-import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
 
-export const RequestScreen = () => {
-  return (
-    <View style={styles.container}>
-      <Text>What item are you looking for?</Text>
-      <ScrollView
-        style={styles.container}
-        contentContainerStyle={styles.contentContainer}
-      >
-        <Text>Select a category</Text>
-        <Picker
-          selectedValue=""
-          style={{ height: 50, width: 150 }}
-          onValueChange={() => {}}
+export class RequestScreen extends Component {
+  render() {
+    return (
+      <View style={styles.container}>
+        <Text style={{ color: '#fff', fontSize: 24, fontWeight: 'bold' }}>
+          What item are you looking for?
+        </Text>
+        <ScrollView
+          style={styles.container}
+          contentContainerStyle={styles.contentContainer}
         >
-          <Picker.Item label="Garden" value="garden" />
-          <Picker.Item label="Pantry" value="pantry" />
-          <Picker.Item label="Cleaning" value="cleaning" />
-        </Picker>
-        <Text style={styles.label}>Item name</Text>
-        <TextInput
-          placeholder="Enter item name"
-          style={{ height: 40, borderColor: 'gray', borderWidth: 1 }}
-          onChangeText={() => {}}
-          value=""
-        ></TextInput>
-        <Text style={styles.label}>Description</Text>
-        <TextInput
-          placeholder="Enter description"
-          style={{ height: 40, borderColor: 'gray', borderWidth: 1 }}
-          onChangeText={() => {}}
-          value=""
-        ></TextInput>
-        <Text style={styles.label}>Amount</Text>
-        <TextInput
-          placeholder="How many?"
-          style={{ height: 40, borderColor: 'gray', borderWidth: 1 }}
-          onChangeText={() => {}}
-          value=""
-        ></TextInput>
-        <Text style={styles.label}>Time</Text>
-        <TextInput
-          placeholder="How long?"
-          style={{ height: 40, borderColor: 'gray', borderWidth: 1 }}
-          onChangeText={() => {}}
-          value=""
-        ></TextInput>
-        <Button
-          onPress={() => {}}
-          title="Submit"
-          style={{ backgroundColor: '#0C94E1' }}
-        />
-      </ScrollView>
-    </View>
-  );
-};
+          <Text style={styles.label}>Select a category*</Text>
+          <Picker
+            selectedValue=""
+            style={{ height: 40, marginBottom: 8 }}
+            onValueChange={() => {}}
+          >
+            <Picker.Item label="Garden" value="garden" />
+            <Picker.Item label="Pantry" value="pantry" />
+            <Picker.Item label="Cleaning" value="cleaning" />
+          </Picker>
+          <Text style={styles.label}>Item name*</Text>
+          <TextInput
+            placeholder="Enter item name"
+            style={styles.input}
+            onChangeText={() => {}}
+            value=""
+          ></TextInput>
+          <Text style={styles.label}>Description*</Text>
+          <TextInput
+            placeholder="Enter description"
+            style={styles.input}
+            onChangeText={() => {}}
+            value=""
+          ></TextInput>
+          <Text style={styles.label}>Amount</Text>
+          <TextInput
+            placeholder="How many?"
+            style={styles.input}
+            onChangeText={() => {}}
+            value=""
+          ></TextInput>
+          <Text style={styles.label}>Time</Text>
+          <TextInput
+            placeholder="How long?"
+            style={styles.input}
+            onChangeText={() => {}}
+            value=""
+          ></TextInput>
+          <Button onPress={() => {}} title="Request" color="#385A94" />
+        </ScrollView>
+      </View>
+    );
+  }
+}
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#0C94E1',
     overflow: 'scroll',
   },
   contentContainer: {
     justifyContent: 'center',
     paddingTop: 30,
   },
+  input: {
+    height: 40,
+    borderColor: 'gray',
+    borderWidth: 1,
+    backgroundColor: '#fff',
+    marginBottom: 8,
+    padding: 5,
+  },
   label: {
-    marginTop: 5,
+    color: '#fff',
   },
   welcomeText: {
     fontSize: 30,
