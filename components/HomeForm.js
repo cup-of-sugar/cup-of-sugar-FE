@@ -108,9 +108,7 @@ const styles = StyleSheet.create({
     height: 150
   },
   searchButton: {
-    marginRight: 40,
-    marginLeft: 40,
-    marginTop: 40,
+    margin: 40,
     paddingTop: 20,
     paddingBottom: 20,
     backgroundColor: Colors.lightBlue,
