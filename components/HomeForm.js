@@ -21,7 +21,7 @@ class HomeForm extends React.Component {
 
   startSearch = () => {
     this.setState({error: ''})
-    this.props.findMatchingItems(this.state.itemName, this.state.category)
+    this.props.updateSearch(this.state.itemName, this.state.category)
   }
 
   render() {
