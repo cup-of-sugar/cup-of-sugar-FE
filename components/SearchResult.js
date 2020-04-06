@@ -1,13 +1,16 @@
 import React from 'react';
 import {StyleSheet, View, Button, Text, TouchableOpacity, Image} from 'react-native';
-import Colors from '../constants/Colors'
+import Colors from '../constants/Colors';
+import { useNavigation } from '@react-navigation/native';
 
-export function SearchResult({ name, quantity, measurement}) {
+export function SearchResult({ item }) {
+  const navigation = useNavigation();
+
   return (
-    <TouchableOpacity style={styles.searchResult}>
-      <Text style={styles.itemName}>{name}</Text>
+    <TouchableOpacity style={styles.searchResult} onPress={() => navigation.navigate('Details', { item })}>
+      <Text style={styles.itemName}>{item.name}</Text>
       <View style={styles.itemInfo}>
-        <Text style={styles.amount}>{quantity} {measurement} available</Text>
+        <Text style={styles.amount}>{item.quantity} {item.measurement} available</Text>
       </View>
     </TouchableOpacity>
   )
