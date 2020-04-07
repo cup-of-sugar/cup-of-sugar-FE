@@ -1,6 +1,6 @@
 import * as WebBrowser from "expo-web-browser";
 import * as React from "react";
-import HomeSearchForm from "../components/HomeForm";
+import { SearchResultsContainer } from "../components/SearchResultsContainer";
 import {
   Image,
   Platform,
@@ -11,24 +11,28 @@ import {
 } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import Colors from "../constants/Colors";
+import { useNavigation } from "@react-navigation/native";
 
-export default function HomeScreen() {
+export default function SearchResultsScreen(props) {
+  const navigation = useNavigation();
+  const category = props.route.params.category;
+  const itemName = props.route.params.itemName;
+
   return (
     <ScrollView
       style={styles.container}
       contentContainerStyle={styles.contentContainer}
     >
-      <Text style={styles.welcomeText}>
-        What would you like to borrow today?
-      </Text>
-      <HomeSearchForm />
+      <TouchableOpacity
+        style={styles.searchButton}
+        onPress={() => navigation.navigate("Home")}
+      >
+        <Text style={styles.searchButtonText}>Try Another Search</Text>
+      </TouchableOpacity>
+      <SearchResultsContainer items={{ category, itemName }} />
     </ScrollView>
   );
 }
-
-HomeScreen.navigationOptions = {
-  header: "none"
-};
 
 const styles = StyleSheet.create({
   container: {

@@ -23,6 +23,7 @@ export function SearchResultsContainer(props) {
           quantity
           description
           measurement
+          available
           category {
             name
           }

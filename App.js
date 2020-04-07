@@ -17,6 +17,7 @@ import { RequestScreen } from "./screens/RequestScreen";
 import HomeScreen from "./screens/HomeScreen";
 import LinksScreen from "./screens/LinksScreen";
 import ItemDetailsScreen from "./screens/ItemDetailsScreen";
+import SearchResultsScreen from "./screens/SearchResultsScreen";
 import BottomTabNavigator from "./navigation/BottomTabNavigator";
 import useLinking from "./navigation/useLinking";
 import cup from "./assets/images/cup.png";
@@ -73,7 +74,7 @@ export default function App(props) {
           >
             <Stack.Navigator>
               <Stack.Screen
-                name="Root"
+                name="Home"
                 component={HomeScreen}
                 options={{
                   headerStyle: {
@@ -89,7 +90,22 @@ export default function App(props) {
                   headerLeft: () => <MenuDrawer />
                 }}
               />
-              <Stack.Screen name="RequestScreen" component={RequestScreen} />
+              <Stack.Screen
+                name="Search Results"
+                component={SearchResultsScreen}
+                options={{
+                  headerStyle: {
+                    backgroundColor: Colors.darkBlue,
+                    height: 120
+                  },
+                  headerTitleStyle: {
+                    color: "white",
+                    fontSize: 25
+                  },
+                  headerRight: () => <Image source={cup} style={styles.logo} />,
+                  headerTintColor: "white"
+                }}
+              />
               <Stack.Screen
                 name="Details"
                 component={ItemDetailsScreen}
@@ -106,6 +122,7 @@ export default function App(props) {
                   headerTintColor: "white"
                 }}
               />
+              <Stack.Screen name="RequestScreen" component={RequestScreen} />
             </Stack.Navigator>
           </NavigationContainer>
         </View>
