@@ -55,7 +55,7 @@ class HomeForm extends React.Component {
           onValueChange={this.handleCategoryChange}
         >
           <Picker.Item label="Choose a category..." />
-          <Picker.Item label="Garden" value="Garden" />
+          <Picker.Item label="Gardening" value="Gardening" />
           <Picker.Item label="Food" value="Food" />
           <Picker.Item label="Cleaning" value="Cleaning" />
         </Picker>
