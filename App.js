@@ -19,7 +19,7 @@ import LinksScreen from "./screens/LinksScreen";
 import SuccessfulBorrowScreen from "./screens/SuccessfulBorrowScreen";
 import ItemDetailsScreen from "./screens/ItemDetailsScreen";
 import SearchResultsScreen from "./screens/SearchResultsScreen";
-import BottomTabNavigator from "./navigation/BottomTabNavigator";
+import MyItemsScreen from "./screens/MyItemsScreen";
 import useLinking from "./navigation/useLinking";
 import cup from "./assets/images/cup.png";
 import Colors from "./constants/Colors";
@@ -89,6 +89,22 @@ export default function App(props) {
                   headerTitle: "Cup of Sugar",
                   headerRight: () => <Image source={cup} style={styles.logo} />,
                   headerLeft: () => <MenuDrawer />
+                }}
+              />
+              <Stack.Screen
+                name="My Items"
+                component={MyItemsScreen}
+                options={{
+                  headerStyle: {
+                    backgroundColor: Colors.darkBlue,
+                    height: 120
+                  },
+                  headerTitleStyle: {
+                    color: "white",
+                    fontSize: 25
+                  },
+                  headerRight: () => <Image source={cup} style={styles.logo} />,
+                  headerTintColor: "white"
                 }}
               />
               <Stack.Screen
