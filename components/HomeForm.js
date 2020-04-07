@@ -8,6 +8,13 @@ import {
   TouchableOpacity
 } from "react-native";
 import Colors from "../constants/Colors";
+import { useNavigation } from "@react-navigation/native";
+
+export default function HomeSearchForm(props) {
+  const navigation = useNavigation();
+
+  return <HomeForm {...props} navigation={navigation} />;
+}
 
 class HomeForm extends React.Component {
   constructor(props) {
@@ -30,8 +37,10 @@ class HomeForm extends React.Component {
   };
 
   startSearch = () => {
-    this.setState({ error: "" });
-    this.props.updateSearch(this.state.itemName, this.state.category);
+    const category = this.state.category;
+    const itemName = this.state.itemName.toLowerCase();
+    this.props.navigation.navigate("Search Results", { category, itemName });
+    this.setState({ category: "", itemName: "", error: "" });
   };
 
   render() {
@@ -123,5 +132,3 @@ const styles = StyleSheet.create({
     textAlign: "center"
   }
 });
-
-export default HomeForm;
