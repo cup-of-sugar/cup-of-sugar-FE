@@ -9,6 +9,8 @@ import {
 } from "react-native";
 import Colors from "../constants/Colors";
 import { useNavigation } from "@react-navigation/native";
+import available from "../assets/images/available.png";
+import out from "../assets/images/out.png";
 
 export function SearchResult({ item }) {
   const navigation = useNavigation();
@@ -18,7 +20,10 @@ export function SearchResult({ item }) {
       style={styles.searchResult}
       onPress={() => navigation.navigate("Details", { item })}
     >
-      <Text style={styles.itemName}>{item.name}</Text>
+      <Text style={styles.itemName}>
+        <Image style={styles.icon} source={item.available ? available : out} />
+        {item.name}
+      </Text>
       <View style={styles.itemInfo}>
         <Text style={styles.amount}>
           {item.quantity} {item.measurement} available
@@ -38,21 +43,23 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: "row",
     margin: 10,
+    padding: 10,
     height: 70,
     width: 330
   },
   itemName: {
     fontSize: 20,
     fontWeight: "bold",
-    marginLeft: 15
-  },
-  itemInfo: {
-    marginRight: 10
+    paddingLeft: 10
   },
   amount: {
     fontSize: 13,
     fontWeight: "bold",
     padding: 3,
     textAlign: "right"
+  },
+  icon: {
+    height: 20,
+    width: 20
   }
 });
