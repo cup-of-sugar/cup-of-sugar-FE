@@ -13,25 +13,40 @@ import { useNavigation } from "@react-navigation/native";
 
 export default function SuccessfulBorrowScreen(props) {
   const navigation = useNavigation();
+  const action = props.route.params.action;
   const name = props.route.params.name;
   const quantity = props.route.params.quantity;
   const measurement = props.route.params.measurement;
 
   return (
     <View style={styles.container}>
-      <Text style={styles.successMessage}>You have successfully reserved:</Text>
+      <Text style={styles.successMessage}>You have successfully {action}:</Text>
       <Text style={styles.itemInfo}>
         {quantity} {measurement ? measurement + " of" : ""} {name}
       </Text>
-      <Text style={styles.successMessage}>
-        Message the lender to coordinate pick-up details!
-      </Text>
-      <TouchableOpacity
-        style={styles.messageButton}
-        onPress={() => navigation.navigate("Home")}
-      >
-        <Text style={styles.messageButtonText}>Send Message</Text>
-      </TouchableOpacity>
+      {action === "reserved" ? (
+        <>
+          <Text style={styles.successMessage}>
+            Message the lender to coordinate pick-up details!
+          </Text>
+          <TouchableOpacity
+            style={styles.messageButton}
+            onPress={() => navigation.navigate("Home")}
+          >
+            <Text style={styles.messageButtonText}>Send Message</Text>
+          </TouchableOpacity>
+        </>
+      ) : (
+        <>
+          <Text style={styles.successMessage}>Thank you!</Text>
+          <TouchableOpacity
+            style={styles.messageButton}
+            onPress={() => navigation.navigate("Home")}
+          >
+            <Text style={styles.messageButtonText}>Borrow Another Item</Text>
+          </TouchableOpacity>
+        </>
+      )}
     </View>
   );
 }
