@@ -26,7 +26,7 @@ export function SearchResult({ item }) {
       </Text>
       <View style={styles.itemInfo}>
         <Text style={styles.amount}>
-          {item.quantity} {item.measurement} available
+          {item.quantity} {item.measurement ? item.measurement : ""} available
         </Text>
       </View>
     </TouchableOpacity>
