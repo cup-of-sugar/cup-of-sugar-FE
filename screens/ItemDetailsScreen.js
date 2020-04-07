@@ -18,7 +18,7 @@ export default function ItemDetailsScreen(props) {
       <View style={styles.infoContainer}>
         <Text style={styles.itemInfoTitle}>Status:</Text>
         <Text style={styles.itemInfo}>
-          {item.quantity} {item.measurement} available
+          {item.quantity} {item.measurement ? item.measurement : ""} available
         </Text>
         <Text style={styles.itemInfoTitle}>Category:</Text>
         <Text style={styles.itemInfo}>{item.category.name}</Text>
@@ -28,7 +28,18 @@ export default function ItemDetailsScreen(props) {
         </Text>
       </View>
       <TouchableOpacity style={styles.borrowButton}>
-        <Text style={styles.borrowButtonText}>Borrow this Item</Text>
+        <Text
+          style={styles.borrowButtonText}
+          onPress={() =>
+            props.navigation.navigate("Success!", {
+              name: item.name,
+              quantity: item.quantity,
+              measurement: item.measurement
+            })
+          }
+        >
+          Borrow this Item
+        </Text>
       </TouchableOpacity>
     </ScrollView>
   );
