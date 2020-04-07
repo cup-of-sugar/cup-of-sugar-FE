@@ -33,6 +33,7 @@ export default function ItemDetailsScreen(props) {
             style={styles.borrowButtonText}
             onPress={() =>
               props.navigation.navigate("Success!", {
+                action: "reserved",
                 name: item.name,
                 quantity: item.quantity,
                 measurement: item.measurement
