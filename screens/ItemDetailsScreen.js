@@ -27,20 +27,22 @@ export default function ItemDetailsScreen(props) {
           {item.description || "No description yet!"}
         </Text>
       </View>
-      <TouchableOpacity style={styles.borrowButton}>
-        <Text
-          style={styles.borrowButtonText}
-          onPress={() =>
-            props.navigation.navigate("Success!", {
-              name: item.name,
-              quantity: item.quantity,
-              measurement: item.measurement
-            })
-          }
-        >
-          Borrow this Item
-        </Text>
-      </TouchableOpacity>
+      {item.available ? (
+        <TouchableOpacity style={styles.borrowButton}>
+          <Text
+            style={styles.borrowButtonText}
+            onPress={() =>
+              props.navigation.navigate("Success!", {
+                name: item.name,
+                quantity: item.quantity,
+                measurement: item.measurement
+              })
+            }
+          >
+            Borrow this Item
+          </Text>
+        </TouchableOpacity>
+      ) : null}
     </ScrollView>
   );
 }
