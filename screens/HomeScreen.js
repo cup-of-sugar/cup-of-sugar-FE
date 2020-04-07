@@ -33,8 +33,7 @@ HomeScreen.navigationOptions = {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
-    overflow: "scroll"
+    backgroundColor: "#fff"
   },
   contentContainer: {
     justifyContent: "center",

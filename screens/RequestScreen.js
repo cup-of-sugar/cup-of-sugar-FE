@@ -1,21 +1,21 @@
-import * as WebBrowser from 'expo-web-browser';
-import * as React from 'react';
-import { Component } from 'react';
+import * as WebBrowser from "expo-web-browser";
+import * as React from "react";
+import { Component } from "react";
 import {
   Picker,
   StyleSheet,
   Text,
   TextInput,
   View,
-  Button,
-} from 'react-native';
-import { ScrollView } from 'react-native-gesture-handler';
+  Button
+} from "react-native";
+import { ScrollView } from "react-native-gesture-handler";
 
 export class RequestScreen extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <Text style={{ color: '#fff', fontSize: 24, fontWeight: 'bold' }}>
+        <Text style={{ color: "#fff", fontSize: 24, fontWeight: "bold" }}>
           What item are you looking for?
         </Text>
         <ScrollView
@@ -70,31 +70,30 @@ export class RequestScreen extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#0C94E1',
-    overflow: 'scroll',
+    backgroundColor: "#0C94E1"
   },
   contentContainer: {
-    justifyContent: 'center',
-    paddingTop: 30,
+    justifyContent: "center",
+    paddingTop: 30
   },
   input: {
     height: 40,
-    borderColor: 'gray',
+    borderColor: "gray",
     borderWidth: 1,
-    backgroundColor: '#fff',
+    backgroundColor: "#fff",
     marginBottom: 8,
-    padding: 5,
+    padding: 5
   },
   label: {
-    color: '#fff',
+    color: "#fff"
   },
   welcomeText: {
     fontSize: 30,
-    fontWeight: 'bold',
-    color: 'black',
+    fontWeight: "bold",
+    color: "black",
     lineHeight: 35,
     margin: 10,
     marginTop: 20,
-    textAlign: 'center',
-  },
+    textAlign: "center"
+  }
 });
