@@ -17,13 +17,21 @@ export default function SuccessfulBorrowScreen(props) {
   const name = props.route.params.name;
   const quantity = props.route.params.quantity;
   const measurement = props.route.params.measurement;
+  const timeDuration = props.route.params.timeDuration;
 
   return (
     <View style={styles.container}>
       <Text style={styles.successMessage}>You have successfully {action}:</Text>
-      <Text style={styles.itemInfo}>
-        {quantity} {measurement ? measurement + " of" : ""} {name}
-      </Text>
+      {!timeDuration ? (
+        <Text style={styles.itemInfo}>
+          {quantity} {measurement + " of"} {name} )
+        </Text>
+      ) : (
+        <Text style={styles.itemInfo}>
+          1 {name}{" "}
+          {action === "reserved" ? `for ${quantity} ${timeDuration}` : ""}
+        </Text>
+      )}
       {action === "reserved" ? (
         <>
           <Text style={styles.successMessage}>
