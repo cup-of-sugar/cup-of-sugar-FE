@@ -13,13 +13,23 @@ import {
 import { ScrollView } from 'react-native-gesture-handler';
 
 export class RequestScreen extends Component {
-  state = {
-    category: '',
-    name: '',
-    description: '',
-    amount: 0,
-    time: '',
+  constructor() {
+    super();
+    this.state = {
+      category: '',
+      name: '',
+      description: '',
+      amount: 0,
+      time: '',
+    };
+  }
+
+  handleChange = (event) => {
+    console.log(event.target.value);
+    this.setState({ [event.target.name]: event.target.value });
+    console.log(this.state.name);
   };
+
   render() {
     return (
       <View style={styles.container}>
@@ -38,62 +48,75 @@ export class RequestScreen extends Component {
         >
           <Text style={styles.label}>Select a category*</Text>
           <Picker
-            selectedValue=""
-            style={{
-              ...Platform.select({
-                ios: {
-                  color: '#fff',
-                  marginBottom: 200,
-                },
-                android: {
-                  height: 40,
-                  marginBottom: 200,
-                },
-                default: {
-                  height: 40,
-                  marginBottom: 8,
-                },
-              }),
-            }}
-            onValueChange={() => {}}
+            value=""
+            onValueChange={(itemValue) => this.handleChange(itemValue)}
           >
-            <Picker.Item label="Garden" value="garden" />
-            <Picker.Item label="Pantry" value="pantry" />
-            <Picker.Item label="Cleaning" value="cleaning" />
+            <Picker.Item
+              label="Garden"
+              value="garden"
+              name="category"
+              onChange={this.handleChange}
+            />
+            <Picker.Item
+              name="category"
+              onChange={this.handleChange}
+              label="Pantry"
+              value="pantry"
+            />
+            <Picker.Item
+              name="category"
+              onChange={this.handleChange}
+              label="Cleaning"
+              value="cleaning"
+            />
           </Picker>
           <Text style={styles.label}>Item name*</Text>
           <TextInput
             placeholder="Enter item name"
             style={styles.input}
-            onChangeText={() => {}}
-            value=""
+            name="name"
+            onChange={this.handleChange}
           ></TextInput>
           <Text style={styles.label}>Description*</Text>
           <TextInput
             placeholder="Enter description"
             style={styles.input}
-            onChangeText={() => {}}
-            value=""
+            onChange={this.handleChange}
+            name="description"
           ></TextInput>
           <Text style={styles.label}>Amount</Text>
           <TextInput
             placeholder="How many?"
             style={styles.input}
-            onChangeText={() => {}}
-            value=""
+            onChange={this.handleChange}
+            name="amount"
           ></TextInput>
           <Text style={styles.label}>Time</Text>
           <TextInput
             placeholder="How long?"
             style={styles.input}
-            onChangeText={() => {}}
-            value=""
+            onChange={this.handleChange}
+            name="time"
           ></TextInput>
           <Button
             onPress={() => {}}
             title="Request"
             color="#385A94"
-            style={{ borderRadius: 8 }}
+            style={{
+              ...Platform.select({
+                ios: {
+                  backgroundColor: '#385A94',
+                  borderRadius: 8,
+                  color: '#fff',
+                },
+                android: {
+                  borderRadius: 8,
+                },
+                default: {
+                  borderRadius: 8,
+                },
+              }),
+            }}
           />
         </ScrollView>
       </View>
