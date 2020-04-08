@@ -33,13 +33,7 @@ export class RequestScreen extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <Text
-          style={{
-            color: '#fff',
-            fontSize: 24,
-            fontWeight: 'bold',
-          }}
-        >
+        <Text style={{ color: '#fff', fontSize: 24, fontWeight: 'bold' }}>
           What item are you looking for?
         </Text>
         <ScrollView
@@ -128,8 +122,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#0C94E1',
-    overflow: 'scroll',
-    padding: 10,
   },
   contentContainer: {
     justifyContent: 'center',
@@ -140,7 +132,6 @@ const styles = StyleSheet.create({
     borderColor: 'gray',
     borderWidth: 1,
     backgroundColor: '#fff',
-    borderRadius: 2,
     marginBottom: 8,
     padding: 5,
   },

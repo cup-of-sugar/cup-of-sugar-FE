@@ -24,6 +24,8 @@ export function SearchResultsContainer(props) {
           description
           measurement
           available
+          timeDuration
+          id
           category {
             name
           }
@@ -44,14 +46,16 @@ export function SearchResultsContainer(props) {
           contentContainerStyle={styles.contentContainer}
         >
           <Text style={styles.resultsText}>Results:</Text>
-          {data.getAllItemsByName.map(item => (
-            <SearchResult key={item.name} item={item} />
-          ))}
+          {data.getAllItemsByName.length ? (
+            data.getAllItemsByName.map(item => (
+              <SearchResult key={item.name} item={item} />
+            ))
+          ) : (
+            <Text style={styles.errorText}>No items found!</Text>
+          )}
         </ScrollView>
       </View>
     );
-  } else {
-    return <Text style={styles.errorText}>No items found!</Text>;
   }
 }
 

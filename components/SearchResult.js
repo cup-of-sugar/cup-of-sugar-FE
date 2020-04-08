@@ -25,9 +25,20 @@ export function SearchResult({ item }) {
         {item.name}
       </Text>
       <View style={styles.itemInfo}>
-        <Text style={styles.amount}>
-          {item.quantity} {item.measurement} available
-        </Text>
+        {item.available ? (
+          !item.timeDuration ? (
+            <Text style={styles.amount}>
+              {item.quantity} {item.measurement ? item.measurement : ""}{" "}
+              available
+            </Text>
+          ) : (
+            <Text style={styles.amount}>
+              Borrow for {item.quantity} {item.timeDuration}
+            </Text>
+          )
+        ) : (
+          <Text style={styles.amount}>Not available</Text>
+        )}
       </View>
     </TouchableOpacity>
   );
