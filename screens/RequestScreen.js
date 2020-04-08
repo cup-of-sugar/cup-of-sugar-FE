@@ -31,6 +31,21 @@ export class RequestScreen extends Component {
   };
 
   render() {
+    const inputComponent = (
+      <TextInput
+        placeholder={this.state.category === 'food' ? 'How many?' : 'How long?'}
+        style={styles.input}
+        onChange={this.handleChange}
+        name="time"
+      ></TextInput>
+    );
+
+    const textComponent = (
+      <Text style={styles.label}>
+        {this.state.category === 'food' ? 'Amount' : 'Time'}
+      </Text>
+    );
+
     return (
       <View style={styles.container}>
         <Text style={{ color: '#fff', fontSize: 24, fontWeight: 'bold' }}>
@@ -44,6 +59,7 @@ export class RequestScreen extends Component {
           <Picker
             value=""
             onValueChange={(itemValue) => this.handleChange(itemValue)}
+            style={{ marginBottom: 8, height: 40 }}
           >
             <Picker.Item
               label="Garden"
@@ -54,8 +70,8 @@ export class RequestScreen extends Component {
             <Picker.Item
               name="category"
               onChange={this.handleChange}
-              label="Pantry"
-              value="pantry"
+              label="Food"
+              value="food"
             />
             <Picker.Item
               name="category"
@@ -78,7 +94,9 @@ export class RequestScreen extends Component {
             onChange={this.handleChange}
             name="description"
           ></TextInput>
-          <Text style={styles.label}>Amount</Text>
+          {textComponent}
+          {inputComponent}
+          {/* <Text style={styles.label}>Amount</Text>
           <TextInput
             placeholder="How many?"
             style={styles.input}
@@ -91,7 +109,7 @@ export class RequestScreen extends Component {
             style={styles.input}
             onChange={this.handleChange}
             name="time"
-          ></TextInput>
+          ></TextInput> */}
           <Button
             onPress={() => {}}
             title="Request"
@@ -122,6 +140,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#0C94E1',
+    padding: 5,
   },
   contentContainer: {
     justifyContent: 'center',
