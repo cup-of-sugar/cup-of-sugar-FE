@@ -12,8 +12,32 @@ import Colors from "../constants/Colors";
 import { useNavigation } from "@react-navigation/native";
 import { ScrollView } from "react-native-gesture-handler";
 
+import { gql } from "apollo-boost";
+import { useMutation } from "@apollo/react-hooks";
+
 export default function MyItemsScreen(props) {
   const navigation = useNavigation();
+
+  const UPDATE_ITEM = gql`
+    mutation {
+      item: updateItemAvailability(
+        input: { id: 3, available: false, name: "trowel" }
+      ) {
+        id
+        available
+        name
+      }
+    }
+  `;
+
+  const [updateItem] = useMutation(UPDATE_ITEM);
+
+  const item = {
+    name: "trowel",
+    quantity: 3,
+    measurement: null,
+    timeDuration: "weeks"
+  };
 
   return (
     <View style={styles.container}>
@@ -23,9 +47,16 @@ export default function MyItemsScreen(props) {
           <Text style={styles.itemName}>Butter</Text>
           <TouchableOpacity
             style={styles.returnButton}
-            onPress={() =>
-              navigation.navigate("Success!", { action: "returned" })
-            }
+            onPress={() => {
+              updateItem() &&
+                navigation.navigate("Success!", {
+                  action: "returned",
+                  name: item.name,
+                  quantity: item.quantity,
+                  measurement: item.measurement,
+                  timeDuration: item.timeDuration
+                });
+            }}
           >
             <Text style={styles.returnButtonText}>Return</Text>
           </TouchableOpacity>
@@ -35,7 +66,13 @@ export default function MyItemsScreen(props) {
           <TouchableOpacity
             style={styles.returnButton}
             onPress={() =>
-              navigation.navigate("Success!", { action: "returned" })
+              navigation.navigate("Success!", {
+                action: "returned",
+                name: item.name,
+                quantity: item.quantity,
+                measurement: item.measurement,
+                timeDuration: item.timeDuration
+              })
             }
           >
             <Text style={styles.returnButtonText}>Return</Text>
