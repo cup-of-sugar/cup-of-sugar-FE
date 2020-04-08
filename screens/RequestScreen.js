@@ -25,9 +25,10 @@ export class RequestScreen extends Component {
   }
 
   handleChange = (event) => {
-    console.log(event.target.value);
+    if (!event.target.name) {
+      event.target.name = 'category';
+    }
     this.setState({ [event.target.name]: event.target.value });
-    console.log(this.state.name);
   };
 
   render() {
@@ -58,23 +59,20 @@ export class RequestScreen extends Component {
           <Text style={styles.label}>Select a category*</Text>
           <Picker
             value=""
-            onValueChange={(itemValue) => this.handleChange(itemValue)}
+            onChange={() => this.handleChange(event)}
             style={{ marginBottom: 8, height: 40 }}
           >
             <Picker.Item
               label="Garden"
               value="garden"
-              name="category"
               onChange={this.handleChange}
             />
             <Picker.Item
-              name="category"
               onChange={this.handleChange}
               label="Food"
               value="food"
             />
             <Picker.Item
-              name="category"
               onChange={this.handleChange}
               label="Cleaning"
               value="cleaning"
