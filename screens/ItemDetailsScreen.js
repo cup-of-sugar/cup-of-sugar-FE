@@ -1,8 +1,8 @@
-import * as WebBrowser from "expo-web-browser";
-import * as React from "react";
-import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
-import { ScrollView } from "react-native-gesture-handler";
-import Colors from "../constants/Colors";
+import * as WebBrowser from 'expo-web-browser';
+import * as React from 'react';
+import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
+import { ScrollView } from 'react-native-gesture-handler';
+import Colors from '../constants/Colors';
 
 import { gql } from "apollo-boost";
 import { useMutation } from "@apollo/react-hooks";
@@ -52,7 +52,7 @@ export default function ItemDetailsScreen(props) {
         <Text style={styles.itemInfo}>{item.category.name}</Text>
         <Text style={styles.itemInfoTitle}>Description:</Text>
         <Text style={styles.itemInfo}>
-          {item.description || "No description yet!"}
+          {item.description || 'No description yet!'}
         </Text>
       </View>
       {item.available ? (
@@ -85,15 +85,15 @@ export default function ItemDetailsScreen(props) {
 
 const styles = StyleSheet.create({
   container: {
-    alignContent: "center",
-    backgroundColor: "#fafafa",
+    alignContent: 'center',
+    backgroundColor: '#fafafa',
     flex: 1,
-    textAlign: "center"
+    textAlign: 'center',
   },
   contentContainer: {
-    justifyContent: "center",
+    justifyContent: 'center',
     padding: 15,
-    paddingTop: 50
+    paddingTop: 50,
   },
   borrowButton: {
     marginRight: 40,
@@ -104,35 +104,35 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.lightBlue,
     borderRadius: 10,
     borderWidth: 1,
-    borderColor: "#fff"
+    borderColor: '#fff',
   },
   borrowButtonText: {
     fontSize: 25,
-    fontWeight: "bold",
-    color: "#fff",
-    textAlign: "center"
+    fontWeight: 'bold',
+    color: '#fff',
+    textAlign: 'center',
   },
   name: {
-    alignSelf: "center",
+    alignSelf: 'center',
     backgroundColor: Colors.aqua,
     fontSize: 35,
-    fontWeight: "bold",
+    fontWeight: 'bold',
     height: 60,
     marginBottom: 25,
     paddingTop: 8,
-    textAlign: "center",
-    width: "100%"
+    textAlign: 'center',
+    width: '100%',
   },
   infoContainer: {
-    alignSelf: "center"
+    alignSelf: 'center',
   },
   itemInfo: {
     fontSize: 25,
-    marginBottom: 15
+    marginBottom: 15,
   },
   itemInfoTitle: {
     fontSize: 25,
-    fontWeight: "bold",
-    marginTop: 10
-  }
+    fontWeight: 'bold',
+    marginTop: 10,
+  },
 });
