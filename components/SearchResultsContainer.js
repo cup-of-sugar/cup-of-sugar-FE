@@ -33,7 +33,9 @@ export function SearchResultsContainer(props) {
       }
     `;
 
-  const { loading, error, data } = useQuery(ITEMS);
+  const { loading, error, data } = useQuery(ITEMS, {
+    fetchPolicy: "network-only"
+  });
 
   if (loading) return <Text style={styles.loadingText}>Loading...</Text>;
   if (error) return <Text style={styles.errorText}>No items found!</Text>;
