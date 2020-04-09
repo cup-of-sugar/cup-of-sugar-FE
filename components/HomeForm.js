@@ -9,11 +9,23 @@ import {
 } from "react-native";
 import Colors from "../constants/Colors";
 import { useNavigation } from "@react-navigation/native";
+import { gql } from "apollo-boost";
+import { useQuery } from "@apollo/react-hooks";
 
 export default function HomeSearchForm(props) {
   const navigation = useNavigation();
 
-  return <HomeForm {...props} navigation={navigation} />;
+  const CATEGORIES = gql`
+    {
+      getAllCategories {
+        name
+      }
+    }
+  `;
+
+  let { loading, error, data } = useQuery(CATEGORIES);
+
+  return <HomeForm {...props} navigation={navigation} categories={data} />;
 }
 
 class HomeForm extends React.Component {
@@ -44,6 +56,16 @@ class HomeForm extends React.Component {
   };
 
   render() {
+    let pickers = this.props.categories
+      ? this.props.categories.getAllCategories.map(category => (
+          <Picker.Item
+            key={category.name}
+            label={category.name}
+            value={category.name}
+          />
+        ))
+      : null;
+
     return (
       <View style={styles.formContainer}>
         <Text style={styles.header}>Category:</Text>
@@ -55,11 +77,7 @@ class HomeForm extends React.Component {
           onValueChange={this.handleCategoryChange}
         >
           <Picker.Item label="Choose a category..." />
-          <Picker.Item label="Cleaning" value="Cleaning" />
-          <Picker.Item label="Clothing" value="Clothing" />
-          <Picker.Item label="Food" value="Food" />
-          <Picker.Item label="Gardening" value="Gardening" />
-          <Picker.Item label="Home Improvement" value="Home Improvement" />
+          {pickers}
         </Picker>
         <Text style={styles.header}>Item Name:</Text>
         <TextInput
