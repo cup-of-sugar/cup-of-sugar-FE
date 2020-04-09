@@ -12,11 +12,13 @@ import Colors from "../constants/Colors";
 import { gql } from "apollo-boost";
 import { useQuery } from "@apollo/react-hooks";
 
+export let ITEMS;
+
 export function SearchResultsContainer(props) {
   let category = props.items.category;
   let item = props.items.itemName;
 
-  const ITEMS = gql`
+  ITEMS = gql`
       {
         getAllItemsByName(name: "${category}", items: "${item}") {
           name
@@ -33,7 +35,7 @@ export function SearchResultsContainer(props) {
       }
     `;
 
-  const { loading, error, data } = useQuery(ITEMS, {
+  let { loading, error, data } = useQuery(ITEMS, {
     fetchPolicy: "network-only"
   });
 
@@ -50,7 +52,7 @@ export function SearchResultsContainer(props) {
           <Text style={styles.resultsText}>Results:</Text>
           {data.getAllItemsByName.length ? (
             data.getAllItemsByName.map(item => (
-              <SearchResult key={item.name} item={item} />
+              <SearchResult key={item.id} item={item} />
             ))
           ) : (
             <Text style={styles.errorText}>No items found!</Text>
