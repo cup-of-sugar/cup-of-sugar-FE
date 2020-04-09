@@ -23,7 +23,7 @@ export default function SearchResultsScreen(props) {
     >
       <TouchableOpacity
         style={styles.searchButton}
-        onPress={() => navigation.navigate("Home")}
+        onPress={() => props.navigation.navigate("Home")}
       >
         <Text style={styles.searchButtonText}>Try Another Search</Text>
       </TouchableOpacity>
