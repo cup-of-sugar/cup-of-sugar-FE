@@ -13,7 +13,7 @@ export default function MenuItems({ closeMenu }) {
 
   return (
     <View style={styles.drawerItems}>
-      <TouchableOpacity onPress={() => handlePress("Home")}>
+      <TouchableOpacity onPress={() => handlePress("Path")}>
         <Text style={styles.drawerText}>Go to Lending</Text>
       </TouchableOpacity>
       <TouchableOpacity onPress={() => handlePress("My Items")}>
