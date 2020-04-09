@@ -46,7 +46,7 @@ class HomeForm extends React.Component {
   render() {
     return (
       <View style={styles.formContainer}>
-        <Text style={styles.header}>Select A Category:</Text>
+        <Text style={styles.header}>Category:</Text>
         <Picker
           style={styles.picker}
           itemStyle={styles.pickerItems}
@@ -55,9 +55,11 @@ class HomeForm extends React.Component {
           onValueChange={this.handleCategoryChange}
         >
           <Picker.Item label="Choose a category..." />
-          <Picker.Item label="Gardening" value="Gardening" />
-          <Picker.Item label="Food" value="Food" />
           <Picker.Item label="Cleaning" value="Cleaning" />
+          <Picker.Item label="Clothing" value="Clothing" />
+          <Picker.Item label="Food" value="Food" />
+          <Picker.Item label="Gardening" value="Gardening" />
+          <Picker.Item label="Home Improvement" value="Home Improvement" />
         </Picker>
         <Text style={styles.header}>Item Name:</Text>
         <TextInput
