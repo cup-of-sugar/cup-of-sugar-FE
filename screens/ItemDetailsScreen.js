@@ -13,7 +13,7 @@ export default function ItemDetailsScreen(props) {
   const UPDATE_ITEM = gql`
     mutation {
       item: updateItemAvailability(
-        input: { id: 3, available: true, name: "trowel" }
+        input: { id: ${item.id}, available: ${item.available}, name: "${item.name}" }
       ) {
         id
         available
