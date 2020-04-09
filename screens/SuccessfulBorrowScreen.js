@@ -24,7 +24,7 @@ export default function SuccessfulBorrowScreen(props) {
       <Text style={styles.successMessage}>You have successfully {action}:</Text>
       {!timeDuration ? (
         <Text style={styles.itemInfo}>
-          {quantity} {measurement + " of"} {name} )
+          {quantity} {measurement + " of"} {name}
         </Text>
       ) : (
         <Text style={styles.itemInfo}>
