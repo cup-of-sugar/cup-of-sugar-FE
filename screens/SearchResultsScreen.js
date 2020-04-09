@@ -11,10 +11,8 @@ import {
 } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import Colors from "../constants/Colors";
-import { useNavigation } from "@react-navigation/native";
 
 export default function SearchResultsScreen(props) {
-  const navigation = useNavigation();
   const category = props.route.params.category;
   const itemName = props.route.params.itemName;
 
