@@ -21,7 +21,7 @@ export default function MyItemsScreen(props) {
   const UPDATE_ITEM = gql`
     mutation {
       item: updateItemAvailability(
-        input: { id: 3, available: false, name: "trowel" }
+        input: { id: 23, available: false, name: "trowel" }
       ) {
         id
         available
@@ -34,7 +34,7 @@ export default function MyItemsScreen(props) {
 
   const item = {
     name: "trowel",
-    quantity: 3,
+    quantity: 23,
     measurement: null,
     timeDuration: "weeks"
   };
@@ -44,7 +44,7 @@ export default function MyItemsScreen(props) {
       <Text style={styles.itemsMessage}>You are currently borrowing:</Text>
       <ScrollView style={styles.itemsContainer}>
         <View style={styles.item}>
-          <Text style={styles.itemName}>Butter</Text>
+          <Text style={styles.itemName}>Trowel</Text>
           <TouchableOpacity
             style={styles.returnButton}
             onPress={() => {
