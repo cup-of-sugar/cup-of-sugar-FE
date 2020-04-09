@@ -25,12 +25,28 @@ export class RequestScreen extends Component {
   }
 
   handleChange = (event) => {
-    console.log(event.target.value);
+    if (!event.target.name) {
+      event.target.name = 'category';
+    }
     this.setState({ [event.target.name]: event.target.value });
-    console.log(this.state.name);
   };
 
   render() {
+    const inputComponent = (
+      <TextInput
+        placeholder={this.state.category === 'food' ? 'How many?' : 'How long?'}
+        style={styles.input}
+        onChange={this.handleChange}
+        name="time"
+      ></TextInput>
+    );
+
+    const textComponent = (
+      <Text style={styles.label}>
+        {this.state.category === 'food' ? 'Amount' : 'Time'}
+      </Text>
+    );
+
     return (
       <View style={styles.container}>
         <Text style={{ color: '#fff', fontSize: 24, fontWeight: 'bold' }}>
@@ -43,22 +59,25 @@ export class RequestScreen extends Component {
           <Text style={styles.label}>Select a category*</Text>
           <Picker
             value=""
-            onValueChange={(itemValue) => this.handleChange(itemValue)}
+            onChange={() => this.handleChange(event)}
+            style={{ marginBottom: 8, height: 40 }}
           >
             <Picker.Item
               label="Garden"
               value="garden"
-              name="category"
               onChange={this.handleChange}
             />
             <Picker.Item
-              name="category"
               onChange={this.handleChange}
               label="Pantry"
               value="pantry"
             />
             <Picker.Item
-              name="category"
+              onChange={this.handleChange}
+              label="Food"
+              value="food"
+            />
+            <Picker.Item
               onChange={this.handleChange}
               label="Cleaning"
               value="cleaning"
@@ -78,20 +97,8 @@ export class RequestScreen extends Component {
             onChange={this.handleChange}
             name="description"
           ></TextInput>
-          <Text style={styles.label}>Amount</Text>
-          <TextInput
-            placeholder="How many?"
-            style={styles.input}
-            onChange={this.handleChange}
-            name="amount"
-          ></TextInput>
-          <Text style={styles.label}>Time</Text>
-          <TextInput
-            placeholder="How long?"
-            style={styles.input}
-            onChange={this.handleChange}
-            name="time"
-          ></TextInput>
+          {textComponent}
+          {inputComponent}
           <Button
             onPress={() => {}}
             title="Request"
@@ -122,6 +129,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#0C94E1',
+    padding: 5,
   },
   contentContainer: {
     justifyContent: 'center',
