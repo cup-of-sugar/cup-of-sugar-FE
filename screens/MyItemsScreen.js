@@ -17,6 +17,7 @@ import { useMutation } from "@apollo/react-hooks";
 
 export default function MyItemsScreen(props) {
   const navigation = useNavigation();
+  const action = props.route.params.action;
 
   const UPDATE_ITEM = gql`
     mutation {
@@ -41,42 +42,31 @@ export default function MyItemsScreen(props) {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.itemsMessage}>You are currently borrowing:</Text>
+      <Text style={styles.itemsMessage}>You are currently {action}ing:</Text>
       <ScrollView style={styles.itemsContainer}>
         <View style={styles.item}>
           <Text style={styles.itemName}>Trowel</Text>
-          <TouchableOpacity
-            style={styles.returnButton}
-            onPress={() => {
-              updateItem() &&
-                navigation.navigate("Success!", {
-                  action: "returned",
-                  name: item.name,
-                  quantity: item.quantity,
-                  measurement: item.measurement,
-                  timeDuration: item.timeDuration
-                });
-            }}
-          >
-            <Text style={styles.returnButtonText}>Return</Text>
-          </TouchableOpacity>
-        </View>
-        <View style={styles.item}>
-          <Text style={styles.itemName}>Milk</Text>
-          <TouchableOpacity
-            style={styles.returnButton}
-            onPress={() =>
-              navigation.navigate("Success!", {
-                action: "returned",
-                name: item.name,
-                quantity: item.quantity,
-                measurement: item.measurement,
-                timeDuration: item.timeDuration
-              })
-            }
-          >
-            <Text style={styles.returnButtonText}>Return</Text>
-          </TouchableOpacity>
+          {action === "borrow" ? (
+            <TouchableOpacity
+              style={styles.returnButton}
+              onPress={() => {
+                updateItem() &&
+                  navigation.navigate("Success!", {
+                    action: "return",
+                    name: item.name,
+                    quantity: item.quantity,
+                    measurement: item.measurement,
+                    timeDuration: item.timeDuration
+                  });
+              }}
+            >
+              <Text style={styles.returnButtonText}>Return</Text>
+            </TouchableOpacity>
+          ) : (
+            <TouchableOpacity style={styles.messageButton}>
+              <Text style={styles.messageButtonText}>Message Borrower</Text>
+            </TouchableOpacity>
+          )}
         </View>
       </ScrollView>
     </View>
@@ -131,6 +121,22 @@ const styles = StyleSheet.create({
   },
   returnButtonText: {
     fontSize: 20,
+    fontWeight: "bold",
+    color: "#fff",
+    textAlign: "center"
+  },
+  messageButton: {
+    backgroundColor: Colors.darkBlue,
+    borderRadius: 10,
+    borderWidth: 1,
+    borderColor: Colors.darkBlue,
+    color: "#fff",
+    height: 50,
+    paddingTop: 12,
+    width: 190
+  },
+  messageButtonText: {
+    fontSize: 18,
     fontWeight: "bold",
     color: "#fff",
     textAlign: "center"
