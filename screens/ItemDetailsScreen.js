@@ -10,6 +10,7 @@ import { useMutation } from "@apollo/react-hooks";
 
 export default function ItemDetailsScreen(props) {
   const item = props.route.params.item;
+  const action = props.route.params.item;
 
   const [status, setStatus] = React.useState(true);
 
@@ -30,7 +31,7 @@ export default function ItemDetailsScreen(props) {
       .then(() => setStatus(!item.available))
       .then(() =>
         props.navigation.navigate("Success!", {
-          action: "reserved",
+          action: "borrow",
           name: item.name,
           quantity: item.quantity,
           measurement: item.measurement,
@@ -92,7 +93,7 @@ export default function ItemDetailsScreen(props) {
       ) : (
         <TouchableOpacity
           style={styles.borrowButton}
-          onPress={() => props.navigation.navigate("Home")}
+          onPress={() => props.navigation.navigate("Home", { action })}
         >
           <Text style={styles.borrowButtonText}>Try Another Search</Text>
         </TouchableOpacity>
