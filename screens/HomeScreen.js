@@ -1,6 +1,6 @@
 import * as WebBrowser from "expo-web-browser";
 import * as React from "react";
-import HomeSearchForm from "../components/HomeForm";
+import SearchForm from "../components/SearchForm";
 import {
   Image,
   Platform,
@@ -21,7 +21,7 @@ export default function HomeScreen() {
       <Text style={styles.welcomeText}>
         What would you like to borrow today?
       </Text>
-      <HomeSearchForm />
+      <SearchForm />
     </ScrollView>
   );
 }
