@@ -25,7 +25,14 @@ export default function SearchForm(props) {
 
   let { loading, error, data } = useQuery(CATEGORIES);
 
-  return <HomeForm {...props} navigation={navigation} categories={data} />;
+  return (
+    <HomeForm
+      {...props}
+      action={props.action}
+      navigation={navigation}
+      categories={data}
+    />
+  );
 }
 
 class HomeForm extends React.Component {
@@ -37,7 +44,9 @@ class HomeForm extends React.Component {
   checkInputs = () => {
     !this.state.category || !this.state.itemName
       ? this.setState({ error: "Please complete both form fields!" })
-      : this.startSearch();
+      : this.props.action === "borrow"
+      ? this.startSearch()
+      : this.loanNewItem();
   };
 
   handleNameChange = itemName => {
@@ -51,7 +60,22 @@ class HomeForm extends React.Component {
   startSearch = () => {
     const category = this.state.category;
     const itemName = this.state.itemName.toLowerCase();
-    this.props.navigation.navigate("Search Results", { category, itemName });
+    this.props.navigation.navigate("Search Results", {
+      category: category,
+      itemName: itemName,
+      action: "borrow"
+    });
+    this.setState({ category: "", itemName: "", error: "" });
+  };
+
+  loanNewItem = () => {
+    const category = this.state.category;
+    const itemName = this.state.itemName.toLowerCase();
+    this.props.navigation.navigate("Success!", {
+      category: category,
+      name: itemName,
+      action: "lend"
+    });
     this.setState({ category: "", itemName: "", error: "" });
   };
 
@@ -91,7 +115,9 @@ class HomeForm extends React.Component {
           style={styles.searchButton}
           onPress={this.checkInputs}
         >
-          <Text style={styles.searchButtonText}>Search</Text>
+          <Text style={styles.searchButtonText}>
+            {this.props.action === "borrow" ? "Search" : "Submit"}
+          </Text>
         </TouchableOpacity>
         <Text style={styles.errorText}>{this.state.error}</Text>
       </View>
