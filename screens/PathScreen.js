@@ -1,11 +1,28 @@
 import * as WebBrowser from "expo-web-browser";
 import * as React from "react";
-import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import {
+  AsyncStorage,
+  Image,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View
+} from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import Colors from "../constants/Colors";
 import cupOfSugar from "../assets/images/cupofsugar.png";
 
 export default function PathScreen({ navigation }) {
+  const handleChoice = action => {
+    try {
+      AsyncStorage.setItem("action", action).then(() =>
+        navigation.navigate("Home", { action: action })
+      );
+    } catch (error) {
+      console.log("error saving choice");
+    }
+  };
+
   return (
     <ScrollView
       style={styles.container}
@@ -14,15 +31,12 @@ export default function PathScreen({ navigation }) {
       <Image style={styles.logo} source={cupOfSugar} />
       <TouchableOpacity
         style={styles.choiceButton}
-        onPress={() => navigation.navigate("Home")}
+        onPress={() => handleChoice("borrow")}
       >
         <Text style={styles.choiceText}>BORROW</Text>
       </TouchableOpacity>
       <TouchableOpacity style={styles.choiceButton}>
-        <Text
-          style={styles.choiceText}
-          onPress={() => navigation.navigate("Home")}
-        >
+        <Text style={styles.choiceText} onPress={() => handleChoice("lend")}>
           LEND
         </Text>
       </TouchableOpacity>
