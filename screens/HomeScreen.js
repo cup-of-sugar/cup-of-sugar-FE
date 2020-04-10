@@ -12,16 +12,18 @@ import {
 import { ScrollView } from "react-native-gesture-handler";
 import Colors from "../constants/Colors";
 
-export default function HomeScreen() {
+export default function HomeScreen(props) {
+  const pathAction = props.route.params.action;
+
   return (
     <ScrollView
       style={styles.container}
       contentContainerStyle={styles.contentContainer}
     >
       <Text style={styles.welcomeText}>
-        What would you like to borrow today?
+        What would you like to {pathAction} today?
       </Text>
-      <SearchForm />
+      <SearchForm action={pathAction} />
     </ScrollView>
   );
 }
@@ -44,7 +46,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     color: "black",
     lineHeight: 35,
-    margin: 10,
+    marginHorizontal: 30,
     marginTop: 20,
     textAlign: "center"
   },

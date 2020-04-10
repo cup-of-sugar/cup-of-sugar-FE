@@ -29,6 +29,7 @@ LoginScreen.navigationOptions = {
 
 const styles = StyleSheet.create({
   container: {
+    backgroundColor: Colors.darkBlue,
     flex: 1
   },
   welcomeText: {

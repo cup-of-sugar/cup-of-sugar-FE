@@ -12,13 +12,13 @@ import { useNavigation } from "@react-navigation/native";
 import available from "../assets/images/available.png";
 import out from "../assets/images/out.png";
 
-export function SearchResult({ item }) {
+export function SearchResult({ item, action }) {
   const navigation = useNavigation();
 
   return (
     <TouchableOpacity
       style={styles.searchResult}
-      onPress={() => navigation.navigate("Details", { item })}
+      onPress={() => navigation.navigate("Details", { item, action })}
     >
       <Text style={styles.itemName}>
         <Image style={styles.icon} source={item.available ? available : out} />
