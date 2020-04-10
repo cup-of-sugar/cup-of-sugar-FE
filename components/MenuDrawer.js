@@ -1,5 +1,12 @@
 import React, { Component } from "react";
-import { StyleSheet, View, Text, TouchableOpacity, Image } from "react-native";
+import {
+  AsyncStorage,
+  StyleSheet,
+  View,
+  Text,
+  TouchableOpacity,
+  Image
+} from "react-native";
 import Drawer from "react-native-drawer";
 import MenuItems from "./MenuItems";
 import { withNavigation } from "react-navigation";
@@ -9,7 +16,17 @@ import menuClosed from "../assets/images/X.png";
 export default class MenuDrawer extends Component {
   constructor() {
     super();
-    this.state = { menuOpen: false };
+    this.state = { menuOpen: false, action: "" };
+  }
+
+  findPath = () => {
+    AsyncStorage.getItem("action").then(pathAction =>
+      this.setState({ action: pathAction })
+    );
+  };
+
+  componentDidMount() {
+    this.findPath();
   }
 
   closeMenu = () => {
@@ -17,7 +34,7 @@ export default class MenuDrawer extends Component {
   };
 
   render() {
-    return (
+    return this.state.action ? (
       <View style={styles.drawerContainer}>
         <TouchableOpacity
           onPress={() => this.setState({ menuOpen: !this.state.menuOpen })}
@@ -34,7 +51,10 @@ export default class MenuDrawer extends Component {
           closedDrawerOffset={0}
           content={
             this.state.menuOpen ? (
-              <MenuItems closeMenu={this.closeMenu} />
+              <MenuItems
+                closeMenu={this.closeMenu}
+                action={this.state.action}
+              />
             ) : null
           }
           tapToClose={true}
@@ -44,7 +64,7 @@ export default class MenuDrawer extends Component {
           tweenDuration={400}
         ></Drawer>
       </View>
-    );
+    ) : null;
   }
 }
 
