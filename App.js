@@ -21,6 +21,7 @@ import ItemDetailsScreen from "./screens/ItemDetailsScreen";
 import SearchResultsScreen from "./screens/SearchResultsScreen";
 import MyItemsScreen from "./screens/MyItemsScreen";
 import PathScreen from "./screens/PathScreen";
+import LoginScreen from "./screens/LoginScreen";
 import useLinking from "./navigation/useLinking";
 import cup from "./assets/images/cup.png";
 import Colors from "./constants/Colors";
@@ -75,6 +76,13 @@ export default function App(props) {
             initialState={initialNavigationState}
           >
             <Stack.Navigator>
+              <Stack.Screen
+                name="Login"
+                component={LoginScreen}
+                options={{
+                  headerShown: false
+                }}
+              />
               <Stack.Screen
                 name="Path"
                 component={PathScreen}
