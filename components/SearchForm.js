@@ -12,7 +12,7 @@ import { useNavigation } from "@react-navigation/native";
 import { gql } from "apollo-boost";
 import { useQuery } from "@apollo/react-hooks";
 
-export default function HomeSearchForm(props) {
+export default function SearchForm(props) {
   const navigation = useNavigation();
 
   const CATEGORIES = gql`
