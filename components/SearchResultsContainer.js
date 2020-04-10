@@ -19,7 +19,8 @@ export function SearchResultsContainer(props) {
   let item = props.items.itemName;
   let action = props.action;
 
-  ITEMS = gql`
+  item
+    ? (ITEMS = gql`
       {
         getAllItemsByName(name: "${category}", items: "${item}") {
           name
@@ -34,7 +35,23 @@ export function SearchResultsContainer(props) {
           }
         }
       }
-    `;
+    `)
+    : (ITEMS = gql`
+        {
+          getAllItemsInCategory(name: "${category}") {
+            name
+            quantity
+            description
+            measurement
+            available
+            timeDuration
+            id
+            category {
+              name
+            }
+          }
+        }
+      `);
 
   let { loading, error, data } = useQuery(ITEMS, {
     fetchPolicy: "network-only"
@@ -51,8 +68,12 @@ export function SearchResultsContainer(props) {
           contentContainerStyle={styles.contentContainer}
         >
           <Text style={styles.resultsText}>Results:</Text>
-          {data.getAllItemsByName.length ? (
+          {data.getAllItemsByName ? (
             data.getAllItemsByName.map(item => (
+              <SearchResult key={item.id} item={item} action={action} />
+            ))
+          ) : data.getAllItemsInCategory ? (
+            data.getAllItemsInCategory.map(item => (
               <SearchResult key={item.id} item={item} action={action} />
             ))
           ) : (

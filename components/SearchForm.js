@@ -42,11 +42,14 @@ class HomeForm extends React.Component {
   }
 
   checkInputs = () => {
-    !this.state.category || !this.state.itemName
-      ? this.setState({ error: "Please complete both form fields!" })
-      : this.props.action === "borrow"
-      ? this.startSearch()
-      : this.loanNewItem();
+    const action = this.props.action;
+    action === "lend"
+      ? !this.state.category || !this.state.itemName
+        ? this.setState({ error: "Please complete both form fields!" })
+        : this.loanNewItem()
+      : !this.state.category
+      ? this.setState({ error: "Please choose a category!" })
+      : this.startSearch();
   };
 
   handleNameChange = itemName => {
@@ -59,7 +62,7 @@ class HomeForm extends React.Component {
 
   startSearch = () => {
     const category = this.state.category;
-    const itemName = this.state.itemName.toLowerCase();
+    const itemName = this.state.itemName.toLowerCase() || null;
     this.props.navigation.navigate("Search Results", {
       category: category,
       itemName: itemName,
@@ -92,7 +95,7 @@ class HomeForm extends React.Component {
 
     return (
       <View style={styles.formContainer}>
-        <Text style={styles.header}>Category:</Text>
+        <Text style={styles.header}>Item Category</Text>
         <Picker
           style={styles.picker}
           itemStyle={styles.pickerItems}
@@ -103,7 +106,7 @@ class HomeForm extends React.Component {
           <Picker.Item label="Choose a category..." />
           {pickers}
         </Picker>
-        <Text style={styles.header}>Item Name:</Text>
+        <Text style={styles.header}>Item Name (Optional)</Text>
         <TextInput
           style={styles.textInput}
           name="itemName"
