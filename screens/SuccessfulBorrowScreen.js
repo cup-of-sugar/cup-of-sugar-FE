@@ -21,18 +21,30 @@ export default function SuccessfulBorrowScreen(props) {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.successMessage}>You have successfully {action}:</Text>
-      {!timeDuration ? (
+      <Text style={styles.successMessage}>
+        You have successfully{" "}
+        {action === "borrow"
+          ? "borrowed"
+          : action === "return"
+          ? "returned"
+          : action === "lend"
+          ? "offered to loan your"
+          : ""}
+        :
+      </Text>
+      {action === "lend" ? (
+        <Text style={styles.itemInfo}>{name}</Text>
+      ) : !timeDuration ? (
         <Text style={styles.itemInfo}>
           {quantity} {measurement + " of"} {name}
         </Text>
       ) : (
         <Text style={styles.itemInfo}>
           1 {name}{" "}
-          {action === "reserved" ? `for ${quantity} ${timeDuration}` : ""}
+          {action === "borrow" ? `for ${quantity} ${timeDuration}` : ""}
         </Text>
       )}
-      {action === "reserved" ? (
+      {action === "borrow" ? (
         <>
           <Text style={styles.successMessage}>
             Message the lender to coordinate pick-up details!
@@ -51,7 +63,9 @@ export default function SuccessfulBorrowScreen(props) {
             style={styles.messageButton}
             onPress={() => navigation.navigate("Home")}
           >
-            <Text style={styles.messageButtonText}>Borrow Another Item</Text>
+            <Text style={styles.messageButtonText}>
+              {action === "lend" ? "Loan" : "Borrow"} Another Item
+            </Text>
           </TouchableOpacity>
         </>
       )}
