@@ -9,11 +9,30 @@ import {
 } from "react-native";
 import Colors from "../constants/Colors";
 import { useNavigation } from "@react-navigation/native";
+import { gql } from "apollo-boost";
+import { useQuery } from "@apollo/react-hooks";
 
-export default function HomeSearchForm(props) {
+export default function SearchForm(props) {
   const navigation = useNavigation();
 
-  return <HomeForm {...props} navigation={navigation} />;
+  const CATEGORIES = gql`
+    {
+      getAllCategories {
+        name
+      }
+    }
+  `;
+
+  let { loading, error, data } = useQuery(CATEGORIES);
+
+  return (
+    <HomeForm
+      {...props}
+      action={props.action}
+      navigation={navigation}
+      categories={data}
+    />
+  );
 }
 
 class HomeForm extends React.Component {
@@ -23,8 +42,13 @@ class HomeForm extends React.Component {
   }
 
   checkInputs = () => {
-    !this.state.category || !this.state.itemName
-      ? this.setState({ error: "Please complete both form fields!" })
+    const action = this.props.action;
+    action === "lend"
+      ? !this.state.category || !this.state.itemName
+        ? this.setState({ error: "Please complete both form fields!" })
+        : this.loanNewItem()
+      : !this.state.category
+      ? this.setState({ error: "Please choose a category!" })
       : this.startSearch();
   };
 
@@ -38,15 +62,40 @@ class HomeForm extends React.Component {
 
   startSearch = () => {
     const category = this.state.category;
+    const itemName = this.state.itemName.toLowerCase() || null;
+    this.props.navigation.navigate("Search Results", {
+      category: category,
+      itemName: itemName,
+      action: "borrow"
+    });
+    this.setState({ category: "", itemName: "", error: "" });
+  };
+
+  loanNewItem = () => {
+    const category = this.state.category;
     const itemName = this.state.itemName.toLowerCase();
-    this.props.navigation.navigate("Search Results", { category, itemName });
+    this.props.navigation.navigate("Success!", {
+      category: category,
+      name: itemName,
+      action: "lend"
+    });
     this.setState({ category: "", itemName: "", error: "" });
   };
 
   render() {
+    let pickers = this.props.categories
+      ? this.props.categories.getAllCategories.map(category => (
+          <Picker.Item
+            key={category.name}
+            label={category.name}
+            value={category.name}
+          />
+        ))
+      : null;
+
     return (
       <View style={styles.formContainer}>
-        <Text style={styles.header}>Select A Category:</Text>
+        <Text style={styles.header}>Item Category</Text>
         <Picker
           style={styles.picker}
           itemStyle={styles.pickerItems}
@@ -55,11 +104,9 @@ class HomeForm extends React.Component {
           onValueChange={this.handleCategoryChange}
         >
           <Picker.Item label="Choose a category..." />
-          <Picker.Item label="Gardening" value="Gardening" />
-          <Picker.Item label="Food" value="Food" />
-          <Picker.Item label="Cleaning" value="Cleaning" />
+          {pickers}
         </Picker>
-        <Text style={styles.header}>Item Name:</Text>
+        <Text style={styles.header}>Item Name (Optional)</Text>
         <TextInput
           style={styles.textInput}
           name="itemName"
@@ -71,7 +118,9 @@ class HomeForm extends React.Component {
           style={styles.searchButton}
           onPress={this.checkInputs}
         >
-          <Text style={styles.searchButtonText}>Search</Text>
+          <Text style={styles.searchButtonText}>
+            {this.props.action === "borrow" ? "Search" : "Submit"}
+          </Text>
         </TouchableOpacity>
         <Text style={styles.errorText}>{this.state.error}</Text>
       </View>

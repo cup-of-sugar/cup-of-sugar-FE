@@ -12,11 +12,15 @@ import Colors from "../constants/Colors";
 import { gql } from "apollo-boost";
 import { useQuery } from "@apollo/react-hooks";
 
+export let ITEMS;
+
 export function SearchResultsContainer(props) {
   let category = props.items.category;
   let item = props.items.itemName;
+  let action = props.action;
 
-  const ITEMS = gql`
+  item
+    ? (ITEMS = gql`
       {
         getAllItemsByName(name: "${category}", items: "${item}") {
           name
@@ -31,9 +35,27 @@ export function SearchResultsContainer(props) {
           }
         }
       }
-    `;
+    `)
+    : (ITEMS = gql`
+        {
+          getAllItemsInCategory(name: "${category}") {
+            name
+            quantity
+            description
+            measurement
+            available
+            timeDuration
+            id
+            category {
+              name
+            }
+          }
+        }
+      `);
 
-  const { loading, error, data } = useQuery(ITEMS);
+  let { loading, error, data } = useQuery(ITEMS, {
+    fetchPolicy: "network-only"
+  });
 
   if (loading) return <Text style={styles.loadingText}>Loading...</Text>;
   if (error) return <Text style={styles.errorText}>No items found!</Text>;
@@ -46,9 +68,13 @@ export function SearchResultsContainer(props) {
           contentContainerStyle={styles.contentContainer}
         >
           <Text style={styles.resultsText}>Results:</Text>
-          {data.getAllItemsByName.length ? (
+          {data.getAllItemsByName ? (
             data.getAllItemsByName.map(item => (
-              <SearchResult key={item.name} item={item} />
+              <SearchResult key={item.id} item={item} action={action} />
+            ))
+          ) : data.getAllItemsInCategory ? (
+            data.getAllItemsInCategory.map(item => (
+              <SearchResult key={item.id} item={item} action={action} />
             ))
           ) : (
             <Text style={styles.errorText}>No items found!</Text>
