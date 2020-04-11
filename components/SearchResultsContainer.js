@@ -11,7 +11,6 @@ import { SearchResult } from "./SearchResult";
 import Colors from "../constants/Colors";
 import { gql } from "apollo-boost";
 import { useQuery } from "@apollo/react-hooks";
-import cup from "../assets/images/cup.png";
 
 export let ITEMS;
 
@@ -19,15 +18,6 @@ export function SearchResultsContainer(props) {
   let category = props.items.category;
   let item = props.items.itemName;
   let action = props.action;
-  const [imageUrl, setImageUrl] = React.useState("");
-
-  const getImage = item => {
-    return fetch(
-      `https://pixabay.com/api/?key=16000731-2e1b57c476acc3626a2d847d9&q=${item}&image_type=photo&safesearch=true&per_page=3`
-    )
-      .then(response => response.json())
-      .then(image => setImageUrl(image.hits[0].previewURL));
-  };
 
   item
     ? (ITEMS = gql`
@@ -79,13 +69,13 @@ export function SearchResultsContainer(props) {
         >
           <Text style={styles.resultsText}>Results:</Text>
           {data.getAllItemsByName ? (
-            data.getAllItemsByName.map(item => (
-              <SearchResult key={item.id} item={item} action={action} />
-            ))
-          ) : data.getAllItemsInCategory ? (
-            data.getAllItemsInCategory.map(item => (
-              <SearchResult key={item.id} item={item} action={action} />
-            ))
+            data.getAllItemsByName.map(item => {
+              return <SearchResult key={item.id} item={item} action={action} />;
+            })
+          ) : data.getAllItemsInCategory.length ? (
+            data.getAllItemsInCategory.map(item => {
+              return <SearchResult key={item.id} item={item} action={action} />;
+            })
           ) : (
             <Text style={styles.errorText}>No items found!</Text>
           )}
