@@ -1,6 +1,6 @@
 import * as WebBrowser from "expo-web-browser";
 import * as React from "react";
-import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
+import { Image, StyleSheet, Text, View, TouchableOpacity } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import Colors from "../constants/Colors";
 import { ITEMS } from "../components/SearchResultsContainer";
@@ -10,6 +10,7 @@ import { useMutation } from "@apollo/react-hooks";
 
 export default function ItemDetailsScreen(props) {
   const item = props.route.params.item;
+  const image = props.route.params.image;
   const action = props.route.params.item;
 
   const [status, setStatus] = React.useState(true);
@@ -60,6 +61,7 @@ export default function ItemDetailsScreen(props) {
       <Text style={styles.name}>
         {item.name.charAt(0).toUpperCase() + item.name.slice(1)}
       </Text>
+      <Image style={styles.image} source={image} />
       <View style={styles.infoContainer}>
         <Text style={styles.itemInfoTitle}>Status:</Text>
         {status && item.available ? (
@@ -88,7 +90,7 @@ export default function ItemDetailsScreen(props) {
           style={styles.borrowButton}
           onPress={() => handleBorrow()}
         >
-          <Text style={styles.borrowButtonText}>Borrow this Item</Text>
+          <Text style={styles.borrowButtonText}>Borrow</Text>
         </TouchableOpacity>
       ) : (
         <TouchableOpacity
@@ -110,14 +112,16 @@ const styles = StyleSheet.create({
     textAlign: "center"
   },
   contentContainer: {
+    alignSelf: "center",
     justifyContent: "center",
     padding: 15,
-    paddingTop: 50
+    paddingTop: 50,
+    width: "85%"
   },
   borrowButton: {
     marginRight: 40,
     marginLeft: 40,
-    marginTop: 40,
+    marginTop: 20,
     paddingTop: 20,
     paddingBottom: 20,
     backgroundColor: Colors.lightBlue,
@@ -147,11 +151,17 @@ const styles = StyleSheet.create({
   },
   itemInfo: {
     fontSize: 25,
-    marginBottom: 15
+    marginBottom: 10
   },
   itemInfoTitle: {
     fontSize: 25,
     fontWeight: "bold",
     marginTop: 10
+  },
+  image: {
+    alignSelf: "center",
+    backgroundColor: Colors.darkBlue,
+    height: 200,
+    width: 200
   }
 });
