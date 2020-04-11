@@ -22,7 +22,7 @@ export function SearchResultsContainer(props) {
   item
     ? (ITEMS = gql`
       {
-        getAllItemsByName(name: "${category}", items: "${item}") {
+        getAllItemsByName(itemName: "${item}") {
           name
           quantity
           description
@@ -69,13 +69,13 @@ export function SearchResultsContainer(props) {
         >
           <Text style={styles.resultsText}>Results:</Text>
           {data.getAllItemsByName ? (
-            data.getAllItemsByName.map(item => (
-              <SearchResult key={item.id} item={item} action={action} />
-            ))
-          ) : data.getAllItemsInCategory ? (
-            data.getAllItemsInCategory.map(item => (
-              <SearchResult key={item.id} item={item} action={action} />
-            ))
+            data.getAllItemsByName.map(item => {
+              return <SearchResult key={item.id} item={item} action={action} />;
+            })
+          ) : data.getAllItemsInCategory.length ? (
+            data.getAllItemsInCategory.map(item => {
+              return <SearchResult key={item.id} item={item} action={action} />;
+            })
           ) : (
             <Text style={styles.errorText}>No items found!</Text>
           )}
