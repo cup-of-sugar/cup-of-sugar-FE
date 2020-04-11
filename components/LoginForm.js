@@ -9,16 +9,32 @@ import {
 } from "react-native";
 import Colors from "../constants/Colors";
 import { useNavigation } from "@react-navigation/native";
+import { gql } from "apollo-boost";
+import { useMutation } from "@apollo/react-hooks";
 
 export default function LoginForm(props) {
+  let email, password;
   const navigation = useNavigation();
-  return <LoginFormClass {...props} navigation={navigation} />;
+
+  const USER_LOGIN = gql`
+    mutation UserLogin($email: String!, $password: String!) {
+      user: userLogin(input: { email: $email, password: $password }) {
+        email
+      }
+    }
+  `;
+
+  const [userLogin] = useMutation(USER_LOGIN, {
+    variables: { email, password }
+  });
+
+  return <LoginFormClass navigation={navigation} userLogin={userLogin} />;
 }
 
 class LoginFormClass extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { username: "", password: "", error: "" };
+    this.state = { username: "", password: "", error: "", validation: "" };
   }
 
   checkInputs = () => {
@@ -28,15 +44,34 @@ class LoginFormClass extends React.Component {
   };
 
   handleChange = (name, value) => {
-    this.setState({ [name]: value });
+    this.setState({ [name]: value, error: "" });
   };
 
   startLogin = () => {
-    const username = this.state.username;
-    const password = this.state.password;
-    console.log(username, password);
-    this.props.navigation.navigate("Path", { username, password });
-    this.setState({ username: "", password: "", error: "" });
+    this.props
+      .userLogin({
+        variables: {
+          email: this.state.username.toLowerCase(),
+          password: this.state.password
+        }
+      })
+      .then(response => this.validateLogin(response));
+  };
+
+  validateLogin = response => {
+    this.setState({ validation: response.data.user.email });
+    if (this.state.validation) {
+      this.props.navigation.navigate("Path");
+      this.setState({ username: "", password: "", error: "", validation: "" });
+    } else if (this.state.validation === null) {
+      this.setState({
+        error: "Incorrect email or password! Please try again!"
+      });
+    } else {
+      this.setState({
+        error: "Error logging in!"
+      });
+    }
   };
 
   render() {
@@ -63,7 +98,7 @@ class LoginFormClass extends React.Component {
           style={styles.submitButton}
           onPress={this.checkInputs}
         >
-          <Text style={styles.submitButtonText}>Search</Text>
+          <Text style={styles.submitButtonText}>Login</Text>
         </TouchableOpacity>
         <Text style={styles.errorText}>{this.state.error}</Text>
       </View>
@@ -78,7 +113,7 @@ const styles = StyleSheet.create({
     color: "#fff",
     fontSize: 25,
     fontWeight: "bold",
-    height: 50,
+    height: "auto",
     marginLeft: 30,
     marginRight: 30,
     textAlign: "center"
