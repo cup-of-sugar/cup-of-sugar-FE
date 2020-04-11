@@ -12,43 +12,23 @@ import { useNavigation } from "@react-navigation/native";
 import available from "../assets/images/available.png";
 import out from "../assets/images/out.png";
 
-export function SearchResult({ item, action }) {
-  const navigation = useNavigation();
+export function SearchResult({ item, action, image }) {
+  const navigation = useNavigation;
 
   return (
     <TouchableOpacity
       style={styles.searchResult}
       onPress={() => navigation.navigate("Details", { item, action })}
     >
-      <Text style={styles.itemName}>
-        <Image style={styles.icon} source={item.available ? available : out} />
-        {item.name}
-      </Text>
-      <View style={styles.itemInfo}>
-        {item.available ? (
-          !item.timeDuration ? (
-            <Text style={styles.amount}>
-              {item.quantity} {item.measurement ? item.measurement : ""}{" "}
-              available
-            </Text>
-          ) : (
-            <Text style={styles.amount}>
-              Borrow for {item.quantity} {item.timeDuration}
-            </Text>
-          )
-        ) : (
-          <Text style={styles.amount}>Not available</Text>
-        )}
-      </View>
+      <Image style={styles.photo} source={image} />
+      <Text style={styles.itemName}>{item.name}</Text>
+      <Image style={styles.icon} source={item.available ? available : out} />
     </TouchableOpacity>
   );
 }
 
 const styles = StyleSheet.create({
   searchResult: {
-    alignSelf: "center",
-    alignItems: "center",
-    justifyContent: "space-between",
     backgroundColor: Colors.aqua,
     borderRadius: 7,
     flex: 1,
@@ -56,12 +36,15 @@ const styles = StyleSheet.create({
     margin: 10,
     padding: 10,
     height: 70,
+    textAlign: "left",
     width: 330
   },
   itemName: {
     fontSize: 20,
     fontWeight: "bold",
-    paddingLeft: 10
+    paddingTop: 10,
+    paddingLeft: 10,
+    paddingRight: 5
   },
   amount: {
     fontSize: 13,
@@ -71,6 +54,11 @@ const styles = StyleSheet.create({
   },
   icon: {
     height: 20,
+    marginTop: 12,
     width: 20
+  },
+  photo: {
+    height: 50,
+    width: 50
   }
 });
