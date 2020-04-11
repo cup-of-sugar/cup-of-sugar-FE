@@ -34,12 +34,12 @@ export default function LoginForm(props) {
 class LoginFormClass extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { username: "", password: "", error: "", validation: "" };
+    this.state = { email: "", password: "", error: "", validation: "" };
   }
 
   checkInputs = () => {
-    !this.state.username || !this.state.password
-      ? this.setState({ error: "Please submit a username and password!" })
+    !this.state.email || !this.state.password
+      ? this.setState({ error: "Please submit a email and password!" })
       : this.startLogin();
   };
 
@@ -51,7 +51,7 @@ class LoginFormClass extends React.Component {
     this.props
       .userLogin({
         variables: {
-          email: this.state.username.toLowerCase(),
+          email: this.state.email.toLowerCase(),
           password: this.state.password
         }
       })
@@ -62,7 +62,7 @@ class LoginFormClass extends React.Component {
     this.setState({ validation: response.data.user.email });
     if (this.state.validation) {
       this.props.navigation.navigate("Path");
-      this.setState({ username: "", password: "", error: "", validation: "" });
+      this.setState({ email: "", password: "", error: "", validation: "" });
     } else if (this.state.validation === null) {
       this.setState({
         error: "Incorrect email or password! Please try again!"
@@ -77,13 +77,13 @@ class LoginFormClass extends React.Component {
   render() {
     return (
       <View style={styles.formContainer}>
-        <Text style={styles.header}>Username</Text>
+        <Text style={styles.header}>Email</Text>
         <TextInput
           style={styles.textInput}
-          name="username"
-          value={this.state.username}
-          onChangeText={text => this.handleChange("username", text)}
-          placeholder="Username..."
+          name="email"
+          value={this.state.email}
+          onChangeText={text => this.handleChange("email", text)}
+          placeholder="Email..."
         />
         <Text style={styles.header}>Password</Text>
         <TextInput
