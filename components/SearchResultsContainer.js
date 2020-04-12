@@ -14,6 +14,28 @@ import { useQuery } from "@apollo/react-hooks";
 
 export let ITEMS;
 
+function findItemData(data, action) {
+  return data.getAllItemsByName ? (
+    data.getAllItemsByName.length ? (
+      data.getAllItemsByName.map(item => {
+        return <SearchResult key={item.id} item={item} action={action} />;
+      })
+    ) : (
+      <Text style={styles.errorText}>No items found!</Text>
+    )
+  ) : data.getAllItemsInCategory ? (
+    data.getAllItemsInCategory.length ? (
+      data.getAllItemsInCategory.map(item => {
+        return <SearchResult key={item.id} item={item} action={action} />;
+      })
+    ) : (
+      <Text style={styles.errorText}>No items found!</Text>
+    )
+  ) : (
+    <Text style={styles.errorText}>No items found!</Text>
+  );
+}
+
 export function SearchResultsContainer(props) {
   let category = props.items.category;
   let item = props.items.itemName;
@@ -68,17 +90,7 @@ export function SearchResultsContainer(props) {
           contentContainerStyle={styles.contentContainer}
         >
           <Text style={styles.resultsText}>Results:</Text>
-          {data.getAllItemsByName ? (
-            data.getAllItemsByName.map(item => {
-              return <SearchResult key={item.id} item={item} action={action} />;
-            })
-          ) : data.getAllItemsInCategory.length ? (
-            data.getAllItemsInCategory.map(item => {
-              return <SearchResult key={item.id} item={item} action={action} />;
-            })
-          ) : (
-            <Text style={styles.errorText}>No items found!</Text>
-          )}
+          {findItemData(data, action)}
         </ScrollView>
       </View>
     );

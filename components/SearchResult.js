@@ -36,7 +36,8 @@ class SearchResultClass extends React.Component {
       .then(response => response.json())
       .then(image =>
         this.setState({ imageUrl: { uri: image.hits[0].largeImageURL } })
-      );
+      )
+      .catch(error => console.log(error));
   };
 
   render() {
