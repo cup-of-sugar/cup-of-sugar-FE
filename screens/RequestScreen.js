@@ -96,11 +96,13 @@ class RequestForm extends Component {
   constructor() {
     super();
     this.state = {
+      title: "",
       category: "",
       name: "",
       description: "",
       quantity: 0,
-      time: "",
+      timeDuration: "",
+      measurement: "",
       error: ""
     };
   }
@@ -116,6 +118,41 @@ class RequestForm extends Component {
 
   handleChange = (name, value) => {
     this.setState({ [name]: value });
+  };
+
+  requestNewItem = () => {
+    this.props
+      .addNewRequest({
+        variables: {
+          title: this.state.title,
+          category: this.state.category,
+          name: this.state.name,
+          description: this.state.description,
+          quantity: this.state.quantity,
+          measurement: this.state.measurement || "null",
+          timeDuration: this.state.timeDuration || "null"
+        }
+      })
+      .then(response => this.confirmRequest())
+      .catch(error => console.log(error));
+  };
+
+  confirmRequest = () => {
+    this.props.navigation.navigate("Success!", {
+      name: this.props.item,
+      timeDuration: this.state.timeDuration,
+      measurement: this.state.measurement,
+      quantity: this.state.quantity,
+      action: "request"
+    });
+    this.setState({
+      title: "",
+      description: "",
+      quantity: 0,
+      measurement: "",
+      timeDuration: "",
+      error: ""
+    });
   };
 
   render() {
@@ -135,6 +172,24 @@ class RequestForm extends Component {
           style={styles.container}
           contentContainerStyle={styles.contentContainer}
         >
+          <Text
+            style={{
+              ...Platform.select({ ios: styles.header, android: styles.label })
+            }}
+          >
+            Title of Your Request
+          </Text>
+          <TextInput
+            placeholder="Title..."
+            style={{
+              ...Platform.select({
+                ios: styles.textInput,
+                android: styles.input
+              })
+            }}
+            name="title"
+            onChange={text => this.handleChange("title", text)}
+          ></TextInput>
           <Text
             style={{
               ...Platform.select({ ios: styles.header, android: styles.label })
@@ -164,7 +219,7 @@ class RequestForm extends Component {
               ...Platform.select({ ios: styles.header, android: styles.label })
             }}
           >
-            Item name*
+            Item name
           </Text>
           <TextInput
             placeholder="Item name..."
@@ -175,7 +230,7 @@ class RequestForm extends Component {
               })
             }}
             name="name"
-            onChange={this.handleChange}
+            onChange={text => this.handleChange("name", text)}
           ></TextInput>
           <Text
             style={{
@@ -192,7 +247,7 @@ class RequestForm extends Component {
                 android: styles.input
               })
             }}
-            onChange={this.handleChange}
+            onChange={text => this.handleChange("description", text)}
             name="description"
           ></TextInput>
           {this.props.category === "Food" ? (
@@ -277,8 +332,7 @@ const styles = StyleSheet.create({
     padding: 5
   },
   contentContainer: {
-    justifyContent: "center",
-    paddingTop: 10
+    justifyContent: "center"
   },
   errorText: {
     alignSelf: "center",
@@ -290,9 +344,10 @@ const styles = StyleSheet.create({
   textInput: {
     borderColor: "#CCCCCC",
     borderWidth: 1,
-    height: 50,
-    fontSize: 25,
-    margin: 10,
+    height: 45,
+    fontSize: 20,
+    marginHorizontal: 10,
+    marginVertical: 5,
     paddingLeft: 20,
     paddingRight: 20
   },
@@ -309,10 +364,10 @@ const styles = StyleSheet.create({
   },
   header: {
     color: "black",
-    fontSize: 25,
+    fontSize: 23,
     textAlign: "center",
     fontWeight: "bold",
-    marginTop: 20,
+    marginTop: 15,
     marginBottom: 5
   },
   requestButton: {
@@ -335,7 +390,7 @@ const styles = StyleSheet.create({
     margin: 10
   },
   pickerItems: {
-    fontSize: 26,
-    height: 150
+    fontSize: 24,
+    height: 130
   }
 });
