@@ -13,7 +13,7 @@ import * as Font from "expo-font";
 import { Ionicons } from "@expo/vector-icons";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
-import { RequestScreen } from "./screens/RequestScreen";
+import RequestScreen from "./screens/RequestScreen";
 import HomeScreen from "./screens/HomeScreen";
 import LinksScreen from "./screens/LinksScreen";
 import LoanDetailsScreen from "./screens/LoanDetailsScreen";
