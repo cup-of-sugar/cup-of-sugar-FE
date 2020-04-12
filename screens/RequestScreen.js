@@ -1,130 +1,199 @@
-import * as WebBrowser from 'expo-web-browser';
-import * as React from 'react';
-import { Component } from 'react';
+import * as WebBrowser from "expo-web-browser";
+import * as React from "react";
+import { Component } from "react";
 import {
+  TouchableOpacity,
   Picker,
   StyleSheet,
   Text,
   TextInput,
   View,
   Button,
-  Platform,
-} from 'react-native';
-import { ScrollView } from 'react-native-gesture-handler';
-import { useNavigation } from '@react-navigation/native';
+  Platform
+} from "react-native";
+import { ScrollView } from "react-native-gesture-handler";
+import Colors from "../constants/Colors";
+import { gql } from "apollo-boost";
+import { useQuery } from "@apollo/react-hooks";
 
-export class RequestScreen extends Component {
+export default function RequestScreen(props) {
+  const navigation = props.navigation;
+
+  const CATEGORIES = gql`
+    {
+      getAllCategories {
+        name
+      }
+    }
+  `;
+
+  let { loading, error, data } = useQuery(CATEGORIES);
+
+  return <RequestForm navigation={navigation} categories={data} />;
+}
+
+class RequestForm extends Component {
   constructor() {
     super();
     this.state = {
-      category: '',
-      name: '',
-      description: '',
-      amount: 0,
-      time: '',
+      category: "",
+      name: "",
+      description: "",
+      quantity: 0,
+      time: "",
+      error: ""
     };
   }
 
-  handleChange = (event) => {
-    if (!event.target.name) {
-      event.target.name = 'category';
-    }
-    this.setState({ [event.target.name]: event.target.value });
+  checkInputs = () => {
+    !this.state.category ||
+    !this.state.name ||
+    !this.state.description ||
+    !this.state.quantity
+      ? this.setState({ error: "Please complete all fields!" })
+      : this.requestNewItem();
   };
 
-  processRequest = () => {
-    const navigation = useNavigation();
-    navigation.navigate('MyRequestsScreen');
+  handleChange = (name, value) => {
+    this.setState({ [name]: value });
   };
 
   render() {
-    const inputComponent = (
-      <TextInput
-        placeholder={this.state.category === 'food' ? 'How many?' : 'How long?'}
-        style={styles.input}
-        onChange={this.handleChange}
-        name="time"
-      ></TextInput>
-    );
-
-    const textComponent = (
-      <Text style={styles.label}>
-        {this.state.category === 'food' ? 'Amount' : 'Time'}
-      </Text>
-    );
+    let pickers = this.props.categories
+      ? this.props.categories.getAllCategories.map(category => (
+          <Picker.Item
+            key={category.name}
+            label={category.name}
+            value={category.name}
+          />
+        ))
+      : null;
 
     return (
       <View style={styles.container}>
-        <Text style={{ color: '#fff', fontSize: 24, fontWeight: 'bold' }}>
-          What item are you looking for?
-        </Text>
         <ScrollView
           style={styles.container}
           contentContainerStyle={styles.contentContainer}
         >
-          <Text style={styles.label}>Select a category*</Text>
-          <Picker
-            value=""
-            onChange={() => this.handleChange(event)}
-            style={{ marginBottom: 8, height: 40 }}
+          <Text
+            style={{
+              ...Platform.select({ ios: styles.header, android: styles.label })
+            }}
           >
-            <Picker.Item
-              label="Garden"
-              value="garden"
-              onChange={this.handleChange}
-            />
-            <Picker.Item
-              onChange={this.handleChange}
-              label="Pantry"
-              value="pantry"
-            />
-            <Picker.Item
-              onChange={this.handleChange}
-              label="Food"
-              value="food"
-            />
-            <Picker.Item
-              onChange={this.handleChange}
-              label="Cleaning"
-              value="cleaning"
-            />
+            Item Category
+          </Text>
+          <Picker
+            name="category"
+            selectedValue={this.state.category}
+            onValueChange={pick => this.handleChange("category", pick)}
+            itemStyle={{
+              ...Platform.select({ ios: styles.pickerItems })
+            }}
+            style={{
+              ...Platform.select({
+                ios: styles.picker,
+                android: { marginBottom: 20, height: 40 }
+              })
+            }}
+          >
+            <Picker.Item label="Choose a category..." />
+            {pickers}
           </Picker>
-          <Text style={styles.label}>Item name*</Text>
+          <Text
+            style={{
+              ...Platform.select({ ios: styles.header, android: styles.label })
+            }}
+          >
+            Item name*
+          </Text>
           <TextInput
-            placeholder="Enter item name"
-            style={styles.input}
+            placeholder="Item name..."
+            style={{
+              ...Platform.select({
+                ios: styles.textInput,
+                android: styles.input
+              })
+            }}
             name="name"
             onChange={this.handleChange}
           ></TextInput>
-          <Text style={styles.label}>Description*</Text>
+          <Text
+            style={{
+              ...Platform.select({ ios: styles.header, android: styles.label })
+            }}
+          >
+            Description
+          </Text>
           <TextInput
-            placeholder="Enter description"
-            style={styles.input}
+            placeholder="Description..."
+            style={{
+              ...Platform.select({
+                ios: styles.textInput,
+                android: styles.input
+              })
+            }}
             onChange={this.handleChange}
             name="description"
           ></TextInput>
-          {textComponent}
-          {inputComponent}
-          <Button
-            onPress={() => this.processRequest()}
-            title="Request"
-            color="#385A94"
-            style={{
-              ...Platform.select({
-                ios: {
-                  backgroundColor: '#385A94',
-                  borderRadius: 8,
-                  color: '#fff',
-                },
-                android: {
-                  borderRadius: 8,
-                },
-                default: {
-                  borderRadius: 8,
-                },
-              }),
-            }}
-          />
+          {this.props.category === "Food" ? (
+            <View>
+              <Text
+                style={{
+                  ...Platform.select({
+                    ios: styles.header,
+                    android: styles.label
+                  })
+                }}
+              >
+                Measurement
+              </Text>
+              <TextInput
+                style={{
+                  ...Platform.select({
+                    ios: styles.textInput,
+                    android: styles.input
+                  })
+                }}
+                name="measurement"
+                value={this.state.measurement}
+                onChangeText={text => this.handleChange("measurement", text)}
+                placeholder="Example: cups, ounces..."
+              />
+            </View>
+          ) : (
+            <View>
+              <Text
+                style={{
+                  ...Platform.select({
+                    ios: styles.header,
+                    android: styles.label
+                  })
+                }}
+              >
+                Amount of Time
+              </Text>
+              <TextInput
+                style={{
+                  ...Platform.select({
+                    ios: styles.textInput,
+                    android: styles.input
+                  })
+                }}
+                name="timeDuration"
+                value={this.state.timeDuration}
+                onChangeText={text => this.handleChange("timeDuration", text)}
+                placeholder="Example: 1 week..."
+              />
+            </View>
+          )}
+          {Platform.select({
+            ios: (
+              <TouchableOpacity style={styles.requestButton}>
+                <Text style={styles.requestButtonText}>Request Item</Text>
+              </TouchableOpacity>
+            ),
+            android: <Button title="Request Item" color="#385A94" />
+          })}
         </ScrollView>
       </View>
     );
@@ -133,32 +202,63 @@ export class RequestScreen extends Component {
 
 const styles = StyleSheet.create({
   container: {
+    backgroundColor: "#fff",
     flex: 1,
-    backgroundColor: '#0C94E1',
-    padding: 5,
+    padding: 5
   },
   contentContainer: {
-    justifyContent: 'center',
-    paddingTop: 30,
+    justifyContent: "center",
+    paddingTop: 10
+  },
+  textInput: {
+    borderColor: "#CCCCCC",
+    borderWidth: 1,
+    height: 50,
+    fontSize: 25,
+    margin: 10,
+    paddingLeft: 20,
+    paddingRight: 20
   },
   input: {
     height: 40,
-    borderColor: 'gray',
+    borderColor: "#CCCCCC",
     borderWidth: 1,
-    backgroundColor: '#fff',
+    backgroundColor: "#fff",
     marginBottom: 8,
-    padding: 5,
+    padding: 5
   },
   label: {
-    color: '#fff',
+    color: "black"
   },
-  welcomeText: {
-    fontSize: 30,
-    fontWeight: 'bold',
-    color: 'black',
-    lineHeight: 35,
-    margin: 10,
+  header: {
+    color: "black",
+    fontSize: 25,
+    textAlign: "center",
+    fontWeight: "bold",
     marginTop: 20,
-    textAlign: 'center',
+    marginBottom: 5
   },
+  requestButton: {
+    marginHorizontal: 40,
+    marginTop: 15,
+    paddingTop: 20,
+    paddingBottom: 20,
+    backgroundColor: Colors.lightBlue,
+    borderRadius: 10,
+    borderWidth: 1,
+    borderColor: "#fff"
+  },
+  requestButtonText: {
+    fontSize: 25,
+    fontWeight: "bold",
+    color: "#fff",
+    textAlign: "center"
+  },
+  picker: {
+    margin: 10
+  },
+  pickerItems: {
+    fontSize: 26,
+    height: 150
+  }
 });
