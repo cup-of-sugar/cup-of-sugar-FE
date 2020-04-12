@@ -72,7 +72,7 @@ export default function ItemDetailsScreen(props) {
             </Text>
           ) : (
             <Text style={styles.itemInfo}>
-              Available to borrow for {item.quantity} {item.timeDuration}
+              Available to borrow for {item.timeDuration}
             </Text>
           )
         ) : (
