@@ -201,14 +201,15 @@ const styles = StyleSheet.create({
   },
   formContainer: {
     flex: 1,
-    paddingTop: 15
+    margin: 15
   },
   header: {
     color: "black",
     fontSize: 25,
-    textAlign: "center",
+    textAlign: "left",
     fontWeight: "bold",
     marginTop: 20,
+    marginLeft: 15,
     marginBottom: 5
   },
   textInput: {
@@ -217,19 +218,11 @@ const styles = StyleSheet.create({
     height: 50,
     fontSize: 25,
     margin: 10,
-    marginTop: 20,
-    paddingLeft: 20,
-    paddingRight: 20
-  },
-  picker: {
-    margin: 10
-  },
-  pickerItems: {
-    fontSize: 26,
-    height: 150
+    paddingHorizontal: 15
   },
   searchButton: {
-    margin: 40,
+    marginHorizontal: 40,
+    marginVertical: 20,
     paddingTop: 20,
     paddingBottom: 20,
     backgroundColor: Colors.lightBlue,
@@ -246,10 +239,12 @@ const styles = StyleSheet.create({
   textAreaContainer: {
     borderColor: "#CCCCCC",
     borderWidth: 1,
-    padding: 5
+    margin: 10
   },
   textArea: {
+    fontSize: 25,
     height: 100,
-    justifyContent: "flex-start"
+    justifyContent: "flex-start",
+    paddingHorizontal: 15
   }
 });
