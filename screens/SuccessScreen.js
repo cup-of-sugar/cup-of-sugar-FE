@@ -32,7 +32,7 @@ export default function SuccessScreen(props) {
           : ""}
         :
       </Text>
-      {action === "lend" action === "request" || ? (
+      {action === "lend" || action === "request" ? (
         <Text style={styles.itemInfo}>{name}</Text>
       ) : !timeDuration ? (
         <Text style={styles.itemInfo}>
