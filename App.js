@@ -16,7 +16,8 @@ import { createStackNavigator } from "@react-navigation/stack";
 import { RequestScreen } from "./screens/RequestScreen";
 import HomeScreen from "./screens/HomeScreen";
 import LinksScreen from "./screens/LinksScreen";
-import SuccessfulBorrowScreen from "./screens/SuccessfulBorrowScreen";
+import LoanDetailsScreen from "./screens/LoanDetailsScreen";
+import SuccessScreen from "./screens/SuccessScreen";
 import ItemDetailsScreen from "./screens/ItemDetailsScreen";
 import SearchResultsScreen from "./screens/SearchResultsScreen";
 import MyItemsScreen from "./screens/MyItemsScreen";
@@ -108,6 +109,23 @@ export default function App(props) {
                 }}
               />
               <Stack.Screen
+                name="Loan Details"
+                component={LoanDetailsScreen}
+                options={{
+                  headerStyle: {
+                    backgroundColor: Colors.darkBlue,
+                    height: 120
+                  },
+                  headerTitle: "Details",
+                  headerTitleStyle: {
+                    color: "white",
+                    fontSize: 25
+                  },
+                  headerRight: () => <Image source={cup} style={styles.logo} />,
+                  headerTintColor: "white"
+                }}
+              />
+              <Stack.Screen
                 name="My Items"
                 component={MyItemsScreen}
                 options={{
@@ -157,7 +175,7 @@ export default function App(props) {
               />
               <Stack.Screen
                 name="Success!"
-                component={SuccessfulBorrowScreen}
+                component={SuccessScreen}
                 options={{
                   headerStyle: {
                     backgroundColor: Colors.darkBlue,
