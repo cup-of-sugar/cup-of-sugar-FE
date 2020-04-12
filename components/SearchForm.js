@@ -52,12 +52,8 @@ class HomeForm extends React.Component {
       : this.startSearch();
   };
 
-  handleNameChange = itemName => {
-    this.setState({ itemName });
-  };
-
-  handleCategoryChange = category => {
-    this.setState({ category });
+  handleChange = (name, value) => {
+    this.setState({ [name]: value });
   };
 
   startSearch = () => {
@@ -101,7 +97,7 @@ class HomeForm extends React.Component {
           itemStyle={styles.pickerItems}
           name="category"
           selectedValue={this.state.category}
-          onValueChange={this.handleCategoryChange}
+          onValueChange={pick => this.handleChange("category", pick)}
         >
           <Picker.Item label="Choose a category..." />
           {pickers}
@@ -113,7 +109,7 @@ class HomeForm extends React.Component {
           style={styles.textInput}
           name="itemName"
           value={this.state.itemName}
-          onChangeText={this.handleNameChange}
+          onChangeText={text => this.handleChange("itemName", text)}
           placeholder="Item name..."
         />
         <TouchableOpacity
