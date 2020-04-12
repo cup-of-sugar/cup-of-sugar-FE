@@ -11,6 +11,7 @@ import {
   Platform,
 } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
+import { useNavigation } from '@react-navigation/native';
 
 export class RequestScreen extends Component {
   constructor() {
@@ -29,6 +30,11 @@ export class RequestScreen extends Component {
       event.target.name = 'category';
     }
     this.setState({ [event.target.name]: event.target.value });
+  };
+
+  processRequest = () => {
+    const navigation = useNavigation();
+    navigation.navigate('MyRequestsScreen');
   };
 
   render() {
@@ -69,6 +75,11 @@ export class RequestScreen extends Component {
             />
             <Picker.Item
               onChange={this.handleChange}
+              label="Pantry"
+              value="pantry"
+            />
+            <Picker.Item
+              onChange={this.handleChange}
               label="Food"
               value="food"
             />
@@ -94,22 +105,8 @@ export class RequestScreen extends Component {
           ></TextInput>
           {textComponent}
           {inputComponent}
-          {/* <Text style={styles.label}>Amount</Text>
-          <TextInput
-            placeholder="How many?"
-            style={styles.input}
-            onChange={this.handleChange}
-            name="amount"
-          ></TextInput>
-          <Text style={styles.label}>Time</Text>
-          <TextInput
-            placeholder="How long?"
-            style={styles.input}
-            onChange={this.handleChange}
-            name="time"
-          ></TextInput> */}
           <Button
-            onPress={() => {}}
+            onPress={() => this.processRequest()}
             title="Request"
             color="#385A94"
             style={{
