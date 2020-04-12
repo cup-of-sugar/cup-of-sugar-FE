@@ -9,13 +9,8 @@ import {
   View
 } from "react-native";
 import Colors from "../constants/Colors";
-import borrower from "../assets/images/borrower.png";
-import lender from "../assets/images/lender.png";
 
-export default function MessagesScreen(props) {
-  // const userID = props.route.params.userID;
-  const [messageView, setMessageView] = React.useState("inbox");
-
+export default function MessageDetailsScreen(props) {
   return (
     <View style={styles.container}>
       <ScrollView
@@ -23,40 +18,8 @@ export default function MessagesScreen(props) {
         contentContainerStyle={styles.contentContainer}
       >
         <View style={styles.buttonContainer}>
-          <TouchableOpacity
-            style={styles.inboxLabel}
-            onPress={() => setMessageView("inbox")}
-          >
-            <Text style={styles.inboxMailboxText}>Inbox (1)</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.sentLabel}
-            onPress={() => setMessageView("sent")}
-          >
-            <Text style={styles.sentMailboxText}>Sent (1)</Text>
-          </TouchableOpacity>
+          <Text>When can I get those tigers?</Text>
         </View>
-        {messageView === "inbox" ? (
-          <View style={styles.inbox}>
-            <TouchableOpacity
-              style={styles.message}
-              onPress={() => props.navigation.navigate("Message")}
-            >
-              <Text style={styles.messageText}>From: Tiger King</Text>
-              <Image source={borrower} style={styles.icon} />
-            </TouchableOpacity>
-          </View>
-        ) : (
-          <View style={styles.sent}>
-            <TouchableOpacity
-              style={styles.message}
-              onPress={() => props.navigation.navigate("Message")}
-            >
-              <Text style={styles.messageText}>To: Carole Baskin</Text>
-              <Image style={styles.icon} source={lender} />
-            </TouchableOpacity>
-          </View>
-        )}
       </ScrollView>
     </View>
   );
