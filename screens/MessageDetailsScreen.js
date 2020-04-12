@@ -17,9 +17,17 @@ export default function MessageDetailsScreen(props) {
         style={styles.Container}
         contentContainerStyle={styles.contentContainer}
       >
-        <View style={styles.buttonContainer}>
-          <Text>When can I get those tigers?</Text>
+        <View style={styles.subjectContainer}>
+          <Text style={styles.subject}>Subject: Tigers</Text>
         </View>
+        <View style={styles.messageContainer}>
+          <Text style={styles.messageContent}>
+            When can I get those tigers? Thanks, Carole
+          </Text>
+        </View>
+        <TouchableOpacity style={styles.replyButton}>
+          <Text style={styles.replyButtonText}>Reply</Text>
+        </TouchableOpacity>
       </ScrollView>
     </View>
   );
@@ -34,75 +42,44 @@ const styles = StyleSheet.create({
   contentContainer: {
     padding: 15
   },
-  buttonContainer: {
-    flex: 1,
-    flexDirection: "row",
-    justifyContent: "space-between"
-  },
-  inboxLabel: {
-    backgroundColor: Colors.lightBlue,
-    borderTopLeftRadius: 7,
-    borderTopRightRadius: 7,
-    height: 70,
-    padding: 20,
-    width: 180
-  },
-  sentLabel: {
-    backgroundColor: Colors.darkBlue,
-    borderTopLeftRadius: 7,
-    borderTopRightRadius: 7,
-    height: 70,
-    padding: 20,
-    width: 180
-  },
-  inbox: {
-    backgroundColor: Colors.lightBlue,
+  messageContainer: {
     borderBottomLeftRadius: 7,
     borderBottomRightRadius: 7,
-    height: 500,
-    paddingVertical: 20
+    borderColor: Colors.lightBlue,
+    borderWidth: 3,
+    flex: 1
   },
-  sent: {
-    backgroundColor: Colors.darkBlue,
-    borderBottomLeftRadius: 7,
-    borderBottomRightRadius: 7,
-    height: 500,
-    paddingVertical: 20
+  subjectContainer: {
+    backgroundColor: Colors.lightBlue,
+    borderTopLeftRadius: 7,
+    borderTopRightRadius: 7
   },
-  inboxMailboxText: {
-    fontSize: 25,
+  subject: {
+    color: "#fff",
+    fontSize: 22,
     fontWeight: "bold",
-    color: "#fff"
+    height: 70,
+    padding: 20
   },
-  sentMailboxText: {
+  messageContent: {
+    fontSize: 20,
+    height: 400,
+    padding: 15
+  },
+  replyButton: {
+    margin: 40,
+    marginTop: 10,
+    paddingTop: 20,
+    paddingBottom: 20,
+    backgroundColor: Colors.lightBlue,
+    borderRadius: 10,
+    borderWidth: 1,
+    borderColor: "#fff"
+  },
+  replyButtonText: {
     fontSize: 25,
     fontWeight: "bold",
     color: "#fff",
-    textAlign: "right"
-  },
-  message: {
-    alignSelf: "center",
-    backgroundColor: "#fff",
-    borderRadius: 10,
-    borderWidth: 1,
-    borderColor: "#fff",
-    flex: 0,
-    flexDirection: "row",
-    height: 70,
-    margin: 40,
-    marginTop: 10,
-    paddingVertical: 20,
-    paddingHorizontal: 15,
-    width: 350
-  },
-  messageText: {
-    fontSize: 20,
-    fontWeight: "bold",
-    color: Colors.darkBlue,
-    paddingRight: 10
-  },
-  icon: {
-    height: 25,
-    width: 115
+    textAlign: "center"
   }
 });
