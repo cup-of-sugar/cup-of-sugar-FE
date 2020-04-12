@@ -9,10 +9,8 @@ import {
   View
 } from "react-native";
 import Colors from "../constants/Colors";
-import { useNavigation } from "@react-navigation/native";
 
-export default function SuccessfulBorrowScreen(props) {
-  const navigation = useNavigation();
+export default function SuccessScreen(props) {
   const action = props.route.params.action;
   const name = props.route.params.name;
   const quantity = props.route.params.quantity;
@@ -51,7 +49,7 @@ export default function SuccessfulBorrowScreen(props) {
           </Text>
           <TouchableOpacity
             style={styles.messageButton}
-            onPress={() => navigation.navigate("Home")}
+            onPress={() => props.navigation.navigate("Home", { action })}
           >
             <Text style={styles.messageButtonText}>Send Message</Text>
           </TouchableOpacity>
@@ -61,7 +59,7 @@ export default function SuccessfulBorrowScreen(props) {
           <Text style={styles.successMessage}>Thank you!</Text>
           <TouchableOpacity
             style={styles.messageButton}
-            onPress={() => navigation.navigate("Home")}
+            onPress={() => props.navigation.navigate("Home", { action })}
           >
             <Text style={styles.messageButtonText}>
               {action === "lend" ? "Loan" : "Borrow"} Another Item
