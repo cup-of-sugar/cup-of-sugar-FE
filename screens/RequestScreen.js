@@ -263,6 +263,7 @@ class RequestForm extends Component {
               />
             )
           })}
+          <Text style={styles.errorText}>{this.state.error}</Text>
         </ScrollView>
       </View>
     );
@@ -278,6 +279,13 @@ const styles = StyleSheet.create({
   contentContainer: {
     justifyContent: "center",
     paddingTop: 10
+  },
+  errorText: {
+    alignSelf: "center",
+    color: "red",
+    fontSize: 20,
+    fontWeight: "bold",
+    margin: 10
   },
   textInput: {
     borderColor: "#CCCCCC",
