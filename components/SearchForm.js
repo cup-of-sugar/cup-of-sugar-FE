@@ -74,7 +74,7 @@ class HomeForm extends React.Component {
   loanNewItem = () => {
     const category = this.state.category;
     const itemName = this.state.itemName.toLowerCase();
-    this.props.navigation.navigate("Success!", {
+    this.props.navigation.navigate("Loan Details", {
       category: category,
       name: itemName,
       action: "lend"
@@ -106,7 +106,9 @@ class HomeForm extends React.Component {
           <Picker.Item label="Choose a category..." />
           {pickers}
         </Picker>
-        <Text style={styles.header}>Item Name (Optional)</Text>
+        <Text style={styles.header}>
+          Item Name{this.props.action === "borrow" ? "(Optional)" : ""}
+        </Text>
         <TextInput
           style={styles.textInput}
           name="itemName"
@@ -119,7 +121,7 @@ class HomeForm extends React.Component {
           onPress={this.checkInputs}
         >
           <Text style={styles.searchButtonText}>
-            {this.props.action === "borrow" ? "Search" : "Submit"}
+            {this.props.action === "borrow" ? "Search" : "Continue"}
           </Text>
         </TouchableOpacity>
         <Text style={styles.errorText}>{this.state.error}</Text>
