@@ -41,7 +41,13 @@ export default function MenuItems({ closeMenu, action }) {
           View My {action === "borrow" ? "Borrowed" : "Loaned"} Items
         </Text>
       </TouchableOpacity>
-      <TouchableOpacity onPress={() => handlePress("RequestScreen")}>
+      <TouchableOpacity
+        onPress={() =>
+          handlePress(action === "borrow" ? "RequestScreen" : "Home", {
+            action: "lend"
+          })
+        }
+      >
         <Text style={styles.drawerText}>
           {action === "borrow" ? "Make a Request" : "Loan an Item"}
         </Text>
