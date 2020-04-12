@@ -24,6 +24,7 @@ import MyItemsScreen from "./screens/MyItemsScreen";
 import PathScreen from "./screens/PathScreen";
 import LoginScreen from "./screens/LoginScreen";
 import MessagesScreen from "./screens/MessagesScreen";
+import MessageDetailsScreen from "./screens/MessageDetailsScreen";
 import useLinking from "./navigation/useLinking";
 import cup from "./assets/images/cup.png";
 import Colors from "./constants/Colors";
@@ -145,6 +146,22 @@ export default function App(props) {
               <Stack.Screen
                 name="Messages"
                 component={MessagesScreen}
+                options={{
+                  headerStyle: {
+                    backgroundColor: Colors.darkBlue,
+                    height: 120
+                  },
+                  headerTitleStyle: {
+                    color: "white",
+                    fontSize: 25
+                  },
+                  headerRight: () => <Image source={cup} style={styles.logo} />,
+                  headerTintColor: "white"
+                }}
+              />
+              <Stack.Screen
+                name="Message"
+                component={MessageDetailsScreen}
                 options={{
                   headerStyle: {
                     backgroundColor: Colors.darkBlue,
