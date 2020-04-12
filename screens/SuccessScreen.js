@@ -25,12 +25,14 @@ export default function SuccessScreen(props) {
           ? "borrowed"
           : action === "return"
           ? "returned"
+          : action === "request"
+          ? "requested"
           : action === "lend"
           ? "offered to loan your"
           : ""}
         :
       </Text>
-      {action === "lend" ? (
+      {action === "lend" action === "request" || ? (
         <Text style={styles.itemInfo}>{name}</Text>
       ) : !timeDuration ? (
         <Text style={styles.itemInfo}>
