@@ -15,9 +15,18 @@ import { ScrollView } from "react-native-gesture-handler";
 import Colors from "../constants/Colors";
 import { gql } from "apollo-boost";
 import { useQuery } from "@apollo/react-hooks";
+import { useMutation } from "@apollo/react-hooks";
 
 export default function RequestScreen(props) {
   const navigation = props.navigation;
+  let title,
+    userID,
+    category,
+    name,
+    description,
+    quantity,
+    measurement,
+    timeDuration;
 
   const CATEGORIES = gql`
     {
@@ -29,7 +38,58 @@ export default function RequestScreen(props) {
 
   let { loading, error, data } = useQuery(CATEGORIES);
 
-  return <RequestForm navigation={navigation} categories={data} />;
+  const NEW_REQUEST = gql`
+    mutation CreatePosting(
+      $title: String!
+      $userID: String!
+      $category: String!
+      $name: String!
+      $description: String!
+      $quantity: String!
+      $measurement: String!
+      $timeDuration: String!
+    ) {
+      posting: createPosting(
+        input: {
+          title: $title
+          userID: $userID
+          postingType: "borrow"
+          categoryName: $category
+          name: $name
+          description: $description
+          quantity: $quantity
+          measurement: $measurement
+          timeDuration: $timeDuration
+        }
+      ) {
+        name
+        description
+        quantity
+        measurement
+      }
+    }
+  `;
+
+  let [addNewRequest] = useMutation(NEW_REQUEST, {
+    variables: {
+      title,
+      userID,
+      category,
+      name,
+      description,
+      quantity,
+      measurement,
+      timeDuration
+    }
+  });
+
+  return (
+    <RequestForm
+      navigation={navigation}
+      categories={data}
+      addNewRequest={addNewRequest}
+    />
+  );
 }
 
 class RequestForm extends Component {
@@ -188,11 +248,20 @@ class RequestForm extends Component {
           )}
           {Platform.select({
             ios: (
-              <TouchableOpacity style={styles.requestButton}>
+              <TouchableOpacity
+                style={styles.requestButton}
+                onPress={() => this.checkInputs()}
+              >
                 <Text style={styles.requestButtonText}>Request Item</Text>
               </TouchableOpacity>
             ),
-            android: <Button title="Request Item" color="#385A94" />
+            android: (
+              <Button
+                onPress={() => this.checkInputs()}
+                title="Request Item"
+                color="#385A94"
+              />
+            )
           })}
         </ScrollView>
       </View>
