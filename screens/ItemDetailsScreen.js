@@ -72,7 +72,7 @@ export default function ItemDetailsScreen(props) {
             </Text>
           ) : (
             <Text style={styles.itemInfo}>
-              Available to borrow for {item.quantity} {item.timeDuration}
+              Available to borrow for {item.timeDuration}
             </Text>
           )
         ) : (
@@ -115,7 +115,7 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     justifyContent: "center",
     padding: 15,
-    paddingTop: 50,
+    paddingTop: 30,
     width: "85%"
   },
   borrowButton: {
@@ -162,6 +162,7 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     backgroundColor: Colors.darkBlue,
     height: 200,
+    marginBottom: 15,
     width: 200
   }
 });
