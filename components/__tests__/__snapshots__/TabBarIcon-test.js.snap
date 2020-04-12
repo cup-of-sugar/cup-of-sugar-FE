@@ -1,0 +1,5 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should render component 1`] = `<Text />`;
+
+exports[`should render component 2`] = `<Text />`;
