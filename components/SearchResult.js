@@ -48,6 +48,7 @@ class SearchResultClass extends React.Component {
           this.props.navigation.navigate("Details", {
             item: this.props.item,
             action: this.props.action,
+            userId: this.props.userId,
             image: this.state.imageUrl || cup
           })
         }
