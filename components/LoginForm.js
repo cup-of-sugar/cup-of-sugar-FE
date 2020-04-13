@@ -61,7 +61,7 @@ class LoginFormClass extends React.Component {
   validateLogin = response => {
     this.setState({ validation: response.data.user.email });
     if (this.state.validation) {
-      this.props.navigation.navigate("Path");
+      this.props.navigation.navigate("Path", { userId: "1" });
       this.setState({ email: "", password: "", error: "", validation: "" });
     } else if (this.state.validation === null) {
       this.setState({
