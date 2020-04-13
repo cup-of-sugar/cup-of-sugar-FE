@@ -106,14 +106,15 @@ const styles = StyleSheet.create({
     borderRadius: 18,
     borderWidth: 1,
     borderColor: Colors.darkBlue,
-    fontSize: 28,
+    fontSize: 26,
     fontWeight: "bold",
     color: Colors.aqua,
     height: 70,
     lineHeight: 35,
     paddingTop: 15,
     marginBottom: 60,
-    width: 300,
+    overflow: "hidden",
+    width: 360,
     textAlign: "center"
   },
   messageButton: {
