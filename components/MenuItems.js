@@ -41,6 +41,9 @@ export default function MenuItems({ closeMenu, action }) {
           View My {action === "borrow" ? "Borrowed" : "Loaned"} Items
         </Text>
       </TouchableOpacity>
+      <TouchableOpacity onPress={() => handlePress("Messages")}>
+        <Text style={styles.drawerText}>My Messages</Text>
+      </TouchableOpacity>
       <TouchableOpacity
         onPress={() =>
           handlePress(action === "borrow" ? "RequestScreen" : "Home", {
@@ -62,7 +65,7 @@ export default function MenuItems({ closeMenu, action }) {
 const styles = StyleSheet.create({
   drawerItems: {
     backgroundColor: Colors.lightBlue,
-    height: 280,
+    height: 350,
     width: 300
   },
   drawerText: {
