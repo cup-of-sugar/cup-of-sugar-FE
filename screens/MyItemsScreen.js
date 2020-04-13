@@ -67,6 +67,9 @@ export default function MyItemsScreen(props) {
         posting {
           title
         }
+        category {
+          name
+        }
       }
     }
   `;
@@ -91,7 +94,7 @@ export default function MyItemsScreen(props) {
               return !item.available ? (
                 <View style={styles.item} key={item.id + item.name}>
                   <Text style={styles.itemName}>{item.name}</Text>
-                  {item.category !== "Food" ? (
+                  {item.category.name !== "Food" ? (
                     <TouchableOpacity
                       style={styles.returnButton}
                       onPress={() => {
