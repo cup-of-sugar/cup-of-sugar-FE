@@ -88,9 +88,7 @@ export default function MyItemsScreen(props) {
     if (data) {
       return (
         <View style={styles.container}>
-          <Text style={styles.itemsMessage}>
-            You are currently {action}ing:
-          </Text>
+          <Text style={styles.itemsMessage}>You are currently borrowing:</Text>
           <ScrollView
             scrollIndicatorInsets={{ right: 1 }}
             style={styles.itemsContainer}
@@ -128,7 +126,7 @@ export default function MyItemsScreen(props) {
                 ) : null;
               })
             ) : (
-              <Text>You're not borrowing any items right currently!</Text>
+              <Text>You're not borrowing any items currently!</Text>
             )}
           </ScrollView>
         </View>
@@ -176,10 +174,7 @@ export default function MyItemsScreen(props) {
               </Text>{" "}
               to contact the neighbor currently borrowing your item.
             </Text>
-            <Text style={styles.itemsMessage}>
-              You are currently {action}
-              ing:
-            </Text>
+            <Text style={styles.itemsMessage}>You are currently lending:</Text>
           </View>
           <ScrollView
             scrollIndicatorInsets={{ right: 1 }}
