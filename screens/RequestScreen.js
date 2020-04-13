@@ -1,6 +1,6 @@
-import * as WebBrowser from 'expo-web-browser';
-import * as React from 'react';
-import { Component } from 'react';
+import * as WebBrowser from "expo-web-browser";
+import * as React from "react";
+import { Component } from "react";
 import {
   TouchableOpacity,
   Picker,
@@ -10,15 +10,16 @@ import {
   View,
   Button,
   Platform,
-} from 'react-native';
-import { ScrollView } from 'react-native-gesture-handler';
-import Colors from '../constants/Colors';
-import { gql } from 'apollo-boost';
-import { useQuery } from '@apollo/react-hooks';
-import { useMutation } from '@apollo/react-hooks';
+} from "react-native";
+import { ScrollView } from "react-native-gesture-handler";
+import Colors from "../constants/Colors";
+import { gql } from "apollo-boost";
+import { useQuery } from "@apollo/react-hooks";
+import { useMutation } from "@apollo/react-hooks";
 
 export default function RequestScreen(props) {
   const navigation = props.navigation;
+  const userId = props.route.params.userId;
   let title, category, name, description, quantity, measurement, timeDuration;
 
   const CATEGORIES = gql`
@@ -34,6 +35,7 @@ export default function RequestScreen(props) {
   const NEW_REQUEST = gql`
     mutation CreatePosting(
       $title: String!
+      $userId: ID!
       $category: String!
       $name: String!
       $description: String!
@@ -44,7 +46,7 @@ export default function RequestScreen(props) {
       posting: createPosting(
         input: {
           title: $title
-          userId: "1"
+          userId: $userId
           postingType: "borrow"
           categoryName: $category
           name: $name
@@ -64,6 +66,7 @@ export default function RequestScreen(props) {
 
   let [addNewRequest] = useMutation(NEW_REQUEST, {
     variables: {
+      userId,
       title,
       category,
       name,
@@ -79,6 +82,7 @@ export default function RequestScreen(props) {
       navigation={navigation}
       categories={data}
       addNewRequest={addNewRequest}
+      userId={userId}
     />
   );
 }
@@ -87,14 +91,14 @@ class RequestForm extends Component {
   constructor() {
     super();
     this.state = {
-      title: '',
-      category: '',
-      name: '',
-      description: '',
+      title: "",
+      category: "",
+      name: "",
+      description: "",
       quantity: 0,
-      timeDuration: '',
-      measurement: '',
-      error: '',
+      timeDuration: "",
+      measurement: "",
+      error: "",
     };
   }
 
@@ -104,7 +108,7 @@ class RequestForm extends Component {
     !this.state.name ||
     !this.state.description ||
     !this.state.quantity
-      ? this.setState({ error: 'Please complete all fields!' })
+      ? this.setState({ error: "Please complete all fields!" })
       : this.requestNewItem();
   };
 
@@ -116,13 +120,14 @@ class RequestForm extends Component {
     this.props
       .addNewRequest({
         variables: {
+          userId: this.props.userId,
           title: this.state.title,
           category: this.state.category,
           name: this.state.name,
           description: this.state.description,
           quantity: this.state.quantity,
-          measurement: this.state.measurement || 'null',
-          timeDuration: this.state.timeDuration || 'null',
+          measurement: this.state.measurement || "null",
+          timeDuration: this.state.timeDuration || "null",
         },
       })
       .then((response) => this.confirmRequest())
@@ -130,20 +135,23 @@ class RequestForm extends Component {
   };
 
   confirmRequest = () => {
-    this.props.navigation.navigate('Success!', {
-      name: this.props.item,
+    this.props.navigation.navigate("Success!", {
+      name: this.state.name,
+      userId: this.props.userId,
       timeDuration: this.state.timeDuration,
       measurement: this.state.measurement,
       quantity: this.state.quantity,
-      action: 'request',
+      action: "request",
     });
     this.setState({
-      title: '',
-      description: '',
+      title: "",
+      category: "",
+      name: "",
+      description: "",
       quantity: 0,
-      measurement: '',
-      timeDuration: '',
-      error: '',
+      measurement: "",
+      timeDuration: "",
+      error: "",
     });
   };
 
@@ -180,7 +188,7 @@ class RequestForm extends Component {
               }),
             }}
             name="title"
-            onChangeText={(text) => this.handleChange('title', text)}
+            onChangeText={(text) => this.handleChange("title", text)}
           ></TextInput>
           <Text
             style={{
@@ -192,7 +200,7 @@ class RequestForm extends Component {
           <Picker
             name="category"
             selectedValue={this.state.category}
-            onValueChange={(pick) => this.handleChange('category', pick)}
+            onValueChange={(pick) => this.handleChange("category", pick)}
             itemStyle={{
               ...Platform.select({ ios: styles.pickerItems }),
             }}
@@ -222,23 +230,8 @@ class RequestForm extends Component {
               }),
             }}
             name="name"
-            onChange={this.handleChange}
+            onChangeText={(text) => this.handleChange("name", text)}
           ></TextInput>
-          <Text style={styles.label}>Description*</Text>
-          <TextInput
-            placeholder="Enter description"
-            style={styles.input}
-            onChange={this.handleChange}
-            name="description"
-          ></TextInput>
-          {textComponent}
-          {inputComponent}
-          <Button
-            onPress={() => this.processRequest()}
-            title="Request"
-            color="#385A94"
-            onChange={(text) => this.handleChange('name', text)}
-          />
           <Text
             style={{
               ...Platform.select({ ios: styles.header, android: styles.label }),
@@ -246,17 +239,17 @@ class RequestForm extends Component {
           >
             Description
           </Text>
-          <TextInput placeholder="Description...">
-            >>>>>> d37b51a14d1abda59aeaee34d4c8693bb6d01230 style=
-            {{
+          <TextInput
+            placeholder="Description..."
+            style={{
               ...Platform.select({
                 ios: styles.textInput,
                 android: styles.input,
               }),
             }}
-            onChangeText={(text) => this.handleChange('description', text)}
-            name="description" >
-          </TextInput>
+            onChangeText={(text) => this.handleChange("description", text)}
+            name="description"
+          ></TextInput>
           <Text
             style={{
               ...Platform.select({ ios: styles.header, android: styles.label }),
@@ -272,13 +265,13 @@ class RequestForm extends Component {
                 android: styles.input,
               }),
             }}
-            onChangeText={(text) => this.handleChange('quantity', text)}
+            onChangeText={(text) => this.handleChange("quantity", text)}
             name="quantity"
             numericvalue
-            keyboardType={'numeric'}
+            keyboardType={"numeric"}
             value={String(this.state.quantity)}
           ></TextInput>
-          {this.props.category === 'Food' ? (
+          {this.props.category === "Food" ? (
             <View>
               <Text
                 style={{
@@ -299,7 +292,7 @@ class RequestForm extends Component {
                 }}
                 name="measurement"
                 value={this.state.measurement}
-                onChangeText={(text) => this.handleChange('measurement', text)}
+                onChangeText={(text) => this.handleChange("measurement", text)}
                 placeholder="Example: cups, ounces..."
               />
             </View>
@@ -324,7 +317,7 @@ class RequestForm extends Component {
                 }}
                 name="timeDuration"
                 value={this.state.timeDuration}
-                onChangeText={(text) => this.handleChange('timeDuration', text)}
+                onChangeText={(text) => this.handleChange("timeDuration", text)}
                 placeholder="Example: 1 week..."
               />
             </View>
@@ -355,22 +348,22 @@ class RequestForm extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#fff',
+    backgroundColor: "#fff",
     flex: 1,
     padding: 5,
   },
   contentContainer: {
-    justifyContent: 'center',
+    justifyContent: "center",
   },
   errorText: {
-    alignSelf: 'center',
-    color: 'red',
+    alignSelf: "center",
+    color: "red",
     fontSize: 20,
-    fontWeight: 'bold',
+    fontWeight: "bold",
     margin: 10,
   },
   textInput: {
-    borderColor: '#CCCCCC',
+    borderColor: "#CCCCCC",
     borderWidth: 1,
     height: 45,
     fontSize: 20,
@@ -381,20 +374,20 @@ const styles = StyleSheet.create({
   },
   input: {
     height: 40,
-    borderColor: '#CCCCCC',
+    borderColor: "#CCCCCC",
     borderWidth: 1,
-    backgroundColor: '#fff',
+    backgroundColor: "#fff",
     marginBottom: 8,
     padding: 5,
   },
   label: {
-    color: 'black',
+    color: "black",
   },
   header: {
-    color: 'black',
+    color: "black",
     fontSize: 23,
-    textAlign: 'center',
-    fontWeight: 'bold',
+    textAlign: "center",
+    fontWeight: "bold",
     marginTop: 15,
     marginBottom: 5,
   },
@@ -406,13 +399,13 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.lightBlue,
     borderRadius: 10,
     borderWidth: 1,
-    borderColor: '#fff',
+    borderColor: "#fff",
   },
   requestButtonText: {
     fontSize: 25,
-    fontWeight: 'bold',
-    color: '#fff',
-    textAlign: 'center',
+    fontWeight: "bold",
+    color: "#fff",
+    textAlign: "center",
   },
   picker: {
     margin: 10,

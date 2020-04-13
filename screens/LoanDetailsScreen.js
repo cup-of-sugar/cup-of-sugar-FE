@@ -28,6 +28,7 @@ export default function LoanDetailsScreen(props) {
     ) {
       posting: createPosting(
         input: {
+          userId: "1"
           title: $title
           postingType: "lend"
           categoryName: $category
@@ -113,7 +114,8 @@ export class LoanDetailsForm extends React.Component {
       timeDuration: this.state.timeDuration,
       measurement: this.state.measurement,
       quantity: this.state.quantity,
-      action: "lend"
+      action: "lend",
+      userId: this.props.userId
     });
     this.setState({
       title: "",

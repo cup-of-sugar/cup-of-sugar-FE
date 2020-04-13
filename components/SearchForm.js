@@ -62,7 +62,8 @@ class HomeForm extends React.Component {
     this.props.navigation.navigate("Search Results", {
       category: category,
       itemName: itemName,
-      action: "borrow"
+      action: "borrow",
+      userId: this.props.userId
     });
     this.setState({ category: "", itemName: "", error: "" });
   };
@@ -73,7 +74,8 @@ class HomeForm extends React.Component {
     this.props.navigation.navigate("Loan Details", {
       category: category,
       name: itemName,
-      action: "lend"
+      action: "lend",
+      userId: this.props.userId
     });
     this.setState({ category: "", itemName: "", error: "" });
   };

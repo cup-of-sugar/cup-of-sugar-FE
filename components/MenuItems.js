@@ -10,10 +10,10 @@ import {
 import Colors from "../constants/Colors";
 import { useNavigation } from "@react-navigation/native";
 
-export default function MenuItems({ closeMenu, action }) {
+export default function MenuItems({ closeMenu, action, userId }) {
   const navigation = useNavigation();
   const handlePress = path => {
-    navigation.navigate(path, { action });
+    navigation.navigate(path, { action, userId });
     closeMenu();
   };
 
@@ -35,7 +35,7 @@ export default function MenuItems({ closeMenu, action }) {
         </Text>
       </TouchableOpacity>
       <TouchableOpacity
-        onPress={() => handlePress("My Items", { action: action })}
+        onPress={() => handlePress("My Items", { action, userId })}
       >
         <Text style={styles.drawerText}>
           View My {action === "borrow" ? "Borrowed" : "Loaned"} Items
@@ -46,7 +46,7 @@ export default function MenuItems({ closeMenu, action }) {
       </TouchableOpacity>
       <TouchableOpacity
         onPress={() =>
-          handlePress(action === "borrow" ? "RequestScreen" : "Home", {
+          handlePress(action === "borrow" ? "Request" : "Home", {
             action: "lend"
           })
         }
