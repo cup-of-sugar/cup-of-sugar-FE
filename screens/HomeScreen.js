@@ -19,6 +19,7 @@ export default function HomeScreen(props) {
   return (
     <ScrollView
       style={styles.container}
+      scrollIndicatorInsets={{ right: 1 }}
       contentContainerStyle={styles.contentContainer}
     >
       <Text style={styles.welcomeText}>

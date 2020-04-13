@@ -15,6 +15,7 @@ export default function MessageDetailsScreen(props) {
     <View style={styles.container}>
       <ScrollView
         style={styles.Container}
+        scrollIndicatorInsets={{ right: 1 }}
         contentContainerStyle={styles.contentContainer}
       >
         <View style={styles.subjectContainer}>

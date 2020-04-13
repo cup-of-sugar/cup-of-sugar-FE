@@ -57,6 +57,7 @@ export default function ItemDetailsScreen(props) {
 
   return (
     <ScrollView
+      scrollIndicatorInsets={{ right: 1 }}
       style={styles.container}
       contentContainerStyle={styles.contentContainer}
     >

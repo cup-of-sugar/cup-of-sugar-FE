@@ -21,6 +21,7 @@ export default function SearchResultsScreen(props) {
   return (
     <ScrollView
       style={styles.container}
+      scrollIndicatorInsets={{ right: 1 }}
       contentContainerStyle={styles.contentContainer}
     >
       <TouchableOpacity

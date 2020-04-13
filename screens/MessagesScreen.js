@@ -19,6 +19,7 @@ export default function MessagesScreen(props) {
   return (
     <View style={styles.container}>
       <ScrollView
+        scrollIndicatorInsets={{ right: 1 }}
         style={styles.Container}
         contentContainerStyle={styles.contentContainer}
       >

@@ -76,25 +76,80 @@ export default function MyItemsScreen(props) {
 
   const { loading, error, data } = useQuery(BORROWED_ITEMS);
 
-  if (loading) {
+  const LOANED_ITEMS = gql`
+    query {
+      itemsUserHasLent(userId: "1") {
+        id
+        name
+        quantity
+        available
+        description
+        measurement
+        timeDuration
+        posting {
+          title
+        }
+        category {
+          name
+        }
+      }
+    }
+  `;
+
+  const { load, err, info } = useQuery(LOANED_ITEMS);
+
+  if (loading || load) {
     return <Text>Loading...</Text>;
   }
 
-  if (error) {
+  if (error || err) {
     return <Text>No items found!</Text>;
   }
 
-  if (data) {
+  if (data || info) {
     return (
       <View style={styles.container}>
         <Text style={styles.itemsMessage}>You are currently {action}ing:</Text>
-        <ScrollView style={styles.itemsContainer}>
-          {action === "borrow" ? (
-            data.itemsUserHasBorrowed.map(item => {
-              return !item.available ? (
-                <View style={styles.item} key={item.id + item.name}>
-                  <Text style={styles.itemName}>{item.name}</Text>
-                  {item.category.name !== "Food" ? (
+        <ScrollView
+          scrollIndicatorInsets={{ right: 1 }}
+          style={styles.itemsContainer}
+        >
+          {action === "borrow"
+            ? data.itemsUserHasBorrowed.map(item => {
+                return !item.available ? (
+                  <View style={styles.item} key={item.id + item.name}>
+                    <Text style={styles.itemName}>{item.name}</Text>
+                    {item.category.name !== "Food" ? (
+                      <TouchableOpacity
+                        style={styles.returnButton}
+                        onPress={() => {
+                          updateItem({
+                            variables: {
+                              id: item.id,
+                              available: item.available,
+                              name: item.name
+                            }
+                          }) &&
+                            navigation.navigate("Success!", {
+                              action: "return",
+                              userId: userId,
+                              name: item.name,
+                              quantity: item.quantity,
+                              measurement: item.measurement,
+                              timeDuration: item.timeDuration
+                            });
+                        }}
+                      >
+                        <Text style={styles.returnButtonText}>Return</Text>
+                      </TouchableOpacity>
+                    ) : null}
+                  </View>
+                ) : null;
+              })
+            : info.itemsUserHasLent.map(item => {
+                return (
+                  <View style={styles.item} key={item.id + item.name}>
+                    <Text style={styles.itemName}>{item.name}</Text>
                     <TouchableOpacity
                       style={styles.returnButton}
                       onPress={() => {
@@ -115,17 +170,13 @@ export default function MyItemsScreen(props) {
                           });
                       }}
                     >
-                      <Text style={styles.returnButtonText}>Return</Text>
+                      <Text style={styles.messageButtonText}>
+                        Message Borrower
+                      </Text>
                     </TouchableOpacity>
-                  ) : null}
-                </View>
-              ) : null;
-            })
-          ) : (
-            <TouchableOpacity style={styles.messageButton}>
-              <Text style={styles.messageButtonText}>Message Borrower</Text>
-            </TouchableOpacity>
-          )}
+                  </View>
+                );
+              })}
         </ScrollView>
       </View>
     );
