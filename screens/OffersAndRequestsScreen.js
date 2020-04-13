@@ -82,9 +82,13 @@ export default function OffersAndRequestsScreen(props) {
             : "Items I'm Offering To Loan"}
           :
         </Text>
-        <ScrollView style={styles.itemsContainer}>
-          {action === "borrow"
-            ? info.itemsUserLookingToBorrow.map(item => {
+        <ScrollView
+          scrollIndicatorInsets={{ right: 1 }}
+          style={styles.itemsContainer}
+        >
+          {action === "borrow" ? (
+            info.itemsUserLookingToBorrow.length ? (
+              info.itemsUserLookingToBorrow.map(item => {
                 return (
                   <View style={styles.item} key={item.id + item.name}>
                     <Text style={styles.itemName}>
@@ -102,24 +106,29 @@ export default function OffersAndRequestsScreen(props) {
                   </View>
                 );
               })
-            : data.itemsUserOfferedToLend.map(item => {
-                return (
-                  <View style={styles.item} key={item.id + item.name}>
-                    <Text style={styles.itemName}>
-                      {item.name.toLowerCase()}
-                    </Text>
-                    <Text style={styles.itemName}>
-                      {item.measurement
-                        ? item.quantity + " " + item.measurement
-                        : item.quantity &&
-                          item.timeDuration &&
-                          !item.timeDuration.includes(item.quantity)
-                        ? item.quantity + " " + item.timeDuration
-                        : item.timeDuration || item.quantity}
-                    </Text>
-                  </View>
-                );
-              })}
+            ) : (
+              <Text>No Requests Found</Text>
+            )
+          ) : data.itemsUserOfferedToLend.length ? (
+            data.itemsUserOfferedToLend.map(item => {
+              return (
+                <View style={styles.item} key={item.id + item.name}>
+                  <Text style={styles.itemName}>{item.name.toLowerCase()}</Text>
+                  <Text style={styles.itemName}>
+                    {item.measurement
+                      ? item.quantity + " " + item.measurement
+                      : item.quantity &&
+                        item.timeDuration &&
+                        !item.timeDuration.includes(item.quantity)
+                      ? item.quantity + " " + item.timeDuration
+                      : item.timeDuration || item.quantity}
+                  </Text>
+                </View>
+              );
+            })
+          ) : (
+            <Text>No Items Found!</Text>
+          )}
         </ScrollView>
       </View>
     );
@@ -156,10 +165,11 @@ const styles = StyleSheet.create({
     margin: 10,
     padding: 20,
     height: 70,
+    overflow: "hidden",
     width: 330
   },
   itemName: {
-    fontSize: 25,
+    fontSize: 23,
     fontWeight: "bold",
     color: Colors.darkBlue,
     textAlign: "left"
