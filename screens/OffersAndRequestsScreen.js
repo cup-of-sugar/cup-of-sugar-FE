@@ -21,74 +21,52 @@ export default function OffersAndRequestsScreen(props) {
   const userId = props.route.params.userId;
   let id, available, name;
 
-  const REQUESTS = gql`
-    query {
-      itemsUserLookingToBorrow(userId: "1") {
-        id
-        name
-        quantity
-        available
-        description
-        measurement
-        timeDuration
-        posting {
-          title
-        }
-        category {
+  if (action === "borrow") {
+    const REQUESTS = gql`
+      query {
+        itemsUserLookingToBorrow(userId: "1") {
+          id
           name
+          quantity
+          available
+          description
+          measurement
+          timeDuration
+          posting {
+            title
+          }
+          category {
+            name
+          }
         }
       }
+    `;
+
+    const { loading, error, data } = useQuery(REQUESTS);
+
+    if (loading) {
+      return <Text>Loading...</Text>;
     }
-  `;
 
-  const { load, err, info } = useQuery(REQUESTS);
-
-  const OFFERS = gql`
-    query {
-      itemsUserOfferedToLend(userId: "1") {
-        id
-        name
-        quantity
-        available
-        description
-        measurement
-        timeDuration
-        posting {
-          title
-        }
-        category {
-          name
-        }
-      }
+    if (error) {
+      return <Text>No items found!</Text>;
     }
-  `;
 
-  const { loading, error, data } = useQuery(OFFERS);
-
-  if (loading || load) {
-    return <Text>Loading...</Text>;
-  }
-
-  if (error || err) {
-    return <Text>No items found!</Text>;
-  }
-
-  if (data || info) {
-    return (
-      <View style={styles.container}>
-        <Text style={styles.itemsMessage}>
-          {action === "borrow"
-            ? "Items I've Requested"
-            : "Items I'm Offering To Loan"}
-          :
-        </Text>
-        <ScrollView
-          scrollIndicatorInsets={{ right: 1 }}
-          style={styles.itemsContainer}
-        >
-          {action === "borrow" ? (
-            info.itemsUserLookingToBorrow.length ? (
-              info.itemsUserLookingToBorrow.map(item => {
+    if (data) {
+      return (
+        <View style={styles.container}>
+          <Text style={styles.itemsMessage}>
+            {action === "borrow"
+              ? "Items I've Requested"
+              : "Items I'm Offering To Loan"}
+            :
+          </Text>
+          <ScrollView
+            scrollIndicatorInsets={{ right: 1 }}
+            style={styles.itemsContainer}
+          >
+            {data.itemsUserLookingToBorrow.length ? (
+              data.itemsUserLookingToBorrow.map(item => {
                 return (
                   <View style={styles.item} key={item.id + item.name}>
                     <Text style={styles.itemName}>
@@ -108,32 +86,83 @@ export default function OffersAndRequestsScreen(props) {
               })
             ) : (
               <Text>No Requests Found</Text>
-            )
-          ) : data.itemsUserOfferedToLend.length ? (
-            data.itemsUserOfferedToLend.map(item => {
-              return (
-                <View style={styles.item} key={item.id + item.name}>
-                  <Text style={styles.itemName}>{item.name.toLowerCase()}</Text>
-                  <Text style={styles.itemName}>
-                    {item.measurement
-                      ? item.quantity + " " + item.measurement
-                      : item.quantity &&
-                        item.timeDuration &&
-                        !item.timeDuration.includes(item.quantity)
-                      ? item.quantity + " " + item.timeDuration
-                      : item.timeDuration || item.quantity}
-                  </Text>
-                </View>
-              );
-            })
-          ) : (
-            <Text>No Items Found!</Text>
-          )}
-        </ScrollView>
-      </View>
-    );
+            )}
+          </ScrollView>
+        </View>
+      );
+    }
+  } else if (action === "lend") {
+    const OFFERS = gql`
+      query {
+        itemsUserOfferedToLend(userId: "1") {
+          id
+          name
+          quantity
+          available
+          description
+          measurement
+          timeDuration
+          posting {
+            title
+          }
+          category {
+            name
+          }
+        }
+      }
+    `;
+
+    const { loading, error, data } = useQuery(OFFERS);
+
+    if (loading) {
+      return <Text>Loading...</Text>;
+    }
+
+    if (error) {
+      return <Text>No items found!</Text>;
+    }
+
+    if (data) {
+      return (
+        <View style={styles.container}>
+          <Text style={styles.itemsMessage}>
+            {action === "borrow"
+              ? "Items I've Requested"
+              : "Items I'm Offering To Loan"}
+            :
+          </Text>
+          <ScrollView
+            scrollIndicatorInsets={{ right: 1 }}
+            style={styles.itemsContainer}
+          >
+            {data.itemsUserOfferedToLend.length ? (
+              data.itemsUserOfferedToLend.map(item => {
+                return (
+                  <View style={styles.item} key={item.id + item.name}>
+                    <Text style={styles.itemName}>
+                      {item.name.toLowerCase()}
+                    </Text>
+                    <Text style={styles.itemName}>
+                      {item.measurement
+                        ? item.quantity + " " + item.measurement
+                        : item.quantity &&
+                          item.timeDuration &&
+                          !item.timeDuration.includes(item.quantity)
+                        ? item.quantity + " " + item.timeDuration
+                        : item.timeDuration || item.quantity}
+                    </Text>
+                  </View>
+                );
+              })
+            ) : (
+              <Text>No Items Found!</Text>
+            )}
+          </ScrollView>
+        </View>
+      );
+    }
   } else {
-    <Text>An error has occurred! Try again later.</Text>;
+    return <Text>No Items Found!</Text>;
   }
 }
 
