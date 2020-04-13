@@ -19,6 +19,7 @@ import { useMutation } from "@apollo/react-hooks";
 
 export default function RequestScreen(props) {
   const navigation = props.navigation;
+  const userId = props.route.params.userId;
   let title, category, name, description, quantity, measurement, timeDuration;
 
   const CATEGORIES = gql`
@@ -34,6 +35,7 @@ export default function RequestScreen(props) {
   const NEW_REQUEST = gql`
     mutation CreatePosting(
       $title: String!
+      $userId: ID!
       $category: String!
       $name: String!
       $description: String!
@@ -44,7 +46,7 @@ export default function RequestScreen(props) {
       posting: createPosting(
         input: {
           title: $title
-          userId: "1"
+          userId: $userId
           postingType: "borrow"
           categoryName: $category
           name: $name
@@ -64,6 +66,7 @@ export default function RequestScreen(props) {
 
   let [addNewRequest] = useMutation(NEW_REQUEST, {
     variables: {
+      userId,
       title,
       category,
       name,
@@ -79,6 +82,7 @@ export default function RequestScreen(props) {
       navigation={navigation}
       categories={data}
       addNewRequest={addNewRequest}
+      userId={userId}
     />
   );
 }
@@ -116,6 +120,7 @@ class RequestForm extends Component {
     this.props
       .addNewRequest({
         variables: {
+          userId: this.props.userId,
           title: this.state.title,
           category: this.state.category,
           name: this.state.name,
@@ -131,7 +136,8 @@ class RequestForm extends Component {
 
   confirmRequest = () => {
     this.props.navigation.navigate("Success!", {
-      name: this.props.item,
+      name: this.state.name,
+      userId: this.props.userId,
       timeDuration: this.state.timeDuration,
       measurement: this.state.measurement,
       quantity: this.state.quantity,
@@ -139,6 +145,8 @@ class RequestForm extends Component {
     });
     this.setState({
       title: "",
+      category: "",
+      name: "",
       description: "",
       quantity: 0,
       measurement: "",
