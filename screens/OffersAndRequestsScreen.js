@@ -41,17 +41,39 @@ export default function OffersAndRequestsScreen(props) {
     }
   `;
 
-  const { loading, error, data } = useQuery(REQUESTS);
+  const { load, err, info } = useQuery(REQUESTS);
 
-  if (loading) {
+  const OFFERS = gql`
+    query {
+      itemsUserOfferedToLend(userId: "1") {
+        id
+        name
+        quantity
+        available
+        description
+        measurement
+        timeDuration
+        posting {
+          title
+        }
+        category {
+          name
+        }
+      }
+    }
+  `;
+
+  const { loading, error, data } = useQuery(OFFERS);
+
+  if (loading || load) {
     return <Text>Loading...</Text>;
   }
 
-  if (error) {
+  if (error || err) {
     return <Text>No items found!</Text>;
   }
 
-  if (data) {
+  if (data || info) {
     return (
       <View style={styles.container}>
         <Text style={styles.itemsMessage}>
@@ -61,31 +83,48 @@ export default function OffersAndRequestsScreen(props) {
           :
         </Text>
         <ScrollView style={styles.itemsContainer}>
-          {action === "borrow" ? (
-            data.itemsUserLookingToBorrow.map(item => {
-              return (
-                <View style={styles.item} key={item.id + item.name}>
-                  <Text style={styles.itemName}>{item.name.toLowerCase()}</Text>
-                  <Text style={styles.itemName}>
-                    {item.measurement
-                      ? item.quantity + " " + item.measurement
-                      : item.quantity &&
-                        item.timeDuration &&
-                        !item.timeDuration.includes(item.quantity)
-                      ? item.quantity + " " + item.timeDuration
-                      : item.timeDuration || item.quantity}
-                  </Text>
-                </View>
-              );
-            })
-          ) : (
-            <TouchableOpacity style={styles.messageButton}>
-              <Text style={styles.messageButtonText}>Message Borrower</Text>
-            </TouchableOpacity>
-          )}
+          {action === "borrow"
+            ? info.itemsUserLookingToBorrow.map(item => {
+                return (
+                  <View style={styles.item} key={item.id + item.name}>
+                    <Text style={styles.itemName}>
+                      {item.name.toLowerCase()}
+                    </Text>
+                    <Text style={styles.itemName}>
+                      {item.measurement
+                        ? item.quantity + " " + item.measurement
+                        : item.quantity &&
+                          item.timeDuration &&
+                          !item.timeDuration.includes(item.quantity)
+                        ? item.quantity + " " + item.timeDuration
+                        : item.timeDuration || item.quantity}
+                    </Text>
+                  </View>
+                );
+              })
+            : data.itemsUserOfferedToLend.map(item => {
+                return (
+                  <View style={styles.item} key={item.id + item.name}>
+                    <Text style={styles.itemName}>
+                      {item.name.toLowerCase()}
+                    </Text>
+                    <Text style={styles.itemName}>
+                      {item.measurement
+                        ? item.quantity + " " + item.measurement
+                        : item.quantity &&
+                          item.timeDuration &&
+                          !item.timeDuration.includes(item.quantity)
+                        ? item.quantity + " " + item.timeDuration
+                        : item.timeDuration || item.quantity}
+                    </Text>
+                  </View>
+                );
+              })}
         </ScrollView>
       </View>
     );
+  } else {
+    <Text>An error has occurred! Try again later.</Text>;
   }
 }
 
