@@ -19,14 +19,7 @@ import { useMutation } from "@apollo/react-hooks";
 
 export default function RequestScreen(props) {
   const navigation = props.navigation;
-  let title,
-    userID,
-    category,
-    name,
-    description,
-    quantity,
-    measurement,
-    timeDuration;
+  let title, category, name, description, quantity, measurement, timeDuration;
 
   const CATEGORIES = gql`
     {
@@ -41,7 +34,6 @@ export default function RequestScreen(props) {
   const NEW_REQUEST = gql`
     mutation CreatePosting(
       $title: String!
-      $userID: String!
       $category: String!
       $name: String!
       $description: String!
@@ -52,7 +44,7 @@ export default function RequestScreen(props) {
       posting: createPosting(
         input: {
           title: $title
-          userID: $userID
+          userId: "1"
           postingType: "borrow"
           categoryName: $category
           name: $name
@@ -73,7 +65,6 @@ export default function RequestScreen(props) {
   let [addNewRequest] = useMutation(NEW_REQUEST, {
     variables: {
       title,
-      userID,
       category,
       name,
       description,
@@ -108,6 +99,7 @@ class RequestForm extends Component {
   }
 
   checkInputs = () => {
+    !this.state.title ||
     !this.state.category ||
     !this.state.name ||
     !this.state.description ||
@@ -188,7 +180,7 @@ class RequestForm extends Component {
               })
             }}
             name="title"
-            onChange={text => this.handleChange("title", text)}
+            onChangeText={text => this.handleChange("title", text)}
           ></TextInput>
           <Text
             style={{
@@ -230,7 +222,7 @@ class RequestForm extends Component {
               })
             }}
             name="name"
-            onChange={text => this.handleChange("name", text)}
+            onChangeText={text => this.handleChange("name", text)}
           ></TextInput>
           <Text
             style={{
@@ -247,8 +239,29 @@ class RequestForm extends Component {
                 android: styles.input
               })
             }}
-            onChange={text => this.handleChange("description", text)}
+            onChangeText={text => this.handleChange("description", text)}
             name="description"
+          ></TextInput>
+          <Text
+            style={{
+              ...Platform.select({ ios: styles.header, android: styles.label })
+            }}
+          >
+            Quantity
+          </Text>
+          <TextInput
+            placeholder="Quantity..."
+            style={{
+              ...Platform.select({
+                ios: styles.textInput,
+                android: styles.input
+              })
+            }}
+            onChangeText={text => this.handleChange("quantity", text)}
+            name="quantity"
+            numericvalue
+            keyboardType={"numeric"}
+            value={String(this.state.quantity)}
           ></TextInput>
           {this.props.category === "Food" ? (
             <View>
