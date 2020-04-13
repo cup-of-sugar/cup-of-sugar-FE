@@ -13,7 +13,7 @@ import * as Font from "expo-font";
 import { Ionicons } from "@expo/vector-icons";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
-import { RequestScreen } from "./screens/RequestScreen";
+import RequestScreen from "./screens/RequestScreen";
 import HomeScreen from "./screens/HomeScreen";
 import LinksScreen from "./screens/LinksScreen";
 import LoanDetailsScreen from "./screens/LoanDetailsScreen";
@@ -23,6 +23,8 @@ import SearchResultsScreen from "./screens/SearchResultsScreen";
 import MyItemsScreen from "./screens/MyItemsScreen";
 import PathScreen from "./screens/PathScreen";
 import LoginScreen from "./screens/LoginScreen";
+import MessagesScreen from "./screens/MessagesScreen";
+import MessageDetailsScreen from "./screens/MessageDetailsScreen";
 import useLinking from "./navigation/useLinking";
 import cup from "./assets/images/cup.png";
 import Colors from "./constants/Colors";
@@ -142,6 +144,38 @@ export default function App(props) {
                 }}
               />
               <Stack.Screen
+                name="Messages"
+                component={MessagesScreen}
+                options={{
+                  headerStyle: {
+                    backgroundColor: Colors.darkBlue,
+                    height: 120
+                  },
+                  headerTitleStyle: {
+                    color: "white",
+                    fontSize: 25
+                  },
+                  headerRight: () => <Image source={cup} style={styles.logo} />,
+                  headerTintColor: "white"
+                }}
+              />
+              <Stack.Screen
+                name="Message"
+                component={MessageDetailsScreen}
+                options={{
+                  headerStyle: {
+                    backgroundColor: Colors.darkBlue,
+                    height: 120
+                  },
+                  headerTitleStyle: {
+                    color: "white",
+                    fontSize: 25
+                  },
+                  headerRight: () => <Image source={cup} style={styles.logo} />,
+                  headerTintColor: "white"
+                }}
+              />
+              <Stack.Screen
                 name="Search Results"
                 component={SearchResultsScreen}
                 options={{
@@ -189,7 +223,22 @@ export default function App(props) {
                   headerTintColor: "white"
                 }}
               />
-              <Stack.Screen name="RequestScreen" component={RequestScreen} />
+              <Stack.Screen
+                name="Request"
+                component={RequestScreen}
+                options={{
+                  headerStyle: {
+                    backgroundColor: Colors.darkBlue,
+                    height: 120
+                  },
+                  headerTitleStyle: {
+                    color: "white",
+                    fontSize: 25
+                  },
+                  headerRight: () => <Image source={cup} style={styles.logo} />,
+                  headerTintColor: "white"
+                }}
+              />
             </Stack.Navigator>
           </NavigationContainer>
         </View>
