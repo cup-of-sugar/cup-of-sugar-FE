@@ -22,100 +22,81 @@ export default function MyItemsScreen(props) {
   const userId = props.route.params.userId;
   let id, available, name;
 
-  const UPDATE_ITEM = gql`
-    mutation UpdateItemAvailability(
-      $id: ID!
-      $available: Boolean!
-      $name: String!
-    ) {
-      item: updateItemAvailability(
-        input: { userId: "1", id: $id, available: $available, name: $name }
+  if (action === "borrow") {
+    const BORROWED_ITEMS = gql`
+      query {
+        itemsUserHasBorrowed(userId: "1") {
+          id
+          name
+          quantity
+          available
+          description
+          measurement
+          timeDuration
+          posting {
+            title
+          }
+          category {
+            name
+          }
+        }
+      }
+    `;
+
+    const { loading, error, data } = useQuery(BORROWED_ITEMS);
+
+    const UPDATE_ITEM = gql`
+      mutation UpdateItemAvailability(
+        $id: ID!
+        $available: Boolean!
+        $name: String!
       ) {
-        id
-        available
-        name
-      }
-    }
-  `;
-
-  const [updateItem] = useMutation(UPDATE_ITEM, {
-    variables: {
-      id,
-      available,
-      name
-    },
-    refetchQueries: () => [
-      {
-        query: BORROWED_ITEMS,
-        variables: {
-          userId: "1"
-        }
-      }
-    ]
-  });
-
-  const BORROWED_ITEMS = gql`
-    query {
-      itemsUserHasBorrowed(userId: "1") {
-        id
-        name
-        quantity
-        available
-        description
-        measurement
-        timeDuration
-        posting {
-          title
-        }
-        category {
+        item: updateItemAvailability(
+          input: { userId: "1", id: $id, available: $available, name: $name }
+        ) {
+          id
+          available
           name
         }
       }
-    }
-  `;
+    `;
 
-  const { loading, error, data } = useQuery(BORROWED_ITEMS);
-
-  const LOANED_ITEMS = gql`
-    query {
-      itemsUserHasLent(userId: "1") {
-        id
+    const [updateItem] = useMutation(UPDATE_ITEM, {
+      variables: {
+        id,
+        available,
         name
-        quantity
-        available
-        description
-        measurement
-        timeDuration
-        posting {
-          title
+      },
+      refetchQueries: () => [
+        {
+          query: BORROWED_ITEMS,
+          variables: {
+            userId: "1"
+          }
         }
-        category {
-          name
-        }
-      }
+      ]
+    });
+
+    if (loading) {
+      return <Text>Loading...</Text>;
     }
-  `;
 
-  const { load, err, info } = useQuery(LOANED_ITEMS);
+    if (error) {
+      return <Text>No items found!</Text>;
+    }
 
-  if (loading || load) {
-    return <Text>Loading...</Text>;
-  }
-
-  if (error || err) {
-    return <Text>No items found!</Text>;
-  }
-
-  if (data || info) {
-    return (
-      <View style={styles.container}>
-        <Text style={styles.itemsMessage}>You are currently {action}ing:</Text>
-        <ScrollView
-          scrollIndicatorInsets={{ right: 1 }}
-          style={styles.itemsContainer}
-        >
-          {action === "borrow"
-            ? data.itemsUserHasBorrowed.map(item => {
+    if (data) {
+      return (
+        <View style={styles.container}>
+          <Text style={styles.itemsMessage}>
+            You are currently {action}ing:
+          </Text>
+          <ScrollView
+            scrollIndicatorInsets={{ right: 1 }}
+            style={styles.itemsContainer}
+          >
+            {data.itemsUserHasBorrowed.length ? (
+              data.itemsUserHasBorrowed.map(item => {
                 return !item.available ? (
                   <View style={styles.item} key={item.id + item.name}>
                     <Text style={styles.itemName}>{item.name}</Text>
@@ -146,40 +127,84 @@ export default function MyItemsScreen(props) {
                   </View>
                 ) : null;
               })
-            : info.itemsUserHasLent.map(item => {
+            ) : (
+              <Text>You're not borrowing any items right currently!</Text>
+            )}
+          </ScrollView>
+        </View>
+      );
+    }
+  } else if (action === "lend") {
+    const LOANED_ITEMS = gql`
+      query {
+        itemsUserHasLent(userId: "1") {
+          id
+          name
+          quantity
+          available
+          description
+          measurement
+          timeDuration
+          posting {
+            title
+          }
+          category {
+            name
+          }
+        }
+      }
+    `;
+
+    const { loading, error, data } = useQuery(LOANED_ITEMS);
+
+    if (loading) {
+      return <Text>Loading...</Text>;
+    }
+
+    if (error) {
+      return <Text>No items found!</Text>;
+    }
+
+    if (data) {
+      return (
+        <View style={styles.container}>
+          <View style={styles.infoContainer}>
+            <Text style={styles.itemsMessage}>
+              Tap{" "}
+              <Text style={{ fontWeight: "bold", color: Colors.darkBlue }}>
+                Message
+              </Text>{" "}
+              to contact the neighbor currently borrowing your item.
+            </Text>
+            <Text style={styles.itemsMessage}>
+              You are currently {action}
+              ing:
+            </Text>
+          </View>
+          <ScrollView
+            scrollIndicatorInsets={{ right: 1 }}
+            style={styles.itemsContainer}
+          >
+            {data.itemsUserHasLent.length ? (
+              data.itemsUserHasLent.map(item => {
                 return (
                   <View style={styles.item} key={item.id + item.name}>
                     <Text style={styles.itemName}>{item.name}</Text>
-                    <TouchableOpacity
-                      style={styles.returnButton}
-                      onPress={() => {
-                        updateItem({
-                          variables: {
-                            id: item.id,
-                            available: item.available,
-                            name: item.name
-                          }
-                        }) &&
-                          navigation.navigate("Success!", {
-                            action: "return",
-                            userId: userId,
-                            name: item.name,
-                            quantity: item.quantity,
-                            measurement: item.measurement,
-                            timeDuration: item.timeDuration
-                          });
-                      }}
-                    >
-                      <Text style={styles.messageButtonText}>
-                        Message Borrower
-                      </Text>
+                    <TouchableOpacity style={styles.messageButton}>
+                      <Text style={styles.messageButtonText}>Message</Text>
                     </TouchableOpacity>
                   </View>
                 );
-              })}
-        </ScrollView>
-      </View>
-    );
+              })
+            ) : (
+              <Text>You're not loaning any items yet!</Text>
+            )}
+          </ScrollView>
+        </View>
+      );
+    }
+  } else {
+    <Text>Nothing found!</Text>;
   }
 }
 
@@ -187,17 +212,21 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#fff",
-    paddingTop: 80
+    paddingTop: 20
   },
   itemsContainer: {
     flex: 1
+  },
+  infoContainer: {
+    alignItems: "center",
+    flex: 0
   },
   itemsMessage: {
     fontSize: 22,
     fontWeight: "bold",
     color: "black",
-    lineHeight: 35,
-    margin: 20,
+    lineHeight: 32,
+    margin: 15,
     textAlign: "center"
   },
   item: {
@@ -211,7 +240,7 @@ const styles = StyleSheet.create({
     margin: 10,
     padding: 20,
     height: 70,
-    width: 330
+    width: 360
   },
   itemName: {
     fontSize: 25,
@@ -242,11 +271,11 @@ const styles = StyleSheet.create({
     borderColor: Colors.darkBlue,
     color: "#fff",
     height: 50,
-    paddingTop: 12,
-    width: 190
+    paddingTop: 8,
+    width: 115
   },
   messageButtonText: {
-    fontSize: 18,
+    fontSize: 22,
     fontWeight: "bold",
     color: "#fff",
     textAlign: "center"
