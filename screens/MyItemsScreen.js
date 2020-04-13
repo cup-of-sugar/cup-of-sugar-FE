@@ -78,11 +78,11 @@ export default function MyItemsScreen(props) {
     });
 
     if (loading) {
-      return <Text>Loading...</Text>;
+      return <Text style={styles.errorText}>Loading...</Text>;
     }
 
     if (error) {
-      return <Text>No items found!</Text>;
+      return <Text style={styles.errorText}>No items found!</Text>;
     }
 
     if (data) {
@@ -126,7 +126,9 @@ export default function MyItemsScreen(props) {
                 ) : null;
               })
             ) : (
-              <Text>You're not borrowing any items currently!</Text>
+              <Text style={styles.errorText}>
+                You're not borrowing any items currently!
+              </Text>
             )}
           </ScrollView>
         </View>
@@ -156,11 +158,11 @@ export default function MyItemsScreen(props) {
     const { loading, error, data } = useQuery(LOANED_ITEMS);
 
     if (loading) {
-      return <Text>Loading...</Text>;
+      return <Text style={styles.errorText}>Loading...</Text>;
     }
 
     if (error) {
-      return <Text>No items found!</Text>;
+      return <Text style={styles.errorText}>No items found!</Text>;
     }
 
     if (data) {
@@ -192,18 +194,27 @@ export default function MyItemsScreen(props) {
                 );
               })
             ) : (
-              <Text>You're not loaning any items yet!</Text>
+              <Text style={styles.errorText}>
+                You're not loaning any items yet!
+              </Text>
             )}
           </ScrollView>
         </View>
       );
     }
   } else {
-    <Text>Nothing found!</Text>;
+    <Text style={styles.errorText}>Nothing found!</Text>;
   }
 }
 
 const styles = StyleSheet.create({
+  errorText: {
+    alignSelf: "center",
+    color: "red",
+    fontSize: 20,
+    fontWeight: "bold",
+    margin: 10
+  },
   container: {
     flex: 1,
     backgroundColor: "#fff",
