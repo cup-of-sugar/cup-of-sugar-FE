@@ -14,16 +14,22 @@ import { ScrollView } from "react-native-gesture-handler";
 
 import { gql } from "apollo-boost";
 import { useMutation } from "@apollo/react-hooks";
+import { useQuery } from "@apollo/react-hooks";
 
 export default function MyItemsScreen(props) {
   const navigation = useNavigation();
   const action = props.route.params.action;
   const userId = props.route.params.userId;
+  let id, available, name;
 
   const UPDATE_ITEM = gql`
-    mutation {
+    mutation UpdateItemAvailability(
+      $id: ID!
+      $available: Boolean!
+      $name: String!
+    ) {
       item: updateItemAvailability(
-        input: { userId: "1", id: 13, available: false, name: "trowel" }
+        input: { userId: "1", id: $id, available: $available, name: $name }
       ) {
         id
         available
@@ -32,48 +38,95 @@ export default function MyItemsScreen(props) {
     }
   `;
 
-  const [updateItem] = useMutation(UPDATE_ITEM);
+  const [updateItem] = useMutation(UPDATE_ITEM, {
+    variables: {
+      id,
+      available,
+      name
+    },
+    refetchQueries: () => [
+      {
+        query: BORROWED_ITEMS,
+        variables: {
+          userId: "1"
+        }
+      }
+    ]
+  });
 
-  const item = {
-    name: "trowel",
-    userId: userId,
-    quantity: 13,
-    measurement: null,
-    timeDuration: "weeks"
-  };
+  const BORROWED_ITEMS = gql`
+    query {
+      itemsUserHasBorrowed(userId: "1") {
+        id
+        name
+        quantity
+        available
+        description
+        measurement
+        timeDuration
+        posting {
+          title
+        }
+      }
+    }
+  `;
 
-  return (
-    <View style={styles.container}>
-      <Text style={styles.itemsMessage}>You are currently {action}ing:</Text>
-      <ScrollView style={styles.itemsContainer}>
-        <View style={styles.item}>
-          <Text style={styles.itemName}>Trowel</Text>
+  const { loading, error, data } = useQuery(BORROWED_ITEMS);
+
+  if (loading) {
+    return <Text>Loading...</Text>;
+  }
+
+  if (error) {
+    return <Text>No items found!</Text>;
+  }
+
+  if (data) {
+    return (
+      <View style={styles.container}>
+        <Text style={styles.itemsMessage}>You are currently {action}ing:</Text>
+        <ScrollView style={styles.itemsContainer}>
           {action === "borrow" ? (
-            <TouchableOpacity
-              style={styles.returnButton}
-              onPress={() => {
-                updateItem() &&
-                  navigation.navigate("Success!", {
-                    action: "return",
-                    userId: userId,
-                    name: item.name,
-                    quantity: item.quantity,
-                    measurement: item.measurement,
-                    timeDuration: item.timeDuration
-                  });
-              }}
-            >
-              <Text style={styles.returnButtonText}>Return</Text>
-            </TouchableOpacity>
+            data.itemsUserHasBorrowed.map(item => {
+              return !item.available ? (
+                <View style={styles.item} key={item.id + item.name}>
+                  <Text style={styles.itemName}>{item.name}</Text>
+                  {item.category !== "Food" ? (
+                    <TouchableOpacity
+                      style={styles.returnButton}
+                      onPress={() => {
+                        updateItem({
+                          variables: {
+                            id: item.id,
+                            available: item.available,
+                            name: item.name
+                          }
+                        }) &&
+                          navigation.navigate("Success!", {
+                            action: "return",
+                            userId: userId,
+                            name: item.name,
+                            quantity: item.quantity,
+                            measurement: item.measurement,
+                            timeDuration: item.timeDuration
+                          });
+                      }}
+                    >
+                      <Text style={styles.returnButtonText}>Return</Text>
+                    </TouchableOpacity>
+                  ) : null}
+                </View>
+              ) : null;
+            })
           ) : (
             <TouchableOpacity style={styles.messageButton}>
               <Text style={styles.messageButtonText}>Message Borrower</Text>
             </TouchableOpacity>
           )}
-        </View>
-      </ScrollView>
-    </View>
-  );
+        </ScrollView>
+      </View>
+    );
+  }
 }
 
 const styles = StyleSheet.create({
@@ -120,7 +173,7 @@ const styles = StyleSheet.create({
     color: "#fff",
     height: 50,
     paddingTop: 10,
-    width: 150
+    width: 100
   },
   returnButtonText: {
     fontSize: 20,
