@@ -38,7 +38,7 @@ export default function MenuItems({ closeMenu, action, userId }) {
         onPress={() => handlePress("My Items", { action, userId })}
       >
         <Text style={styles.drawerText}>
-          {action === "borrow" ? "My Borrowed Items" : "Items I'm Loaning"}
+          {action === "borrow" ? "My Borrowed Items" : "Items I'm Lending"}
         </Text>
       </TouchableOpacity>
       <TouchableOpacity
