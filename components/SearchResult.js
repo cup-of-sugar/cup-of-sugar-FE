@@ -54,7 +54,9 @@ class SearchResultClass extends React.Component {
         }
       >
         <Image style={styles.photo} source={this.state.imageUrl || cup} />
-        <Text style={styles.itemName}>{this.props.item.name}</Text>
+        <Text style={styles.itemName}>
+          {this.props.item.name.toLowerCase()}
+        </Text>
         <Image
           style={styles.icon}
           source={this.props.item.available ? available : out}
