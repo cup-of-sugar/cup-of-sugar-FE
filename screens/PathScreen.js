@@ -12,11 +12,15 @@ import { ScrollView } from "react-native-gesture-handler";
 import Colors from "../constants/Colors";
 import cupOfSugar from "../assets/images/cupofsugar.png";
 
-export default function PathScreen({ navigation }) {
+export default function PathScreen(props) {
+  const userId = props.route.params.userId;
+
   const handleChoice = action => {
+    const items = [["action", action], ["userId", userId]];
+    console.log(items);
     try {
-      AsyncStorage.setItem("action", action).then(() =>
-        navigation.navigate("Home", { action: action })
+      AsyncStorage.multiSet(items).then(() =>
+        props.navigation.navigate("Home", { action, userId })
       );
     } catch (error) {
       console.log("error saving choice");
