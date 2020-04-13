@@ -38,7 +38,14 @@ export default function MenuItems({ closeMenu, action, userId }) {
         onPress={() => handlePress("My Items", { action, userId })}
       >
         <Text style={styles.drawerText}>
-          View My {action === "borrow" ? "Borrowed" : "Loaned"} Items
+          {action === "borrow" ? "My Borrowed Items" : "Items I'm Loaning"}
+        </Text>
+      </TouchableOpacity>
+      <TouchableOpacity
+        onPress={() => handlePress("OffersAndRequests", { action, userId })}
+      >
+        <Text style={styles.drawerText}>
+          {action === "borrow" ? "My Item Requests" : "Items I'm Offering"}
         </Text>
       </TouchableOpacity>
       <TouchableOpacity onPress={() => handlePress("Messages")}>
@@ -65,7 +72,7 @@ export default function MenuItems({ closeMenu, action, userId }) {
 const styles = StyleSheet.create({
   drawerItems: {
     backgroundColor: Colors.lightBlue,
-    height: 350,
+    height: 420,
     width: 300
   },
   drawerText: {
