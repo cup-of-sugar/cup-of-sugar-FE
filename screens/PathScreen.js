@@ -30,6 +30,7 @@ export default function PathScreen(props) {
   return (
     <ScrollView
       style={styles.container}
+      scrollIndicatorInsets={{ right: 1 }}
       contentContainerStyle={styles.contentContainer}
     >
       <Image style={styles.logo} source={cupOfSugar} />

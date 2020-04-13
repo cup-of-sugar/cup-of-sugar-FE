@@ -128,6 +128,7 @@ export function SearchResultsContainer(props) {
       <View style={styles.searchContainer}>
         <ScrollView
           style={styles.searchContainer}
+          scrollIndicatorInsets={{ right: 1 }}
           contentContainerStyle={styles.contentContainer}
         >
           <Text style={styles.resultsText}>Results:</Text>

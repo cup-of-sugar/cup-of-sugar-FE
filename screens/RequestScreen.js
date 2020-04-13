@@ -170,6 +170,7 @@ class RequestForm extends Component {
       <View style={styles.container}>
         <ScrollView
           style={styles.container}
+          scrollIndicatorInsets={{ right: 1 }}
           contentContainerStyle={styles.contentContainer}
         >
           <Text
