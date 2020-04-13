@@ -11,6 +11,11 @@ exports[`should render component 1`] = `
   }
   onGestureHandlerEvent={[Function]}
   onGestureHandlerStateChange={[Function]}
+  scrollIndicatorInsets={
+    Object {
+      "right": 1,
+    }
+  }
   style={
     Object {
       "backgroundColor": "#385A94",
