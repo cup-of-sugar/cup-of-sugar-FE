@@ -45,11 +45,11 @@ export default function OffersAndRequestsScreen(props) {
     const { loading, error, data } = useQuery(REQUESTS);
 
     if (loading) {
-      return <Text>Loading...</Text>;
+      return <Text style={styles.errorText}>Loading...</Text>;
     }
 
     if (error) {
-      return <Text>No items found!</Text>;
+      return <Text style={styles.errorText}>No items found!</Text>;
     }
 
     if (data) {
@@ -80,7 +80,7 @@ export default function OffersAndRequestsScreen(props) {
                 );
               })
             ) : (
-              <Text>No Requests Found</Text>
+              <Text style={styles.errorText}>No Requests Found</Text>
             )}
           </ScrollView>
         </View>
@@ -110,11 +110,11 @@ export default function OffersAndRequestsScreen(props) {
     const { loading, error, data } = useQuery(OFFERS);
 
     if (loading) {
-      return <Text>Loading...</Text>;
+      return <Text style={styles.errorText}>Loading...</Text>;
     }
 
     if (error) {
-      return <Text>No items found!</Text>;
+      return <Text style={styles.errorText}>No items found!</Text>;
     }
 
     if (data) {
@@ -145,18 +145,25 @@ export default function OffersAndRequestsScreen(props) {
                 );
               })
             ) : (
-              <Text>No Items Found!</Text>
+              <Text style={styles.errorText}>No Items Found!</Text>
             )}
           </ScrollView>
         </View>
       );
     }
   } else {
-    return <Text>No Items Found!</Text>;
+    return <Text style={styles.errorText}>No Items Found!</Text>;
   }
 }
 
 const styles = StyleSheet.create({
+  errorText: {
+    alignSelf: "center",
+    color: "red",
+    fontSize: 20,
+    fontWeight: "bold",
+    margin: 10
+  },
   container: {
     flex: 1,
     backgroundColor: "#fff",
