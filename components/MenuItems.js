@@ -10,10 +10,10 @@ import {
 import Colors from "../constants/Colors";
 import { useNavigation } from "@react-navigation/native";
 
-export default function MenuItems({ closeMenu, action }) {
+export default function MenuItems({ closeMenu, action, userId }) {
   const navigation = useNavigation();
   const handlePress = path => {
-    navigation.navigate(path, { action });
+    navigation.navigate(path, { action, userId });
     closeMenu();
   };
 
@@ -35,15 +35,18 @@ export default function MenuItems({ closeMenu, action }) {
         </Text>
       </TouchableOpacity>
       <TouchableOpacity
-        onPress={() => handlePress("My Items", { action: action })}
+        onPress={() => handlePress("My Items", { action, userId })}
       >
         <Text style={styles.drawerText}>
           View My {action === "borrow" ? "Borrowed" : "Loaned"} Items
         </Text>
       </TouchableOpacity>
+      <TouchableOpacity onPress={() => handlePress("Messages")}>
+        <Text style={styles.drawerText}>My Messages</Text>
+      </TouchableOpacity>
       <TouchableOpacity
         onPress={() =>
-          handlePress(action === "borrow" ? "RequestScreen" : "Home", {
+          handlePress(action === "borrow" ? "Request" : "Home", {
             action: "lend"
           })
         }
@@ -62,7 +65,7 @@ export default function MenuItems({ closeMenu, action }) {
 const styles = StyleSheet.create({
   drawerItems: {
     backgroundColor: Colors.lightBlue,
-    height: 280,
+    height: 350,
     width: 300
   },
   drawerText: {

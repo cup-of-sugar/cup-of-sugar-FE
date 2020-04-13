@@ -18,11 +18,12 @@ import { useMutation } from "@apollo/react-hooks";
 export default function MyItemsScreen(props) {
   const navigation = useNavigation();
   const action = props.route.params.action;
+  const userId = props.route.params.userId;
 
   const UPDATE_ITEM = gql`
     mutation {
       item: updateItemAvailability(
-        input: { id: 23, available: false, name: "trowel" }
+        input: { userId: "1", id: 13, available: false, name: "trowel" }
       ) {
         id
         available
@@ -35,7 +36,8 @@ export default function MyItemsScreen(props) {
 
   const item = {
     name: "trowel",
-    quantity: 23,
+    userId: userId,
+    quantity: 13,
     measurement: null,
     timeDuration: "weeks"
   };
@@ -53,6 +55,7 @@ export default function MyItemsScreen(props) {
                 updateItem() &&
                   navigation.navigate("Success!", {
                     action: "return",
+                    userId: userId,
                     name: item.name,
                     quantity: item.quantity,
                     measurement: item.measurement,

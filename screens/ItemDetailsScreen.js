@@ -11,14 +11,15 @@ import { useMutation } from "@apollo/react-hooks";
 export default function ItemDetailsScreen(props) {
   const item = props.route.params.item;
   const image = props.route.params.image;
-  const action = props.route.params.item;
+  const action = props.route.params.action;
+  const userId = props.route.params.userId;
 
   const [status, setStatus] = React.useState(true);
 
   const UPDATE_ITEM = gql`
     mutation {
       item: updateItemAvailability(
-        input: { id: ${item.id}, available: ${item.available}, name: "${item.name}" }
+        input: { userId: ${userId} id: ${item.id}, available: ${item.available}, name: "${item.name}" }
       ) {
         id
         available
@@ -33,6 +34,7 @@ export default function ItemDetailsScreen(props) {
       .then(() =>
         props.navigation.navigate("Success!", {
           action: "borrow",
+          userId: userId,
           name: item.name,
           quantity: item.quantity,
           measurement: item.measurement,
@@ -95,7 +97,7 @@ export default function ItemDetailsScreen(props) {
       ) : (
         <TouchableOpacity
           style={styles.borrowButton}
-          onPress={() => props.navigation.navigate("Home", { action })}
+          onPress={() => props.navigation.navigate("Home", { action, userId })}
         >
           <Text style={styles.borrowButtonText}>Try Another Search</Text>
         </TouchableOpacity>
@@ -119,8 +121,7 @@ const styles = StyleSheet.create({
     width: "85%"
   },
   borrowButton: {
-    marginRight: 40,
-    marginLeft: 40,
+    marginHorizontal: 30,
     marginTop: 20,
     paddingTop: 20,
     paddingBottom: 20,

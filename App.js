@@ -15,7 +15,6 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import RequestScreen from "./screens/RequestScreen";
 import HomeScreen from "./screens/HomeScreen";
-import LinksScreen from "./screens/LinksScreen";
 import LoanDetailsScreen from "./screens/LoanDetailsScreen";
 import SuccessScreen from "./screens/SuccessScreen";
 import ItemDetailsScreen from "./screens/ItemDetailsScreen";
@@ -23,6 +22,8 @@ import SearchResultsScreen from "./screens/SearchResultsScreen";
 import MyItemsScreen from "./screens/MyItemsScreen";
 import PathScreen from "./screens/PathScreen";
 import LoginScreen from "./screens/LoginScreen";
+import MessagesScreen from "./screens/MessagesScreen";
+import MessageDetailsScreen from "./screens/MessageDetailsScreen";
 import useLinking from "./navigation/useLinking";
 import cup from "./assets/images/cup.png";
 import Colors from "./constants/Colors";
@@ -128,6 +129,38 @@ export default function App(props) {
               <Stack.Screen
                 name="My Items"
                 component={MyItemsScreen}
+                options={{
+                  headerStyle: {
+                    backgroundColor: Colors.darkBlue,
+                    height: 120
+                  },
+                  headerTitleStyle: {
+                    color: "white",
+                    fontSize: 25
+                  },
+                  headerRight: () => <Image source={cup} style={styles.logo} />,
+                  headerTintColor: "white"
+                }}
+              />
+              <Stack.Screen
+                name="Messages"
+                component={MessagesScreen}
+                options={{
+                  headerStyle: {
+                    backgroundColor: Colors.darkBlue,
+                    height: 120
+                  },
+                  headerTitleStyle: {
+                    color: "white",
+                    fontSize: 25
+                  },
+                  headerRight: () => <Image source={cup} style={styles.logo} />,
+                  headerTintColor: "white"
+                }}
+              />
+              <Stack.Screen
+                name="Message"
+                component={MessageDetailsScreen}
                 options={{
                   headerStyle: {
                     backgroundColor: Colors.darkBlue,

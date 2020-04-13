@@ -12,6 +12,7 @@ import Colors from "../constants/Colors";
 
 export default function SuccessScreen(props) {
   const action = props.route.params.action;
+  const userId = props.route.params.userId;
   const name = props.route.params.name;
   const quantity = props.route.params.quantity;
   const measurement = props.route.params.measurement;
@@ -51,7 +52,9 @@ export default function SuccessScreen(props) {
           </Text>
           <TouchableOpacity
             style={styles.messageButton}
-            onPress={() => props.navigation.navigate("Home", { action })}
+            onPress={() =>
+              props.navigation.navigate("Home", { action, userId })
+            }
           >
             <Text style={styles.messageButtonText}>Send Message</Text>
           </TouchableOpacity>
@@ -61,7 +64,9 @@ export default function SuccessScreen(props) {
           <Text style={styles.successMessage}>Thank you!</Text>
           <TouchableOpacity
             style={styles.messageButton}
-            onPress={() => props.navigation.navigate("Home", { action })}
+            onPress={() =>
+              props.navigation.navigate("Home", { action, userId })
+            }
           >
             <Text style={styles.messageButtonText}>
               {action === "lend" ? "Loan" : "Borrow"} Another Item

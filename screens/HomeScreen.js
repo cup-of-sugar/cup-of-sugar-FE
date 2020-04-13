@@ -14,6 +14,7 @@ import Colors from "../constants/Colors";
 
 export default function HomeScreen(props) {
   const pathAction = props.route.params.action;
+  const userId = props.route.params.userId;
 
   return (
     <ScrollView
@@ -23,7 +24,7 @@ export default function HomeScreen(props) {
       <Text style={styles.welcomeText}>
         What would you like to {pathAction} today?
       </Text>
-      <SearchForm action={pathAction} />
+      <SearchForm action={pathAction} userId={userId} />
     </ScrollView>
   );
 }
