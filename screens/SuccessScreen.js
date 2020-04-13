@@ -58,6 +58,14 @@ export default function SuccessScreen(props) {
           >
             <Text style={styles.messageButtonText}>Send Message</Text>
           </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.messageButton}
+            onPress={() =>
+              props.navigation.navigate("Home", { action, userId })
+            }
+          >
+            <Text style={styles.messageButtonText}>Message Later</Text>
+          </TouchableOpacity>
         </>
       ) : (
         <>
