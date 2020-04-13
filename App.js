@@ -24,6 +24,7 @@ import PathScreen from "./screens/PathScreen";
 import LoginScreen from "./screens/LoginScreen";
 import MessagesScreen from "./screens/MessagesScreen";
 import MessageDetailsScreen from "./screens/MessageDetailsScreen";
+import OffersAndRequestsScreen from "./screens/OffersAndRequestsScreen";
 import useLinking from "./navigation/useLinking";
 import cup from "./assets/images/cup.png";
 import Colors from "./constants/Colors";
@@ -134,6 +135,23 @@ export default function App(props) {
                     backgroundColor: Colors.darkBlue,
                     height: 120
                   },
+                  headerTitleStyle: {
+                    color: "white",
+                    fontSize: 25
+                  },
+                  headerRight: () => <Image source={cup} style={styles.logo} />,
+                  headerTintColor: "white"
+                }}
+              />
+              <Stack.Screen
+                name="OffersAndRequests"
+                component={OffersAndRequestsScreen}
+                options={{
+                  headerStyle: {
+                    backgroundColor: Colors.darkBlue,
+                    height: 120
+                  },
+                  headerTitle: "",
                   headerTitleStyle: {
                     color: "white",
                     fontSize: 25
