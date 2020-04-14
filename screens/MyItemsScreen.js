@@ -78,7 +78,7 @@ export default function MyItemsScreen(props) {
     });
 
     if (loading) {
-      return <Text style={styles.errorText}>Loading...</Text>;
+      return <Text style={styles.loadingText}>Loading...</Text>;
     }
 
     if (error) {
@@ -158,7 +158,7 @@ export default function MyItemsScreen(props) {
     const { loading, error, data } = useQuery(LOANED_ITEMS);
 
     if (loading) {
-      return <Text style={styles.errorText}>Loading...</Text>;
+      return <Text style={styles.loadingText}>Loading...</Text>;
     }
 
     if (error) {
@@ -187,7 +187,12 @@ export default function MyItemsScreen(props) {
                 return (
                   <View style={styles.item} key={item.id + item.name}>
                     <Text style={styles.itemName}>{item.name}</Text>
-                    <TouchableOpacity style={styles.messageButton}>
+                    <TouchableOpacity
+                      style={styles.messageButton}
+                      onPress={() =>
+                        props.navigation.navigate("Compose", { action, userId })
+                      }
+                    >
                       <Text style={styles.messageButtonText}>Message</Text>
                     </TouchableOpacity>
                   </View>
@@ -285,5 +290,11 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     color: "#fff",
     textAlign: "center"
+  },
+  loadingText: {
+    alignSelf: "center",
+    fontSize: 20,
+    fontWeight: "bold",
+    margin: 10
   }
 });
