@@ -9,14 +9,12 @@ import {
   View
 } from "react-native";
 import Colors from "../constants/Colors";
-import { useNavigation } from "@react-navigation/native";
 import { ScrollView } from "react-native-gesture-handler";
-
 import { gql } from "apollo-boost";
 import { useQuery } from "@apollo/react-hooks";
 
 export default function OffersAndRequestsScreen(props) {
-  const navigation = useNavigation();
+  const navigation = props.navigation;
   const action = props.route.params.action;
   const userId = props.route.params.userId;
   let id, available, name;
