@@ -21,6 +21,7 @@ import ItemDetailsScreen from "./screens/ItemDetailsScreen";
 import SearchResultsScreen from "./screens/SearchResultsScreen";
 import MyItemsScreen from "./screens/MyItemsScreen";
 import PathScreen from "./screens/PathScreen";
+import ComposeMessageScreen from "./screens/ComposeMesssageScreen";
 import LoginScreen from "./screens/LoginScreen";
 import LenderRequestScreen from "./screens/LenderRequestScreen";
 import MessagesScreen from "./screens/MessagesScreen";
@@ -260,6 +261,22 @@ export default function App(props) {
               <Stack.Screen
                 name="Request"
                 component={RequestScreen}
+                options={{
+                  headerStyle: {
+                    backgroundColor: Colors.darkBlue,
+                    height: 120
+                  },
+                  headerTitleStyle: {
+                    color: "white",
+                    fontSize: 25
+                  },
+                  headerRight: () => <Image source={cup} style={styles.logo} />,
+                  headerTintColor: "white"
+                }}
+              />
+              <Stack.Screen
+                name="Compose"
+                component={ComposeMessageScreen}
                 options={{
                   headerStyle: {
                     backgroundColor: Colors.darkBlue,
