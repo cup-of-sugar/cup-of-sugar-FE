@@ -107,9 +107,9 @@ export default function App(props) {
                     color: "white",
                     fontSize: 25
                   },
-                  headerTitle: "Cup of Sugar",
-                  headerRight: () => <Image source={cup} style={styles.logo} />,
-                  headerLeft: () => <MenuDrawer />
+                  headerTitle: () => <Image source={cup} style={styles.logo} />,
+                  headerRight: () => <MenuDrawer />,
+                  headerTintColor: "white"
                 }}
               />
               <Stack.Screen
@@ -120,12 +120,12 @@ export default function App(props) {
                     backgroundColor: Colors.darkBlue,
                     height: 120
                   },
-                  headerTitle: "Details",
                   headerTitleStyle: {
                     color: "white",
                     fontSize: 25
                   },
-                  headerRight: () => <Image source={cup} style={styles.logo} />,
+                  headerTitle: "Details",
+                  headerRight: () => <MenuDrawer />,
                   headerTintColor: "white"
                 }}
               />
@@ -141,7 +141,8 @@ export default function App(props) {
                     color: "white",
                     fontSize: 25
                   },
-                  headerRight: () => <Image source={cup} style={styles.logo} />,
+                  headerTitle: () => <Image source={cup} style={styles.logo} />,
+                  headerRight: () => <MenuDrawer />,
                   headerTintColor: "white"
                 }}
               />
@@ -157,7 +158,8 @@ export default function App(props) {
                     color: "white",
                     fontSize: 25
                   },
-                  headerRight: () => <Image source={cup} style={styles.logo} />,
+                  headerTitle: () => <Image source={cup} style={styles.logo} />,
+                  headerRight: () => <MenuDrawer />,
                   headerTintColor: "white"
                 }}
               />
@@ -169,12 +171,12 @@ export default function App(props) {
                     backgroundColor: Colors.darkBlue,
                     height: 120
                   },
-                  headerTitle: "",
                   headerTitleStyle: {
                     color: "white",
                     fontSize: 25
                   },
-                  headerRight: () => <Image source={cup} style={styles.logo} />,
+                  headerTitle: () => <Image source={cup} style={styles.logo} />,
+                  headerRight: () => <MenuDrawer />,
                   headerTintColor: "white"
                 }}
               />
@@ -190,7 +192,8 @@ export default function App(props) {
                     color: "white",
                     fontSize: 25
                   },
-                  headerRight: () => <Image source={cup} style={styles.logo} />,
+                  headerTitle: () => <Image source={cup} style={styles.logo} />,
+                  headerRight: () => <MenuDrawer />,
                   headerTintColor: "white"
                 }}
               />
@@ -206,7 +209,8 @@ export default function App(props) {
                     color: "white",
                     fontSize: 25
                   },
-                  headerRight: () => <Image source={cup} style={styles.logo} />,
+                  headerTitle: () => <Image source={cup} style={styles.logo} />,
+                  headerRight: () => <MenuDrawer />,
                   headerTintColor: "white"
                 }}
               />
@@ -222,7 +226,8 @@ export default function App(props) {
                     color: "white",
                     fontSize: 25
                   },
-                  headerRight: () => <Image source={cup} style={styles.logo} />,
+                  headerTitle: () => <Image source={cup} style={styles.logo} />,
+                  headerRight: () => <MenuDrawer />,
                   headerTintColor: "white"
                 }}
               />
@@ -238,7 +243,8 @@ export default function App(props) {
                     color: "white",
                     fontSize: 25
                   },
-                  headerRight: () => <Image source={cup} style={styles.logo} />,
+                  headerTitle: () => <Image source={cup} style={styles.logo} />,
+                  headerRight: () => <MenuDrawer />,
                   headerTintColor: "white"
                 }}
               />
@@ -254,7 +260,8 @@ export default function App(props) {
                     color: "white",
                     fontSize: 25
                   },
-                  headerRight: () => <Image source={cup} style={styles.logo} />,
+                  headerTitle: () => <Image source={cup} style={styles.logo} />,
+                  headerRight: () => <MenuDrawer />,
                   headerTintColor: "white"
                 }}
               />
@@ -270,7 +277,8 @@ export default function App(props) {
                     color: "white",
                     fontSize: 25
                   },
-                  headerRight: () => <Image source={cup} style={styles.logo} />,
+                  headerTitle: () => <Image source={cup} style={styles.logo} />,
+                  headerRight: () => <MenuDrawer />,
                   headerTintColor: "white"
                 }}
               />
@@ -286,7 +294,8 @@ export default function App(props) {
                     color: "white",
                     fontSize: 25
                   },
-                  headerRight: () => <Image source={cup} style={styles.logo} />,
+                  headerTitle: () => <Image source={cup} style={styles.logo} />,
+                  headerRight: () => <MenuDrawer />,
                   headerTintColor: "white"
                 }}
               />
@@ -307,7 +316,7 @@ const styles = StyleSheet.create({
   },
   logo: {
     margin: 15,
-    height: 42,
-    width: 57
+    height: 70,
+    width: 70
   }
 });
