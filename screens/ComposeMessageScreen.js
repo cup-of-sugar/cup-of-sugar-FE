@@ -12,6 +12,7 @@ import {
 import Colors from "../constants/Colors";
 import { gql } from "apollo-boost";
 import { useQuery } from "@apollo/react-hooks";
+import plane from "../assets/images/plane.png";
 
 export default function ComposeMessageScreen(props) {
   return <ComposeForm action={props.action} navigation={props.navigation} />;
@@ -20,7 +21,7 @@ export default function ComposeMessageScreen(props) {
 class ComposeForm extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { subject: "", body: "", error: "" };
+    this.state = { subject: "", body: "", error: "", sent: false };
   }
 
   checkInputs = () => {
@@ -33,7 +34,9 @@ class ComposeForm extends React.Component {
     this.setState({ [name]: value });
   };
 
-  sendMessage = () => {};
+  sendMessage = () => {
+    this.setState({ sent: true });
+  };
 
   // startSearch = () => {
   //   const category = this.state.category;
@@ -62,33 +65,56 @@ class ComposeForm extends React.Component {
   render() {
     return (
       <View style={styles.formContainer}>
-        <View style={styles.toContainer}>
-          <Text style={styles.header}>To: Joe@tigers.com</Text>
-        </View>
-        <View style={styles.subjectContainer}>
-          <TextInput
-            style={styles.subjectInput}
-            name="subject"
-            value={this.state.subject}
-            onChangeText={text => this.handleChange("subject", text)}
-            placeholder="Subject..."
-          />
-        </View>
-        <View style={styles.textAreaContainer}>
-          <TextInput
-            style={styles.textArea}
-            name="body"
-            value={this.state.body}
-            multiline={true}
-            numberOfLines={40}
-            onChangeText={text => this.handleChange("body", text)}
-            placeholder="Message..."
-          />
-        </View>
-        <TouchableOpacity style={styles.sendButton} onPress={this.checkInputs}>
-          <Text style={styles.sendButtonText}>Send Message</Text>
-        </TouchableOpacity>
-        <Text style={styles.errorText}>{this.state.error}</Text>
+        {!this.state.sent ? (
+          <>
+            <View style={styles.toContainer}>
+              <Text style={styles.header}>To: Joe@tigers.com</Text>
+            </View>
+            <View style={styles.subjectContainer}>
+              <TextInput
+                style={styles.subjectInput}
+                name="subject"
+                value={this.state.subject}
+                onChangeText={text => this.handleChange("subject", text)}
+                placeholder="Subject..."
+              />
+            </View>
+            <View style={styles.textAreaContainer}>
+              <TextInput
+                style={styles.textArea}
+                name="body"
+                value={this.state.body}
+                multiline={true}
+                numberOfLines={40}
+                onChangeText={text => this.handleChange("body", text)}
+                placeholder="Message..."
+              />
+            </View>
+            <TouchableOpacity
+              style={styles.sendButton}
+              onPress={this.checkInputs}
+            >
+              <Text style={styles.sendButtonText}>Send Message</Text>
+            </TouchableOpacity>
+            <Text style={styles.errorText}>{this.state.error}</Text>
+          </>
+        ) : (
+          <>
+            <Text style={styles.sent}>Sent!</Text>
+            <Image source={plane} style={styles.plane} />
+            <TouchableOpacity
+              style={styles.sendButton}
+              onPress={() =>
+                this.props.navigation.navigate("Home", {
+                  action: this.props.action,
+                  userId: this.state.userId
+                })
+              }
+            >
+              <Text style={styles.sendButtonText}>Home</Text>
+            </TouchableOpacity>
+          </>
+        )}
       </View>
     );
   }
@@ -103,6 +129,7 @@ const styles = StyleSheet.create({
     margin: 10
   },
   formContainer: {
+    backgroundColor: "#fff",
     flex: 1,
     padding: 16,
     paddingTop: 30
@@ -172,5 +199,20 @@ const styles = StyleSheet.create({
     justifyContent: "flex-start",
     padding: 15,
     paddingTop: 20
+  },
+  sent: {
+    alignSelf: "center",
+    fontSize: 60,
+    fontWeight: "bold",
+    color: Colors.darkBlue,
+    marginTop: 80
+  },
+  plane: {
+    alignSelf: "center",
+    height: 250,
+    marginLeft: 20,
+    marginRight: 30,
+    marginVertical: 50,
+    width: 240
   }
 });
