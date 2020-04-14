@@ -78,7 +78,7 @@ export default function MyItemsScreen(props) {
     });
 
     if (loading) {
-      return <Text style={styles.errorText}>Loading...</Text>;
+      return <Text style={styles.loadingText}>Loading...</Text>;
     }
 
     if (error) {
@@ -158,7 +158,7 @@ export default function MyItemsScreen(props) {
     const { loading, error, data } = useQuery(LOANED_ITEMS);
 
     if (loading) {
-      return <Text style={styles.errorText}>Loading...</Text>;
+      return <Text style={styles.loadingText}>Loading...</Text>;
     }
 
     if (error) {
@@ -290,5 +290,11 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     color: "#fff",
     textAlign: "center"
+  },
+  loadingText: {
+    alignSelf: "center",
+    fontSize: 20,
+    fontWeight: "bold",
+    margin: 10
   }
 });
