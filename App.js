@@ -21,7 +21,7 @@ import ItemDetailsScreen from "./screens/ItemDetailsScreen";
 import SearchResultsScreen from "./screens/SearchResultsScreen";
 import MyItemsScreen from "./screens/MyItemsScreen";
 import PathScreen from "./screens/PathScreen";
-import ComposeMessageScreen from "./screens/ComposeMesssageScreen";
+import ComposeMessageScreen from "./screens/ComposeMessageScreen";
 import LoginScreen from "./screens/LoginScreen";
 import LenderRequestScreen from "./screens/LenderRequestScreen";
 import MessagesScreen from "./screens/MessagesScreen";

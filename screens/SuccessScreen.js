@@ -53,7 +53,7 @@ export default function SuccessScreen(props) {
           <TouchableOpacity
             style={styles.messageButton}
             onPress={() =>
-              props.navigation.navigate("Home", { action, userId })
+              props.navigation.navigate("Compose", { action, userId })
             }
           >
             <Text style={styles.messageButtonText}>Send Message</Text>
