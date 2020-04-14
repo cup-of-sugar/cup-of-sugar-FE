@@ -53,7 +53,7 @@ export default function OffersAndRequestsScreen(props) {
     if (data) {
       return (
         <View style={styles.container}>
-          <Text style={styles.itemsMessage}>Items I've Requested</Text>
+          <Text style={styles.itemsMessage}>Items I've Requested:</Text>
           <ScrollView
             scrollIndicatorInsets={{ right: 1 }}
             style={styles.itemsContainer}
@@ -118,7 +118,7 @@ export default function OffersAndRequestsScreen(props) {
     if (data) {
       return (
         <View style={styles.container}>
-          <Text style={styles.itemsMessage}>Items I'm Offering To Loan</Text>
+          <Text style={styles.itemsMessage}>Items I'm Offering To Loan:</Text>
           <ScrollView
             scrollIndicatorInsets={{ right: 1 }}
             style={styles.itemsContainer}
