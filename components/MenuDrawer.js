@@ -35,7 +35,7 @@ export default class MenuDrawer extends Component {
 
   render() {
     return this.state.action ? (
-      <View style={styles.drawerContainer}>
+      <View style={styles.container}>
         <TouchableOpacity
           onPress={() => this.setState({ menuOpen: !this.state.menuOpen })}
         >
@@ -44,42 +44,48 @@ export default class MenuDrawer extends Component {
             style={styles.menu}
           />
         </TouchableOpacity>
-        <Drawer
-          open={this.state.menuOpen}
-          type="static"
-          openDrawerOffset={0.5}
-          closedDrawerOffset={0}
-          content={
-            this.state.menuOpen ? (
-              <MenuItems
-                closeMenu={this.closeMenu}
-                action={this.state.action}
-                userId={this.state.userId}
-              />
-            ) : null
-          }
-          tapToClose={true}
-          onClose={this.closeDrawer}
-          styles={styles.drawer}
-          tweenEasing={"easeInOutQuad"}
-          tweenDuration={400}
-        ></Drawer>
+        <View style={styles.drawerContainer}>
+          <Drawer
+            open={this.state.menuOpen}
+            type="static"
+            openDrawerOffset={0.5}
+            closedDrawerOffset={0}
+            content={
+              this.state.menuOpen ? (
+                <MenuItems
+                  closeMenu={this.closeMenu}
+                  action={this.state.action}
+                  userId={this.state.userId}
+                />
+              ) : null
+            }
+            tapToClose={true}
+            onClose={this.closeDrawer}
+            styles={styles.drawer}
+            tweenEasing={"easeInOutQuad"}
+            tweenDuration={400}
+          ></Drawer>
+        </View>
       </View>
     ) : null;
   }
 }
 
 const styles = StyleSheet.create({
+  container: {
+    marginTop: 40,
+    marginRight: 20
+  },
   drawerContainer: {
-    width: "190%"
+    marginTop: 20,
+    marginRight: 230
   },
   drawer: {
     backgroundColor: "#fff"
   },
   menu: {
     height: 30,
-    margin: 20,
-    marginTop: 23,
+    marginLeft: 200,
     width: 40
   }
 });
