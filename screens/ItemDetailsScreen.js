@@ -7,6 +7,7 @@ import { ITEMS } from "../components/SearchResultsContainer";
 
 import { gql } from "apollo-boost";
 import { useMutation } from "@apollo/react-hooks";
+import { useQuery } from "@apollo/react-hooks";
 
 export default function ItemDetailsScreen(props) {
   const item = props.route.params.item;
@@ -28,22 +29,37 @@ export default function ItemDetailsScreen(props) {
     }
   `;
 
-  const handleBorrow = () => {
-    updateItem()
-      .then(() => setStatus(!item.available))
-      .then(() =>
-        props.navigation.navigate("Success!", {
-          action: "borrow",
-          userId: userId,
-          name: item.name,
-          quantity: item.quantity,
-          measurement: item.measurement,
-          timeDuration: item.timeDuration
-        })
-      );
+  const handleAction = () => {
+    action === "borrow"
+      ? updateBorrow()
+          .then(() => setStatus(!item.available))
+          .then(() =>
+            props.navigation.navigate("Success!", {
+              action: action,
+              userId: userId,
+              name: item.name,
+              quantity: item.quantity,
+              measurement: item.measurement,
+              timeDuration: item.timeDuration
+            })
+          )
+          .catch(error => console.log(error))
+      : updateLend()
+          .then(() => setStatus(!item.available))
+          .then(() =>
+            props.navigation.navigate("Success!", {
+              action: action,
+              userId: userId,
+              name: item.name,
+              quantity: item.quantity,
+              measurement: item.measurement,
+              timeDuration: item.timeDuration
+            })
+          )
+          .catch(error => console.log(error));
   };
 
-  const [updateItem] = useMutation(UPDATE_ITEM, {
+  const [updateBorrow] = useMutation(UPDATE_ITEM, {
     refetchQueries: () => [
       {
         query: ITEMS,
@@ -55,6 +71,8 @@ export default function ItemDetailsScreen(props) {
     ]
   });
 
+  const [updateLend] = useMutation(UPDATE_ITEM);
+
   return (
     <ScrollView
       scrollIndicatorInsets={{ right: 1 }}
@@ -64,22 +82,37 @@ export default function ItemDetailsScreen(props) {
       <Text style={styles.name}>
         {item.name.charAt(0).toUpperCase() + item.name.slice(1)}
       </Text>
-      <Image style={styles.image} source={image} />
+      {action === "borrow" ? (
+        <Image style={styles.image} source={image} />
+      ) : null}
       <View style={styles.infoContainer}>
         <Text style={styles.itemInfoTitle}>Status:</Text>
-        {status && item.available ? (
-          !item.timeDuration ? (
-            <Text style={styles.itemInfo}>
-              {item.quantity} {item.measurement ? item.measurement : ""}{" "}
-              available
-            </Text>
+        {action === "borrow" ? (
+          status && item.available ? (
+            !item.timeDuration ? (
+              <Text style={styles.itemInfo}>
+                {item.quantity} {item.measurement ? item.measurement : ""}{" "}
+                available
+              </Text>
+            ) : (
+              <Text style={styles.itemInfo}>
+                Available to borrow for
+                {item.timeDuration}
+              </Text>
+            )
           ) : (
-            <Text style={styles.itemInfo}>
-              Available to borrow for {item.timeDuration}
-            </Text>
+            <Text style={styles.itemInfo}>Not available currently.</Text>
           )
+        ) : !item.timeDuration ? (
+          <Text style={styles.itemInfo}>
+            {item.quantity} {item.measurement ? item.measurement : ""}
+            {""}
+          </Text>
         ) : (
-          <Text style={styles.itemInfo}>Not available currently.</Text>
+          <Text style={styles.itemInfo}>
+            Needed for
+            {item.timeDuration}
+          </Text>
         )}
         <Text style={styles.itemInfoTitle}>Category:</Text>
         <Text style={styles.itemInfo}>{item.category.name}</Text>
@@ -88,19 +121,30 @@ export default function ItemDetailsScreen(props) {
           {item.description || "No description yet!"}
         </Text>
       </View>
-      {status && item.available ? (
-        <TouchableOpacity
-          style={styles.borrowButton}
-          onPress={() => handleBorrow()}
-        >
-          <Text style={styles.borrowButtonText}>Borrow</Text>
-        </TouchableOpacity>
+      {action === "borrow" ? (
+        status && item.available ? (
+          <TouchableOpacity
+            style={styles.borrowButton}
+            onPress={() => handleAction()}
+          >
+            <Text style={styles.borrowButtonText}>Borrow</Text>
+          </TouchableOpacity>
+        ) : (
+          <TouchableOpacity
+            style={styles.borrowButton}
+            onPress={() =>
+              props.navigation.navigate("Home", { action, userId })
+            }
+          >
+            <Text style={styles.borrowButtonText}>Try Another Search</Text>
+          </TouchableOpacity>
+        )
       ) : (
         <TouchableOpacity
           style={styles.borrowButton}
-          onPress={() => props.navigation.navigate("Home", { action, userId })}
+          onPress={() => handleAction()}
         >
-          <Text style={styles.borrowButtonText}>Try Another Search</Text>
+          <Text style={styles.borrowButtonText}>Lend Item</Text>
         </TouchableOpacity>
       )}
     </ScrollView>
