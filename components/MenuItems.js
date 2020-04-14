@@ -49,24 +49,24 @@ export default function MenuItems({ closeMenu, action, userId }) {
         </Text>
       </TouchableOpacity>
       {action === "lend" ? (
-        <TouchableOpacity onPress={() => handlePress("LenderRequests")}>
+        <TouchableOpacity
+          onPress={() => handlePress("LenderRequests", { action, userId })}
+        >
           <Text style={styles.drawerText}>Neighorhood Requests</Text>
         </TouchableOpacity>
       ) : null}
-      <TouchableOpacity onPress={() => handlePress("Messages")}>
+      <TouchableOpacity
+        onPress={() => handlePress("Messages", { action, userId })}
+      >
         <Text style={styles.drawerText}>My Messages</Text>
       </TouchableOpacity>
-      <TouchableOpacity
-        onPress={() =>
-          handlePress(action === "borrow" ? "Request" : "Home", {
-            action: "lend"
-          })
-        }
-      >
-        <Text style={styles.drawerText}>
-          {action === "borrow" ? "Make a Request" : "Loan an Item"}
-        </Text>
-      </TouchableOpacity>
+      {action === "borrow" ? (
+        <TouchableOpacity
+          onPress={() => handlePress("Request", { action, userId })}
+        >
+          <Text style={styles.drawerText}>Make a Request</Text>
+        </TouchableOpacity>
+      ) : null}
       <TouchableOpacity onPress={() => handleLogout()}>
         <Text style={styles.drawerText}>Logout</Text>
       </TouchableOpacity>
