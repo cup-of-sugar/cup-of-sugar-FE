@@ -209,7 +209,7 @@ exports[`should render component 2`] = `
       }
     }
   >
-    Thank you!
+    The neighbor who requested to borrow this item will reach out to you soon. Thank you!
   </Text>
   <View
     accessible={true}
@@ -315,7 +315,7 @@ exports[`should render component 3`] = `
       }
     }
   >
-    Thank you!
+    The neighbor who requested to borrow this item will reach out to you soon. Thank you!
   </Text>
   <View
     accessible={true}
@@ -425,7 +425,7 @@ exports[`should render component 4`] = `
       }
     }
   >
-    Thank you!
+    The neighbor who requested to borrow this item will reach out to you soon. Thank you!
   </Text>
   <View
     accessible={true}
