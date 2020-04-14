@@ -64,7 +64,16 @@ export default function LenderRequestScreen(props) {
               return (
                 <View style={styles.item} key={item.id + item.name}>
                   <Text style={styles.itemName}>{item.name.toLowerCase()}</Text>
-                  <TouchableOpacity style={styles.lendButton}>
+                  <TouchableOpacity
+                    style={styles.lendButton}
+                    onPress={() =>
+                      props.navigation.navigate("Details", {
+                        action,
+                        userId,
+                        item
+                      })
+                    }
+                  >
                     <Text style={styles.lendButtonText}>Lend</Text>
                   </TouchableOpacity>
                 </View>
