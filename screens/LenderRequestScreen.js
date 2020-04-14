@@ -53,7 +53,7 @@ export default function LenderRequestScreen(props) {
     return (
       <View style={styles.container}>
         <Text style={styles.itemsMessage}>
-          Items Neighbors Have Requested To Borrow:
+          Items Your Neighbors Have Requested To Borrow:
         </Text>
         <ScrollView
           scrollIndicatorInsets={{ right: 1 }}
@@ -133,10 +133,10 @@ const styles = StyleSheet.create({
     color: "#fff",
     height: 50,
     paddingTop: 12,
-    width: 190
+    width: 120
   },
   lendButtonText: {
-    fontSize: 18,
+    fontSize: 20,
     fontWeight: "bold",
     color: "#fff",
     textAlign: "center"
