@@ -78,7 +78,7 @@ const styles = StyleSheet.create({
   drawerItems: {
     backgroundColor: Colors.lightBlue,
     height: 420,
-    width: 300
+    width: 260
   },
   drawerText: {
     borderColor: "#fff",
