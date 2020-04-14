@@ -38,30 +38,6 @@ class ComposeForm extends React.Component {
     this.setState({ sent: true });
   };
 
-  // startSearch = () => {
-  //   const category = this.state.category;
-  //   const itemName = this.state.itemName.toLowerCase() || null;
-  //   this.props.navigation.navigate("Search Results", {
-  //     category: category,
-  //     itemName: itemName,
-  //     action: "borrow",
-  //     userId: this.props.userId
-  //   });
-  //   this.setState({ category: "", itemName: "", error: "" });
-  // };
-  //
-  // loanNewItem = () => {
-  //   const category = this.state.category;
-  //   const itemName = this.state.itemName.toLowerCase();
-  //   this.props.navigation.navigate("Loan Details", {
-  //     category: category,
-  //     name: itemName,
-  //     action: "lend",
-  //     userId: this.props.userId
-  //   });
-  //   this.setState({ category: "", itemName: "", error: "" });
-  // };
-
   render() {
     return (
       <View style={styles.formContainer}>
