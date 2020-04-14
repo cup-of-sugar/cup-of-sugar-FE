@@ -69,7 +69,10 @@ export default function SuccessScreen(props) {
         </>
       ) : (
         <>
-          <Text style={styles.successMessage}>Thank you!</Text>
+          <Text style={styles.successMessage}>
+            The neighbor who requested to borrow this item will reach out to you
+            soon. Thank you!
+          </Text>
           <TouchableOpacity
             style={styles.messageButton}
             onPress={() =>
