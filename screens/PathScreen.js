@@ -17,7 +17,6 @@ export default function PathScreen(props) {
 
   const handleChoice = action => {
     const items = [["action", action], ["userId", userId]];
-    console.log(items);
     try {
       AsyncStorage.multiSet(items).then(() =>
         props.navigation.navigate("Home", { action, userId })
@@ -30,6 +29,7 @@ export default function PathScreen(props) {
   return (
     <ScrollView
       style={styles.container}
+      scrollIndicatorInsets={{ right: 1 }}
       contentContainerStyle={styles.contentContainer}
     >
       <Image style={styles.logo} source={cupOfSugar} />

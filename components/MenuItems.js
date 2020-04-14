@@ -38,23 +38,35 @@ export default function MenuItems({ closeMenu, action, userId }) {
         onPress={() => handlePress("My Items", { action, userId })}
       >
         <Text style={styles.drawerText}>
-          View My {action === "borrow" ? "Borrowed" : "Loaned"} Items
+          {action === "borrow" ? "My Borrowed Items" : "Items I'm Lending"}
         </Text>
-      </TouchableOpacity>
-      <TouchableOpacity onPress={() => handlePress("Messages")}>
-        <Text style={styles.drawerText}>My Messages</Text>
       </TouchableOpacity>
       <TouchableOpacity
-        onPress={() =>
-          handlePress(action === "borrow" ? "Request" : "Home", {
-            action: "lend"
-          })
-        }
+        onPress={() => handlePress("OffersAndRequests", { action, userId })}
       >
         <Text style={styles.drawerText}>
-          {action === "borrow" ? "Make a Request" : "Loan an Item"}
+          {action === "borrow" ? "My Item Requests" : "Items I'm Offering"}
         </Text>
       </TouchableOpacity>
+      {action === "lend" ? (
+        <TouchableOpacity
+          onPress={() => handlePress("LenderRequests", { action, userId })}
+        >
+          <Text style={styles.drawerText}>Neighorhood Requests</Text>
+        </TouchableOpacity>
+      ) : null}
+      <TouchableOpacity
+        onPress={() => handlePress("Messages", { action, userId })}
+      >
+        <Text style={styles.drawerText}>My Messages</Text>
+      </TouchableOpacity>
+      {action === "borrow" ? (
+        <TouchableOpacity
+          onPress={() => handlePress("Request", { action, userId })}
+        >
+          <Text style={styles.drawerText}>Make a Request</Text>
+        </TouchableOpacity>
+      ) : null}
       <TouchableOpacity onPress={() => handleLogout()}>
         <Text style={styles.drawerText}>Logout</Text>
       </TouchableOpacity>
@@ -65,7 +77,7 @@ export default function MenuItems({ closeMenu, action, userId }) {
 const styles = StyleSheet.create({
   drawerItems: {
     backgroundColor: Colors.lightBlue,
-    height: 350,
+    height: 420,
     width: 300
   },
   drawerText: {

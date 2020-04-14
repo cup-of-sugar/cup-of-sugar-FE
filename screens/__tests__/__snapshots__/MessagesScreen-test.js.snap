@@ -16,6 +16,11 @@ exports[`should render component 1`] = `
         "padding": 15,
       }
     }
+    scrollIndicatorInsets={
+      Object {
+        "right": 1,
+      }
+    }
   >
     <View>
       <View

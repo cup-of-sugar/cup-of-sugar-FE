@@ -9,7 +9,7 @@ import {
   TextInput,
   View,
   Button,
-  Platform,
+  Platform
 } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import Colors from "../constants/Colors";
@@ -73,8 +73,8 @@ export default function RequestScreen(props) {
       description,
       quantity,
       measurement,
-      timeDuration,
-    },
+      timeDuration
+    }
   });
 
   return (
@@ -98,7 +98,7 @@ class RequestForm extends Component {
       quantity: 0,
       timeDuration: "",
       measurement: "",
-      error: "",
+      error: ""
     };
   }
 
@@ -127,11 +127,11 @@ class RequestForm extends Component {
           description: this.state.description,
           quantity: this.state.quantity,
           measurement: this.state.measurement || "null",
-          timeDuration: this.state.timeDuration || "null",
-        },
+          timeDuration: this.state.timeDuration || "null"
+        }
       })
-      .then((response) => this.confirmRequest())
-      .catch((error) => console.log(error));
+      .then(response => this.confirmRequest())
+      .catch(error => console.log(error));
   };
 
   confirmRequest = () => {
@@ -141,7 +141,7 @@ class RequestForm extends Component {
       timeDuration: this.state.timeDuration,
       measurement: this.state.measurement,
       quantity: this.state.quantity,
-      action: "request",
+      action: "request"
     });
     this.setState({
       title: "",
@@ -151,13 +151,13 @@ class RequestForm extends Component {
       quantity: 0,
       measurement: "",
       timeDuration: "",
-      error: "",
+      error: ""
     });
   };
 
   render() {
     let pickers = this.props.categories
-      ? this.props.categories.getAllCategories.map((category) => (
+      ? this.props.categories.getAllCategories.map(category => (
           <Picker.Item
             key={category.name}
             label={category.name}
@@ -170,11 +170,19 @@ class RequestForm extends Component {
       <View style={styles.container}>
         <ScrollView
           style={styles.container}
+          scrollIndicatorInsets={{ right: 1 }}
           contentContainerStyle={styles.contentContainer}
         >
           <Text
             style={{
-              ...Platform.select({ ios: styles.header, android: styles.label }),
+              ...Platform.select({ ios: styles.heading, android: styles.label })
+            }}
+          >
+            What would you like to borrow?
+          </Text>
+          <Text
+            style={{
+              ...Platform.select({ ios: styles.header, android: styles.label })
             }}
           >
             Title of Your Request
@@ -184,15 +192,15 @@ class RequestForm extends Component {
             style={{
               ...Platform.select({
                 ios: styles.textInput,
-                android: styles.input,
-              }),
+                android: styles.input
+              })
             }}
             name="title"
-            onChangeText={(text) => this.handleChange("title", text)}
+            onChangeText={text => this.handleChange("title", text)}
           ></TextInput>
           <Text
             style={{
-              ...Platform.select({ ios: styles.header, android: styles.label }),
+              ...Platform.select({ ios: styles.header, android: styles.label })
             }}
           >
             Item Category
@@ -200,15 +208,15 @@ class RequestForm extends Component {
           <Picker
             name="category"
             selectedValue={this.state.category}
-            onValueChange={(pick) => this.handleChange("category", pick)}
+            onValueChange={pick => this.handleChange("category", pick)}
             itemStyle={{
-              ...Platform.select({ ios: styles.pickerItems }),
+              ...Platform.select({ ios: styles.pickerItems })
             }}
             style={{
               ...Platform.select({
                 ios: styles.picker,
-                android: { marginBottom: 20, height: 40 },
-              }),
+                android: { marginBottom: 20, height: 40 }
+              })
             }}
           >
             <Picker.Item label="Choose a category..." />
@@ -216,7 +224,7 @@ class RequestForm extends Component {
           </Picker>
           <Text
             style={{
-              ...Platform.select({ ios: styles.header, android: styles.label }),
+              ...Platform.select({ ios: styles.header, android: styles.label })
             }}
           >
             Item name
@@ -226,15 +234,15 @@ class RequestForm extends Component {
             style={{
               ...Platform.select({
                 ios: styles.textInput,
-                android: styles.input,
-              }),
+                android: styles.input
+              })
             }}
             name="name"
-            onChangeText={(text) => this.handleChange("name", text)}
+            onChangeText={text => this.handleChange("name", text)}
           ></TextInput>
           <Text
             style={{
-              ...Platform.select({ ios: styles.header, android: styles.label }),
+              ...Platform.select({ ios: styles.header, android: styles.label })
             }}
           >
             Description
@@ -244,15 +252,15 @@ class RequestForm extends Component {
             style={{
               ...Platform.select({
                 ios: styles.textInput,
-                android: styles.input,
-              }),
+                android: styles.input
+              })
             }}
-            onChangeText={(text) => this.handleChange("description", text)}
+            onChangeText={text => this.handleChange("description", text)}
             name="description"
           ></TextInput>
           <Text
             style={{
-              ...Platform.select({ ios: styles.header, android: styles.label }),
+              ...Platform.select({ ios: styles.header, android: styles.label })
             }}
           >
             Quantity
@@ -262,23 +270,23 @@ class RequestForm extends Component {
             style={{
               ...Platform.select({
                 ios: styles.textInput,
-                android: styles.input,
-              }),
+                android: styles.input
+              })
             }}
-            onChangeText={(text) => this.handleChange("quantity", text)}
+            onChangeText={text => this.handleChange("quantity", text)}
             name="quantity"
             numericvalue
             keyboardType={"numeric"}
             value={String(this.state.quantity)}
           ></TextInput>
-          {this.props.category === "Food" ? (
+          {this.state.category === "Food" ? (
             <View>
               <Text
                 style={{
                   ...Platform.select({
                     ios: styles.header,
-                    android: styles.label,
-                  }),
+                    android: styles.label
+                  })
                 }}
               >
                 Measurement
@@ -287,12 +295,12 @@ class RequestForm extends Component {
                 style={{
                   ...Platform.select({
                     ios: styles.textInput,
-                    android: styles.input,
-                  }),
+                    android: styles.input
+                  })
                 }}
                 name="measurement"
                 value={this.state.measurement}
-                onChangeText={(text) => this.handleChange("measurement", text)}
+                onChangeText={text => this.handleChange("measurement", text)}
                 placeholder="Example: cups, ounces..."
               />
             </View>
@@ -302,8 +310,8 @@ class RequestForm extends Component {
                 style={{
                   ...Platform.select({
                     ios: styles.header,
-                    android: styles.label,
-                  }),
+                    android: styles.label
+                  })
                 }}
               >
                 Amount of Time
@@ -312,12 +320,12 @@ class RequestForm extends Component {
                 style={{
                   ...Platform.select({
                     ios: styles.textInput,
-                    android: styles.input,
-                  }),
+                    android: styles.input
+                  })
                 }}
                 name="timeDuration"
                 value={this.state.timeDuration}
-                onChangeText={(text) => this.handleChange("timeDuration", text)}
+                onChangeText={text => this.handleChange("timeDuration", text)}
                 placeholder="Example: 1 week..."
               />
             </View>
@@ -337,7 +345,7 @@ class RequestForm extends Component {
                 title="Request Item"
                 color="#385A94"
               />
-            ),
+            )
           })}
           <Text style={styles.errorText}>{this.state.error}</Text>
         </ScrollView>
@@ -350,17 +358,17 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: "#fff",
     flex: 1,
-    padding: 5,
+    padding: 5
   },
   contentContainer: {
-    justifyContent: "center",
+    justifyContent: "center"
   },
   errorText: {
     alignSelf: "center",
     color: "red",
     fontSize: 20,
     fontWeight: "bold",
-    margin: 10,
+    margin: 10
   },
   textInput: {
     borderColor: "#CCCCCC",
@@ -370,7 +378,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 10,
     marginVertical: 5,
     paddingLeft: 20,
-    paddingRight: 20,
+    paddingRight: 20
   },
   input: {
     height: 40,
@@ -378,10 +386,10 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     backgroundColor: "#fff",
     marginBottom: 8,
-    padding: 5,
+    padding: 5
   },
   label: {
-    color: "black",
+    color: "black"
   },
   header: {
     color: "black",
@@ -389,29 +397,37 @@ const styles = StyleSheet.create({
     textAlign: "center",
     fontWeight: "bold",
     marginTop: 15,
-    marginBottom: 5,
+    marginBottom: 5
   },
   requestButton: {
     marginHorizontal: 40,
-    marginTop: 15,
+    marginVertical: 15,
     paddingTop: 20,
     paddingBottom: 20,
     backgroundColor: Colors.lightBlue,
     borderRadius: 10,
     borderWidth: 1,
-    borderColor: "#fff",
+    borderColor: "#fff"
   },
   requestButtonText: {
     fontSize: 25,
     fontWeight: "bold",
     color: "#fff",
-    textAlign: "center",
+    textAlign: "center"
   },
   picker: {
-    margin: 10,
+    margin: 10
   },
   pickerItems: {
     fontSize: 24,
-    height: 130,
+    height: 130
   },
+  heading: {
+    color: "black",
+    fontSize: 25,
+    textAlign: "center",
+    fontWeight: "bold",
+    marginVertical: 20,
+    marginHorizontal: 10
+  }
 });

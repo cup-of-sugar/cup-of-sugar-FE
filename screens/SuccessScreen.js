@@ -58,10 +58,21 @@ export default function SuccessScreen(props) {
           >
             <Text style={styles.messageButtonText}>Send Message</Text>
           </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.messageButton}
+            onPress={() =>
+              props.navigation.navigate("Home", { action, userId })
+            }
+          >
+            <Text style={styles.messageButtonText}>Message Later</Text>
+          </TouchableOpacity>
         </>
       ) : (
         <>
-          <Text style={styles.successMessage}>Thank you!</Text>
+          <Text style={styles.successMessage}>
+            The neighbor who requested to borrow this item will reach out to you
+            soon. Thank you!
+          </Text>
           <TouchableOpacity
             style={styles.messageButton}
             onPress={() =>
@@ -98,14 +109,15 @@ const styles = StyleSheet.create({
     borderRadius: 18,
     borderWidth: 1,
     borderColor: Colors.darkBlue,
-    fontSize: 28,
+    fontSize: 26,
     fontWeight: "bold",
     color: Colors.aqua,
     height: 70,
     lineHeight: 35,
     paddingTop: 15,
     marginBottom: 60,
-    width: 300,
+    overflow: "hidden",
+    width: 360,
     textAlign: "center"
   },
   messageButton: {
