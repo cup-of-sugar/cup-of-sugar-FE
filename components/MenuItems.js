@@ -48,6 +48,11 @@ export default function MenuItems({ closeMenu, action, userId }) {
           {action === "borrow" ? "My Item Requests" : "Items I'm Offering"}
         </Text>
       </TouchableOpacity>
+      {action === "lend" ? (
+        <TouchableOpacity onPress={() => handlePress("LenderRequests")}>
+          <Text style={styles.drawerText}>Neighorhood Requests</Text>
+        </TouchableOpacity>
+      ) : null}
       <TouchableOpacity onPress={() => handlePress("Messages")}>
         <Text style={styles.drawerText}>My Messages</Text>
       </TouchableOpacity>
