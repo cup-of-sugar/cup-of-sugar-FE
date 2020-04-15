@@ -1,13 +1,6 @@
 import * as WebBrowser from "expo-web-browser";
 import * as React from "react";
-import {
-  Image,
-  Platform,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View
-} from "react-native";
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import Colors from "../constants/Colors";
 import { ScrollView } from "react-native-gesture-handler";
 import { gql } from "apollo-boost";
@@ -21,8 +14,7 @@ export default function LenderRequestScreen(props) {
 
   const REQUESTS = gql`
     query {
-      itemsUserLookingToBorrow(userId: "1") {
-        id
+      getAllOpenBorrowRequests {
         name
         quantity
         available
@@ -31,9 +23,6 @@ export default function LenderRequestScreen(props) {
         timeDuration
         posting {
           title
-        }
-        category {
-          name
         }
       }
     }
@@ -62,7 +51,7 @@ export default function LenderRequestScreen(props) {
           {data.itemsUserLookingToBorrow.length ? (
             data.itemsUserLookingToBorrow.map(item => {
               return (
-                <View style={styles.item} key={item.id + item.name}>
+                <View style={styles.item} key={item.description}>
                   <Text style={styles.itemName}>{item.name.toLowerCase()}</Text>
                   <TouchableOpacity
                     style={styles.lendButton}
