@@ -9,18 +9,20 @@ import {
   View
 } from "react-native";
 import Colors from "../constants/Colors";
-import borrower from "../assets/images/borrower.png";
-import lender from "../assets/images/lender.png";
+import Inbox from "../components/Inbox";
+import Outbox from "../components/Outbox";
+import { gql } from "apollo-boost";
+import { useQuery } from "@apollo/react-hooks";
 
 export default function MessagesScreen(props) {
-  // const userID = props.route.params.userID;
+  const userId = props.route.params.userId;
   const [messageView, setMessageView] = React.useState("inbox");
 
   return (
     <View style={styles.container}>
       <ScrollView
         scrollIndicatorInsets={{ right: 1 }}
-        style={styles.Container}
+        style={styles.container}
         contentContainerStyle={styles.contentContainer}
       >
         <View style={styles.buttonContainer}>
@@ -28,34 +30,22 @@ export default function MessagesScreen(props) {
             style={styles.inboxLabel}
             onPress={() => setMessageView("inbox")}
           >
-            <Text style={styles.inboxMailboxText}>Inbox (1)</Text>
+            <Text style={styles.inboxMailboxText}>Inbox</Text>
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.sentLabel}
             onPress={() => setMessageView("sent")}
           >
-            <Text style={styles.sentMailboxText}>Sent (1)</Text>
+            <Text style={styles.sentMailboxText}>Sent</Text>
           </TouchableOpacity>
         </View>
         {messageView === "inbox" ? (
           <View style={styles.inbox}>
-            <TouchableOpacity
-              style={styles.message}
-              onPress={() => props.navigation.navigate("Message")}
-            >
-              <Text style={styles.messageText}>From: Tiger King</Text>
-              <Image source={borrower} style={styles.icon} />
-            </TouchableOpacity>
+            <Inbox userID={userId} />
           </View>
         ) : (
           <View style={styles.sent}>
-            <TouchableOpacity
-              style={styles.message}
-              onPress={() => props.navigation.navigate("Message")}
-            >
-              <Text style={styles.messageText}>To: Carole Baskin</Text>
-              <Image style={styles.icon} source={lender} />
-            </TouchableOpacity>
+            <Outbox userID={userId} />
           </View>
         )}
       </ScrollView>
@@ -66,7 +56,7 @@ export default function MessagesScreen(props) {
 const styles = StyleSheet.create({
   container: {
     backgroundColor: "#fff",
-    paddingTop: 50,
+    paddingTop: 20,
     height: "100%"
   },
   contentContainer: {
@@ -117,30 +107,5 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     color: "#fff",
     textAlign: "right"
-  },
-  message: {
-    alignSelf: "center",
-    backgroundColor: "#fff",
-    borderRadius: 10,
-    borderWidth: 1,
-    borderColor: "#fff",
-    flex: 0,
-    flexDirection: "row",
-    height: 70,
-    margin: 40,
-    marginTop: 10,
-    paddingVertical: 20,
-    paddingHorizontal: 15,
-    width: 350
-  },
-  messageText: {
-    fontSize: 20,
-    fontWeight: "bold",
-    color: Colors.darkBlue,
-    paddingRight: 10
-  },
-  icon: {
-    height: 25,
-    width: 115
   }
 });
