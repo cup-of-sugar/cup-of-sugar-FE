@@ -48,8 +48,8 @@ export default function LenderRequestScreen(props) {
           scrollIndicatorInsets={{ right: 1 }}
           style={styles.itemsContainer}
         >
-          {data.itemsUserLookingToBorrow.length ? (
-            data.itemsUserLookingToBorrow.map(item => {
+          {data.getAllOpenBorrowRequests.length ? (
+            data.getAllOpenBorrowRequests.map(item => {
               return (
                 <View style={styles.item} key={item.description}>
                   <Text style={styles.itemName}>{item.name.toLowerCase()}</Text>
