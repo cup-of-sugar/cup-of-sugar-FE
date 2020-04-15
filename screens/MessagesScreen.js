@@ -41,11 +41,11 @@ export default function MessagesScreen(props) {
         </View>
         {messageView === "inbox" ? (
           <View style={styles.inbox}>
-            <Inbox userID={userId} />
+            <Inbox userID={userId} navigation={props.navigation} />
           </View>
         ) : (
           <View style={styles.sent}>
-            <Outbox userID={userId} />
+            <Outbox userID={userId} navigation={props.navigation} />
           </View>
         )}
       </ScrollView>
