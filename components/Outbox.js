@@ -11,12 +11,11 @@ import { SearchResult } from "./SearchResult";
 import Colors from "../constants/Colors";
 import { gql } from "apollo-boost";
 import { useQuery } from "@apollo/react-hooks";
-import { useNavigation } from "@react-navigation/native";
 import borrower from "../assets/images/borrower.png";
 import lender from "../assets/images/lender.png";
 
 export default function Outbox(props) {
-  const navigation = useNavigation();
+  const navigation = props.navigation;
 
   const SENT_MESSAGES = gql`
     {
