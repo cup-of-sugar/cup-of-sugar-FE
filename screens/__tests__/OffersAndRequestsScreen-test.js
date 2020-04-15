@@ -3,11 +3,11 @@ import OffersAndRequestsScreen, {
   REQUESTS,
   OFFERS,
 } from "../OffersAndRequestsScreen";
-import ReactTestRenderer from "react-test-renderer";
+import { create, act } from "react-test-renderer";
 
 import { MockedProvider } from "@apollo/react-testing";
 
-test("should render component", () => {
+test("should render component", async () => {
   const mocks = [
     {
       request: {
@@ -17,11 +17,22 @@ test("should render component", () => {
         data: {
           itemsUserLookingToBorrow: [
             {
+              __typename: "ItemType",
               id: 1,
               name: "butter",
               measurement: 2,
               quantity: "sticks",
               timeDuration: null,
+              category: {
+                __typename: "CategoryType",
+                name: "food",
+              },
+              description: "",
+              available: true,
+              posting: {
+                __typename: "PostingType",
+                title: "Gimme butter",
+              },
             },
           ],
         },
@@ -32,15 +43,18 @@ test("should render component", () => {
     navigation: { navigate: jest.fn() },
     route: { params: { action: "borrow" } },
   };
-  const tree = ReactTestRenderer.create(
-    <MockedProvider mocks={mocks} addTypeName={false}>
-      <OffersAndRequestsScreen {...props} />
-    </MockedProvider>
-  ).toJSON();
+  let tree;
+  await act(async () => {
+    tree = await create(
+      <MockedProvider mocks={mocks}>
+        <OffersAndRequestsScreen {...props} />
+      </MockedProvider>
+    );
+  });
   expect(tree).toMatchSnapshot();
 });
 
-test("should render component", () => {
+test("should render component", async () => {
   const mocks = [
     {
       request: {
@@ -50,11 +64,22 @@ test("should render component", () => {
         data: {
           itemsUserOfferedToLend: [
             {
+              __typename: "ItemType",
               id: 1,
               name: "butter",
               measurement: 2,
               quantity: "sticks",
               timeDuration: null,
+              category: {
+                __typename: "CategoryType",
+                name: "food",
+              },
+              description: "",
+              available: true,
+              posting: {
+                title: "Gimme butter",
+                __typename: "PostingType",
+              },
             },
           ],
         },
@@ -65,10 +90,13 @@ test("should render component", () => {
     navigation: { navigate: jest.fn() },
     route: { params: { action: "lend" } },
   };
-  const tree = ReactTestRenderer.create(
-    <MockedProvider mocks={mocks} addTypeName={false}>
-      <OffersAndRequestsScreen {...props} />
-    </MockedProvider>
-  ).toJSON();
+  let tree;
+  await act(async () => {
+    tree = await create(
+      <MockedProvider mocks={mocks}>
+        <OffersAndRequestsScreen {...props} />
+      </MockedProvider>
+    );
+  });
   expect(tree).toMatchSnapshot();
 });
