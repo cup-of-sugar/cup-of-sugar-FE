@@ -11,11 +11,45 @@ import {
 } from "react-native";
 import Colors from "../constants/Colors";
 import { gql } from "apollo-boost";
-import { useQuery } from "@apollo/react-hooks";
+import { useMutation } from "@apollo/react-hooks";
 import plane from "../assets/images/plane.png";
 
 export default function ComposeMessageScreen(props) {
-  return <ComposeForm action={props.action} navigation={props.navigation} />;
+  let title, body, recipientId, userId;
+
+  const NEW_MESSAGE = gql`
+    mutation SendMessage($title: String!, $body: String!, $recipientId: ID!) {
+      message: sendMessage(
+        input: {
+          title: $title
+          body: $body
+          userId: "1"
+          recipientId: $recipientId
+        }
+      ) {
+        id
+        title
+        body
+      }
+    }
+  `;
+
+  const [sendMessage] = useMutation(NEW_MESSAGE, {
+    variables: {
+      title,
+      body,
+      userId,
+      recipientId
+    }
+  });
+
+  return (
+    <ComposeForm
+      recipient={props.route.params.recipient}
+      navigation={props.navigation}
+      sendMessage={sendMessage}
+    />
+  );
 }
 
 class ComposeForm extends React.Component {
@@ -35,7 +69,17 @@ class ComposeForm extends React.Component {
   };
 
   sendMessage = () => {
-    this.setState({ sent: true });
+    this.props
+      .sendMessage({
+        variables: {
+          userId: this.props.userId,
+          recipientId: "4",
+          title: this.state.subject,
+          body: this.state.body
+        }
+      })
+      .then(() => this.setState({ sent: true }))
+      .catch(error => console.log(error));
   };
 
   render() {
@@ -44,7 +88,9 @@ class ComposeForm extends React.Component {
         {!this.state.sent ? (
           <>
             <View style={styles.toContainer}>
-              <Text style={styles.header}>To: Joe@tigers.com</Text>
+              <Text style={styles.header}>
+                To: {this.props.recipient || "Joe Exotic"}
+              </Text>
             </View>
             <View style={styles.subjectContainer}>
               <TextInput

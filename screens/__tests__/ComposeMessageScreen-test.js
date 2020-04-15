@@ -1,5 +1,5 @@
 import React from "react";
-import MessagesScreen from "../MessagesScreen";
+import ComposeMessageScreen from "../ComposeMessageScreen";
 import { MockedProvider } from "@apollo/react-testing";
 import ReactTestRenderer from "react-test-renderer";
 
@@ -10,7 +10,7 @@ it("should render without error if on borrowing path", () => {
   };
   ReactTestRenderer.create(
     <MockedProvider mocks={[]}>
-      <MessagesScreen {...props} />
+      <ComposeMessageScreen {...props} />
     </MockedProvider>
   );
 });
@@ -22,7 +22,7 @@ it("should render without error if on lending path", () => {
   };
   ReactTestRenderer.create(
     <MockedProvider mocks={[]}>
-      <MessagesScreen {...props} />
+      <ComposeMessageScreen {...props} />
     </MockedProvider>
   );
 });
