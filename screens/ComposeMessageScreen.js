@@ -17,7 +17,7 @@ import { SENT_MESSAGES } from "../components/Outbox";
 import { INBOX_MESSAGES } from "../components/Inbox";
 
 export default function ComposeMessageScreen(props) {
-  let title, body, recipientId;
+  let title, body, recipientEmail;
   const userId = props.route.params.userId;
 
   const NEW_MESSAGE = gql`
