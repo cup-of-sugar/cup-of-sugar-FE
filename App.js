@@ -160,7 +160,7 @@ export default function App(props) {
                 }}
               />
               <Stack.Screen
-                name="OffersAndRequests"
+                name="Offers/Requests"
                 component={OffersAndRequestsScreen}
                 options={{
                   headerStyle: {
