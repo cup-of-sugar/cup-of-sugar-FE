@@ -1,0 +1,29 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should render component 1`] = `
+<Text
+  style={
+    Object {
+      "alignSelf": "center",
+      "fontSize": 20,
+      "fontWeight": "bold",
+    }
+  }
+>
+  Loading...
+</Text>
+`;
+
+exports[`should render component 2`] = `
+<Text
+  style={
+    Object {
+      "alignSelf": "center",
+      "fontSize": 20,
+      "fontWeight": "bold",
+    }
+  }
+>
+  Loading...
+</Text>
+`;
