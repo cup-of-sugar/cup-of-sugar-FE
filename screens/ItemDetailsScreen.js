@@ -147,12 +147,15 @@ export default function ItemDetailsScreen(props) {
           </Text>
         ) : (
           <Text style={styles.itemInfo}>
-            Needed for
-            {item.timeDuration}
+            {"Needed for" + " " + item.timeDuration}
           </Text>
         )}
-        <Text style={styles.itemInfoTitle}>Category:</Text>
-        <Text style={styles.itemInfo}>{item.category.name}</Text>
+        {item.category ? (
+          <>
+            <Text style={styles.itemInfoTitle}>Category:</Text>
+            <Text style={styles.itemInfo}>{item.category.name}</Text>
+          </>
+        ) : null}
         <Text style={styles.itemInfoTitle}>Description:</Text>
         <Text style={styles.itemInfo}>
           {item.description || "No description yet!"}
@@ -177,12 +180,19 @@ export default function ItemDetailsScreen(props) {
           </TouchableOpacity>
         )
       ) : (
-        <TouchableOpacity
-          style={styles.borrowButton}
-          onPress={() => handleAction()}
-        >
-          <Text style={styles.borrowButtonText}>Lend Item</Text>
-        </TouchableOpacity>
+        <>
+          <Text style={styles.lenderText}>
+            Do you have this item? Message your neighbor and let them know!
+          </Text>
+          <TouchableOpacity
+            style={styles.borrowButton}
+            onPress={() =>
+              props.navigation.navigate("Compose", { action, userId })
+            }
+          >
+            <Text style={styles.borrowButtonText}>Message Neighbor</Text>
+          </TouchableOpacity>
+        </>
       )}
     </ScrollView>
   );
@@ -247,5 +257,12 @@ const styles = StyleSheet.create({
     height: 200,
     marginBottom: 15,
     width: 200
+  },
+  lenderText: {
+    marginTop: 30,
+    fontSize: 25,
+    fontWeight: "bold",
+    marginBottom: 10,
+    textAlign: "center"
   }
 });
