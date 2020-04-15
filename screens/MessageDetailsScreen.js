@@ -11,6 +11,8 @@ import {
 import Colors from "../constants/Colors";
 
 export default function MessageDetailsScreen(props) {
+  const message = props.route.params.message;
+
   return (
     <View style={styles.container}>
       <ScrollView
@@ -19,14 +21,20 @@ export default function MessageDetailsScreen(props) {
         contentContainerStyle={styles.contentContainer}
       >
         <View style={styles.subjectContainer}>
-          <Text style={styles.subject}>Subject: Tigers</Text>
+          <Text style={styles.subject}>Subject: {message.title}</Text>
         </View>
         <View style={styles.messageContainer}>
-          <Text style={styles.messageContent}>
-            When can I get those tigers? Thanks, Carole
-          </Text>
+          <Text style={styles.messageContent}>{message.body}</Text>
         </View>
-        <TouchableOpacity style={styles.replyButton}>
+        <TouchableOpacity
+          style={styles.replyButton}
+          onPress={() =>
+            props.navigation.navigate("Compose", {
+              recipient: message.recipient.firstName,
+              userId: props.route.params.userId
+            })
+          }
+        >
           <Text style={styles.replyButtonText}>Reply</Text>
         </TouchableOpacity>
       </ScrollView>
