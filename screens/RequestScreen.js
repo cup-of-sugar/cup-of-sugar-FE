@@ -16,6 +16,7 @@ import Colors from "../constants/Colors";
 import { gql } from "apollo-boost";
 import { useQuery } from "@apollo/react-hooks";
 import { useMutation } from "@apollo/react-hooks";
+import { REQUESTS } from "./OffersAndRequestsScreen";
 
 export default function RequestScreen(props) {
   const navigation = props.navigation;
@@ -74,7 +75,12 @@ export default function RequestScreen(props) {
       quantity,
       measurement,
       timeDuration
-    }
+    },
+    refetchQueries: () => [
+      {
+        query: REQUESTS
+      }
+    ]
   });
 
   return (

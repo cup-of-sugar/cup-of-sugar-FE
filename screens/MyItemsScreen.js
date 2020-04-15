@@ -8,32 +8,52 @@ import { gql } from "apollo-boost";
 import { useMutation } from "@apollo/react-hooks";
 import { useQuery } from "@apollo/react-hooks";
 
+export const LOANED_ITEMS = gql`
+  query {
+    itemsUserHasLent(userId: "1") {
+      id
+      name
+      quantity
+      available
+      description
+      measurement
+      timeDuration
+      posting {
+        title
+      }
+      category {
+        name
+      }
+    }
+  }
+`;
+
+export const BORROWED_ITEMS = gql`
+  query {
+    itemsUserHasBorrowed(userId: "1") {
+      id
+      name
+      quantity
+      available
+      description
+      measurement
+      timeDuration
+      posting {
+        title
+      }
+      category {
+        name
+      }
+    }
+  }
+`;
+
 export default function MyItemsScreen(props) {
   const action = props.route.params.action;
   const userId = props.route.params.userId;
   let id, available, name;
 
   if (action === "borrow") {
-    const BORROWED_ITEMS = gql`
-      query {
-        itemsUserHasBorrowed(userId: "1") {
-          id
-          name
-          quantity
-          available
-          description
-          measurement
-          timeDuration
-          posting {
-            title
-          }
-          category {
-            name
-          }
-        }
-      }
-    `;
-
     const { loading, error, data } = useQuery(BORROWED_ITEMS);
 
     const UPDATE_ITEM = gql`
@@ -126,26 +146,6 @@ export default function MyItemsScreen(props) {
       );
     }
   } else if (action === "lend") {
-    const LOANED_ITEMS = gql`
-      query {
-        itemsUserHasLent(userId: "1") {
-          id
-          name
-          quantity
-          available
-          description
-          measurement
-          timeDuration
-          posting {
-            title
-          }
-          category {
-            name
-          }
-        }
-      }
-    `;
-
     const { loading, error, data } = useQuery(LOANED_ITEMS);
 
     if (loading) {
@@ -242,13 +242,15 @@ const styles = StyleSheet.create({
     margin: 10,
     padding: 20,
     height: 70,
-    width: 360
+    width: 370
   },
   itemName: {
     fontSize: 25,
     fontWeight: "bold",
     color: Colors.darkBlue,
-    textAlign: "left"
+    textAlign: "left",
+    overflow: "hidden",
+    width: 225
   },
   returnButton: {
     backgroundColor: Colors.darkBlue,
@@ -273,7 +275,7 @@ const styles = StyleSheet.create({
     borderColor: Colors.darkBlue,
     color: "#fff",
     height: 50,
-    paddingTop: 8,
+    paddingTop: 9,
     width: 115
   },
   messageButtonText: {

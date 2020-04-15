@@ -4,6 +4,9 @@ import { Image, StyleSheet, Text, View, TouchableOpacity } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import Colors from "../constants/Colors";
 import { ITEMS } from "../components/SearchResultsContainer";
+import { OFFERS } from "./OffersAndRequestsScreen";
+import { BORROWED_ITEMS } from "./MyItemsScreen";
+import { LOANED_ITEMS } from "./MyItemsScreen";
 
 import { gql } from "apollo-boost";
 import { useMutation } from "@apollo/react-hooks";
@@ -67,11 +70,45 @@ export default function ItemDetailsScreen(props) {
           name: item.category.name,
           items: item.name
         }
+      },
+      {
+        query: OFFERS
+      },
+      {
+        query: LOANED_ITEMS
+      },
+      {
+        query: BORROWED_ITEMS,
+        variables: {
+          userId: "1"
+        }
       }
     ]
   });
 
-  const [updateLend] = useMutation(UPDATE_ITEM);
+  const [updateLend] = useMutation(UPDATE_ITEM, {
+    refetchQueries: () => [
+      {
+        query: ITEMS,
+        variables: {
+          name: item.category.name,
+          items: item.name
+        }
+      },
+      {
+        query: OFFERS
+      },
+      {
+        query: LOANED_ITEMS
+      },
+      {
+        query: BORROWED_ITEMS,
+        variables: {
+          userId: "1"
+        }
+      }
+    ]
+  });
 
   return (
     <ScrollView
