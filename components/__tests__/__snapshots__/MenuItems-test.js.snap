@@ -1,3 +1,437 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`should render component 1`] = `null`;
+exports[`should render component when action is borrow 1`] = `
+<View
+  style={
+    Object {
+      "backgroundColor": "#0C94E1",
+      "height": 420,
+      "width": 260,
+    }
+  }
+>
+  <View
+    accessible={true}
+    focusable={true}
+    isTVSelectable={true}
+    onClick={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      Object {
+        "opacity": 1,
+      }
+    }
+  >
+    <Text
+      style={
+        Object {
+          "borderColor": "#fff",
+          "borderWidth": 1,
+          "color": "#fff",
+          "fontSize": 20,
+          "fontWeight": "bold",
+          "height": 70,
+          "padding": 20,
+          "width": "100%",
+        }
+      }
+    >
+      Go to 
+      Lending
+    </Text>
+  </View>
+  <View
+    accessible={true}
+    focusable={true}
+    isTVSelectable={true}
+    onClick={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      Object {
+        "opacity": 1,
+      }
+    }
+  >
+    <Text
+      style={
+        Object {
+          "borderColor": "#fff",
+          "borderWidth": 1,
+          "color": "#fff",
+          "fontSize": 20,
+          "fontWeight": "bold",
+          "height": 70,
+          "padding": 20,
+          "width": "100%",
+        }
+      }
+    >
+      My Borrowed Items
+    </Text>
+  </View>
+  <View
+    accessible={true}
+    focusable={true}
+    isTVSelectable={true}
+    onClick={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      Object {
+        "opacity": 1,
+      }
+    }
+  >
+    <Text
+      style={
+        Object {
+          "borderColor": "#fff",
+          "borderWidth": 1,
+          "color": "#fff",
+          "fontSize": 20,
+          "fontWeight": "bold",
+          "height": 70,
+          "padding": 20,
+          "width": "100%",
+        }
+      }
+    >
+      My Item Requests
+    </Text>
+  </View>
+  <View
+    accessible={true}
+    focusable={true}
+    isTVSelectable={true}
+    onClick={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      Object {
+        "opacity": 1,
+      }
+    }
+  >
+    <Text
+      style={
+        Object {
+          "borderColor": "#fff",
+          "borderWidth": 1,
+          "color": "#fff",
+          "fontSize": 20,
+          "fontWeight": "bold",
+          "height": 70,
+          "padding": 20,
+          "width": "100%",
+        }
+      }
+    >
+      My Messages
+    </Text>
+  </View>
+  <View
+    accessible={true}
+    focusable={true}
+    isTVSelectable={true}
+    onClick={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      Object {
+        "opacity": 1,
+      }
+    }
+  >
+    <Text
+      style={
+        Object {
+          "borderColor": "#fff",
+          "borderWidth": 1,
+          "color": "#fff",
+          "fontSize": 20,
+          "fontWeight": "bold",
+          "height": 70,
+          "padding": 20,
+          "width": "100%",
+        }
+      }
+    >
+      Make a Request
+    </Text>
+  </View>
+  <View
+    accessible={true}
+    focusable={true}
+    isTVSelectable={true}
+    onClick={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      Object {
+        "opacity": 1,
+      }
+    }
+  >
+    <Text
+      style={
+        Object {
+          "borderColor": "#fff",
+          "borderWidth": 1,
+          "color": "#fff",
+          "fontSize": 20,
+          "fontWeight": "bold",
+          "height": 70,
+          "padding": 20,
+          "width": "100%",
+        }
+      }
+    >
+      Logout
+    </Text>
+  </View>
+</View>
+`;
+
+exports[`should render component when action is lend 1`] = `
+<View
+  style={
+    Object {
+      "backgroundColor": "#0C94E1",
+      "height": 420,
+      "width": 260,
+    }
+  }
+>
+  <View
+    accessible={true}
+    focusable={true}
+    isTVSelectable={true}
+    onClick={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      Object {
+        "opacity": 1,
+      }
+    }
+  >
+    <Text
+      style={
+        Object {
+          "borderColor": "#fff",
+          "borderWidth": 1,
+          "color": "#fff",
+          "fontSize": 20,
+          "fontWeight": "bold",
+          "height": 70,
+          "padding": 20,
+          "width": "100%",
+        }
+      }
+    >
+      Go to 
+      Borrowing
+    </Text>
+  </View>
+  <View
+    accessible={true}
+    focusable={true}
+    isTVSelectable={true}
+    onClick={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      Object {
+        "opacity": 1,
+      }
+    }
+  >
+    <Text
+      style={
+        Object {
+          "borderColor": "#fff",
+          "borderWidth": 1,
+          "color": "#fff",
+          "fontSize": 20,
+          "fontWeight": "bold",
+          "height": 70,
+          "padding": 20,
+          "width": "100%",
+        }
+      }
+    >
+      Items I'm Lending
+    </Text>
+  </View>
+  <View
+    accessible={true}
+    focusable={true}
+    isTVSelectable={true}
+    onClick={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      Object {
+        "opacity": 1,
+      }
+    }
+  >
+    <Text
+      style={
+        Object {
+          "borderColor": "#fff",
+          "borderWidth": 1,
+          "color": "#fff",
+          "fontSize": 20,
+          "fontWeight": "bold",
+          "height": 70,
+          "padding": 20,
+          "width": "100%",
+        }
+      }
+    >
+      Items I'm Offering
+    </Text>
+  </View>
+  <View
+    accessible={true}
+    focusable={true}
+    isTVSelectable={true}
+    onClick={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      Object {
+        "opacity": 1,
+      }
+    }
+  >
+    <Text
+      style={
+        Object {
+          "borderColor": "#fff",
+          "borderWidth": 1,
+          "color": "#fff",
+          "fontSize": 20,
+          "fontWeight": "bold",
+          "height": 70,
+          "padding": 20,
+          "width": "100%",
+        }
+      }
+    >
+      Neighorhood Requests
+    </Text>
+  </View>
+  <View
+    accessible={true}
+    focusable={true}
+    isTVSelectable={true}
+    onClick={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      Object {
+        "opacity": 1,
+      }
+    }
+  >
+    <Text
+      style={
+        Object {
+          "borderColor": "#fff",
+          "borderWidth": 1,
+          "color": "#fff",
+          "fontSize": 20,
+          "fontWeight": "bold",
+          "height": 70,
+          "padding": 20,
+          "width": "100%",
+        }
+      }
+    >
+      My Messages
+    </Text>
+  </View>
+  <View
+    accessible={true}
+    focusable={true}
+    isTVSelectable={true}
+    onClick={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      Object {
+        "opacity": 1,
+      }
+    }
+  >
+    <Text
+      style={
+        Object {
+          "borderColor": "#fff",
+          "borderWidth": 1,
+          "color": "#fff",
+          "fontSize": 20,
+          "fontWeight": "bold",
+          "height": 70,
+          "padding": 20,
+          "width": "100%",
+        }
+      }
+    >
+      Logout
+    </Text>
+  </View>
+</View>
+`;
