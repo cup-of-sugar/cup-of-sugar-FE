@@ -5,7 +5,7 @@ import {
   View,
   Text,
   TouchableOpacity,
-  Image
+  Image,
 } from "react-native";
 import { SearchResult } from "./SearchResult";
 import Colors from "../constants/Colors";
@@ -14,24 +14,24 @@ import { useQuery } from "@apollo/react-hooks";
 import borrower from "../assets/images/borrower.png";
 import lender from "../assets/images/lender.png";
 
+export const SENT_MESSAGES = gql`
+  {
+    userOutbox(userId: "1") {
+      title
+      body
+      recipient {
+        firstName
+        email
+      }
+    }
+  }
+`;
+
 export default function Outbox(props) {
   const navigation = props.navigation;
 
-  const SENT_MESSAGES = gql`
-    {
-      userOutbox(userId: "1") {
-        title
-        body
-        recipient {
-          firstName
-          email
-        }
-      }
-    }
-  `;
-
   let { loading, error, data } = useQuery(SENT_MESSAGES, {
-    fetchPolicy: "network-only"
+    fetchPolicy: "network-only",
   });
 
   if (loading) return <Text style={styles.loadingText}>Loading...</Text>;
@@ -40,7 +40,7 @@ export default function Outbox(props) {
 
   if (data) {
     return data.userOutbox.length ? (
-      data.userOutbox.map(mail => {
+      data.userOutbox.map((mail) => {
         return (
           <TouchableOpacity
             key={mail.title}
@@ -48,7 +48,7 @@ export default function Outbox(props) {
             onPress={() =>
               navigation.navigate("Message", {
                 message: mail,
-                userId: props.userId
+                userId: props.userId,
               })
             }
           >
@@ -79,23 +79,23 @@ const styles = StyleSheet.create({
     marginVertical: 10,
     paddingVertical: 20,
     paddingHorizontal: 15,
-    width: 350
+    width: 350,
   },
   messageText: {
     fontSize: 20,
     fontWeight: "bold",
     color: Colors.darkBlue,
-    paddingRight: 10
+    paddingRight: 10,
   },
   icon: {
     height: 25,
-    width: 115
+    width: 115,
   },
   loadingText: {
     alignSelf: "center",
     fontSize: 20,
     fontWeight: "bold",
-    margin: 10
+    margin: 10,
   },
   errorText: {
     alignSelf: "center",
@@ -103,6 +103,6 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: "bold",
     margin: 10,
-    marginTop: 50
-  }
+    marginTop: 50,
+  },
 });
