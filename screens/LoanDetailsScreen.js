@@ -63,7 +63,10 @@ export default function LoanDetailsScreen(props) {
     },
     refetchQueries: () => [
       {
-        query: OFFERS
+        query: OFFERS,
+        variables: {
+          userId: userId
+        }
       }
     ]
   });

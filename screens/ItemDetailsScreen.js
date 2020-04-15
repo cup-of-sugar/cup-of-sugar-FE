@@ -72,10 +72,16 @@ export default function ItemDetailsScreen(props) {
         }
       },
       {
-        query: OFFERS
+        query: OFFERS,
+        variables: {
+          userId: userId
+        }
       },
       {
-        query: LOANED_ITEMS
+        query: LOANED_ITEMS,
+        variables: {
+          userId: userId
+        }
       },
       {
         query: BORROWED_ITEMS,
@@ -96,10 +102,16 @@ export default function ItemDetailsScreen(props) {
         }
       },
       {
-        query: OFFERS
+        query: OFFERS,
+        variables: {
+          userId: userId
+        }
       },
       {
-        query: LOANED_ITEMS
+        query: LOANED_ITEMS,
+        variables: {
+          userId: userId
+        }
       },
       {
         query: BORROWED_ITEMS,

@@ -25,14 +25,14 @@ export default function ComposeMessageScreen(props) {
       $title: String!
       $body: String!
       $userId: ID!
-      $recipientId: ID!
+      $recipientEmail: ID!
     ) {
       message: sendMessage(
         input: {
           title: $title
           body: $body
           userId: $userId
-          recipientId: $recipientId
+          recipientEmail: $recipientId
         }
       ) {
         id
@@ -51,7 +51,10 @@ export default function ComposeMessageScreen(props) {
     },
     refetchQueries: () => [
       {
-        query: SENT_MESSAGES
+        query: SENT_MESSAGES,
+        variables: {
+          userId: userId
+        }
       },
       {
         query: INBOX_MESSAGES,
