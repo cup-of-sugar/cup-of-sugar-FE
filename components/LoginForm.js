@@ -45,7 +45,13 @@ export default function LoginForm(props) {
 export class LoginFormClass extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { email: "", password: "", error: "", validation: "" };
+    this.state = {
+      email: "",
+      password: "",
+      error: "",
+      token: "",
+      userId: ""
+    };
   }
 
   checkInputs = () => {
@@ -61,16 +67,21 @@ export class LoginFormClass extends React.Component {
   startLogin = () => {
     this.props
       .userLogin()
-      .then(response => this.validateLogin(response.data.user.token))
+      .then(response => this.validateLogin(response))
       .catch(error => console.log(error));
   };
 
   validateLogin = response => {
-    this.setState({ validation: response });
-    if (this.state.validation) {
-      this.props.navigation.navigate("Path", { userId: this.state.validation });
+    this.setState({
+      token: response.data.user.token,
+      userId: response.data.user.user.id
+    });
+    if (this.state.token) {
+      this.props.navigation.navigate("Path", {
+        userId: this.state.userId
+      });
       this.setState({ email: "", password: "", error: "", validation: "" });
-    } else if (!this.state.validation) {
+    } else if (!this.state.token) {
       this.setState({
         error: "Incorrect email or password! Please try again!"
       });
