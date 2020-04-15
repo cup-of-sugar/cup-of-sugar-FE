@@ -25,7 +25,7 @@ export default function ComposeMessageScreen(props) {
       $title: String!
       $body: String!
       $userId: ID!
-      $recipientEmail: string!
+      $recipientEmail: String!
     ) {
       message: sendMessage(
         input: {
@@ -96,7 +96,7 @@ class ComposeForm extends React.Component {
       .sendMessage({
         variables: {
           userId: this.props.userId,
-          recipientId: this.props.recipient.email || "carole@tigers.com",
+          recipientEmail: this.props.recipient.email || "carole@tigers.com",
           title: this.state.subject,
           body: this.state.body
         }
