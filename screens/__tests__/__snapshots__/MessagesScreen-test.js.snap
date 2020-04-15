@@ -11,11 +11,14 @@ exports[`should render without error if on borrowing path 1`] = `
   }
 >
   <RCTScrollView
+    collapsable={false}
     contentContainerStyle={
       Object {
         "padding": 15,
       }
     }
+    onGestureHandlerEvent={[Function]}
+    onGestureHandlerStateChange={[Function]}
     scrollIndicatorInsets={
       Object {
         "right": 1,
@@ -111,7 +114,10 @@ exports[`should render without error if on borrowing path 1`] = `
           </Text>
         </View>
       </View>
-      <View
+      <RCTScrollView
+        collapsable={false}
+        onGestureHandlerEvent={[Function]}
+        onGestureHandlerStateChange={[Function]}
         style={
           Object {
             "backgroundColor": "#0C94E1",
@@ -122,21 +128,23 @@ exports[`should render without error if on borrowing path 1`] = `
           }
         }
       >
-        <Text
-          style={
-            Object {
-              "alignSelf": "center",
-              "color": "red",
-              "fontSize": 20,
-              "fontWeight": "bold",
-              "margin": 10,
-              "marginTop": 50,
+        <View>
+          <Text
+            style={
+              Object {
+                "alignSelf": "center",
+                "color": "#fff",
+                "fontSize": 20,
+                "fontWeight": "bold",
+                "margin": 10,
+                "marginTop": 50,
+              }
             }
-          }
-        >
-          No messages found!
-        </Text>
-      </View>
+          >
+            No messages found!
+          </Text>
+        </View>
+      </RCTScrollView>
     </View>
   </RCTScrollView>
 </View>
@@ -153,11 +161,14 @@ exports[`should render without error if on lending path 1`] = `
   }
 >
   <RCTScrollView
+    collapsable={false}
     contentContainerStyle={
       Object {
         "padding": 15,
       }
     }
+    onGestureHandlerEvent={[Function]}
+    onGestureHandlerStateChange={[Function]}
     scrollIndicatorInsets={
       Object {
         "right": 1,
@@ -253,7 +264,10 @@ exports[`should render without error if on lending path 1`] = `
           </Text>
         </View>
       </View>
-      <View
+      <RCTScrollView
+        collapsable={false}
+        onGestureHandlerEvent={[Function]}
+        onGestureHandlerStateChange={[Function]}
         style={
           Object {
             "backgroundColor": "#0C94E1",
@@ -264,21 +278,23 @@ exports[`should render without error if on lending path 1`] = `
           }
         }
       >
-        <Text
-          style={
-            Object {
-              "alignSelf": "center",
-              "color": "red",
-              "fontSize": 20,
-              "fontWeight": "bold",
-              "margin": 10,
-              "marginTop": 50,
+        <View>
+          <Text
+            style={
+              Object {
+                "alignSelf": "center",
+                "color": "#fff",
+                "fontSize": 20,
+                "fontWeight": "bold",
+                "margin": 10,
+                "marginTop": 50,
+              }
             }
-          }
-        >
-          No messages found!
-        </Text>
-      </View>
+          >
+            No messages found!
+          </Text>
+        </View>
+      </RCTScrollView>
     </View>
   </RCTScrollView>
 </View>
