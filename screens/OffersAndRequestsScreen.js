@@ -45,7 +45,7 @@ export const OFFERS = gql`
   }
 `;
 
-export default function OffersAndRequestsScreen(props) {
+const OffersAndRequestsScreen = (props) => {
   const navigation = props.navigation;
   const action = props.route.params.action;
   const userId = props.route.params.userId;
@@ -144,7 +144,7 @@ export default function OffersAndRequestsScreen(props) {
   } else {
     return <Text style={styles.errorText}>No Items Found!</Text>;
   }
-}
+};
 
 const styles = StyleSheet.create({
   errorText: {
@@ -228,3 +228,5 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
 });
+
+export default OffersAndRequestsScreen;
