@@ -80,7 +80,7 @@ export default function ItemDetailsScreen(props) {
       {
         query: BORROWED_ITEMS,
         variables: {
-          userId: "1"
+          userId: userId
         }
       }
     ]
@@ -104,7 +104,7 @@ export default function ItemDetailsScreen(props) {
       {
         query: BORROWED_ITEMS,
         variables: {
-          userId: "1"
+          userId: userId
         }
       }
     ]

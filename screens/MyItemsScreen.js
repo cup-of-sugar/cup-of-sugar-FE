@@ -9,8 +9,8 @@ import { useMutation } from "@apollo/react-hooks";
 import { useQuery } from "@apollo/react-hooks";
 
 export const LOANED_ITEMS = gql`
-  query {
-    itemsUserHasLent(userId: "1") {
+  query ItemsUserHasLent($userId: ID!) {
+    itemsUserHasLent(userId: $userId) {
       id
       name
       quantity
@@ -29,8 +29,8 @@ export const LOANED_ITEMS = gql`
 `;
 
 export const BORROWED_ITEMS = gql`
-  query {
-    itemsUserHasBorrowed(userId: "1") {
+  query ItemsUserHasBorrowed($userId: ID!) {
+    itemsUserHasBorrowed(userId: $userId) {
       id
       name
       quantity
@@ -54,16 +54,26 @@ export default function MyItemsScreen(props) {
   let id, available, name;
 
   if (action === "borrow") {
-    const { loading, error, data } = useQuery(BORROWED_ITEMS);
+    const { loading, error, data } = useQuery(BORROWED_ITEMS, {
+      variables: {
+        userId: userId
+      }
+    });
 
     const UPDATE_ITEM = gql`
       mutation UpdateItemAvailability(
+        $userId: ID!
         $id: ID!
         $available: Boolean!
         $name: String!
       ) {
         item: updateItemAvailability(
-          input: { userId: "1", id: $id, available: $available, name: $name }
+          input: {
+            userId: $userId
+            id: $id
+            available: $available
+            name: $name
+          }
         ) {
           id
           available
@@ -74,6 +84,7 @@ export default function MyItemsScreen(props) {
 
     const [updateItem] = useMutation(UPDATE_ITEM, {
       variables: {
+        userId,
         id,
         available,
         name
@@ -82,7 +93,7 @@ export default function MyItemsScreen(props) {
         {
           query: BORROWED_ITEMS,
           variables: {
-            userId: "1"
+            userId: userId
           }
         }
       ]
@@ -115,6 +126,7 @@ export default function MyItemsScreen(props) {
                         onPress={() => {
                           updateItem({
                             variables: {
+                              userId: userId,
                               id: item.id,
                               available: item.available,
                               name: item.name
@@ -146,7 +158,11 @@ export default function MyItemsScreen(props) {
       );
     }
   } else if (action === "lend") {
-    const { loading, error, data } = useQuery(LOANED_ITEMS);
+    const { loading, error, data } = useQuery(LOANED_ITEMS, {
+      variables: {
+        userId: userId
+      }
+    });
 
     if (loading) {
       return <Text style={styles.loadingText}>Loading...</Text>;
