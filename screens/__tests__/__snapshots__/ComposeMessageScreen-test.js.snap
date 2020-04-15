@@ -34,7 +34,7 @@ exports[`should render without error if on borrowing path 1`] = `
       }
     >
       To: 
-      Joe Exotic
+      Carole
     </Text>
   </View>
   <View
@@ -185,7 +185,7 @@ exports[`should render without error if on lending path 1`] = `
       }
     >
       To: 
-      Joe Exotic
+      Carole
     </Text>
   </View>
   <View
