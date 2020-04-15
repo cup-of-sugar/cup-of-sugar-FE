@@ -39,10 +39,11 @@ export default function PathScreen(props) {
       >
         <Text style={styles.choiceText}>BORROW</Text>
       </TouchableOpacity>
-      <TouchableOpacity style={styles.choiceButton}>
-        <Text style={styles.choiceText} onPress={() => handleChoice("lend")}>
-          LEND
-        </Text>
+      <TouchableOpacity
+        style={styles.choiceButton}
+        onPress={() => handleChoice("lend")}
+      >
+        <Text style={styles.choiceText}>LEND</Text>
       </TouchableOpacity>
     </ScrollView>
   );
