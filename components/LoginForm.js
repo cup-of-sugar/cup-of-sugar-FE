@@ -5,7 +5,7 @@ import {
   StyleSheet,
   View,
   TextInput,
-  TouchableOpacity
+  TouchableOpacity,
 } from "react-native";
 import Colors from "../constants/Colors";
 import { useNavigation } from "@react-navigation/native";
@@ -25,13 +25,13 @@ export default function LoginForm(props) {
   `;
 
   const [userLogin] = useMutation(USER_LOGIN, {
-    variables: { email, password }
+    variables: { email, password },
   });
 
   return <LoginFormClass navigation={navigation} userLogin={userLogin} />;
 }
 
-class LoginFormClass extends React.Component {
+export class LoginFormClass extends React.Component {
   constructor(props) {
     super(props);
     this.state = { email: "", password: "", error: "", validation: "" };
@@ -52,24 +52,24 @@ class LoginFormClass extends React.Component {
       .userLogin({
         variables: {
           email: this.state.email.toLowerCase(),
-          password: this.state.password
-        }
+          password: this.state.password,
+        },
       })
-      .then(response => this.validateLogin(response));
+      .then((response) => this.validateLogin(response));
   };
 
-  validateLogin = response => {
+  validateLogin = (response) => {
     this.setState({ validation: response.data.user.email });
     if (this.state.validation) {
       this.props.navigation.navigate("Path", { userId: "1" });
       this.setState({ email: "", password: "", error: "", validation: "" });
     } else if (this.state.validation === null) {
       this.setState({
-        error: "Incorrect email or password! Please try again!"
+        error: "Incorrect email or password! Please try again!",
       });
     } else {
       this.setState({
-        error: "Error logging in!"
+        error: "Error logging in!",
       });
     }
   };
@@ -82,7 +82,7 @@ class LoginFormClass extends React.Component {
           style={styles.textInput}
           name="email"
           value={this.state.email}
-          onChangeText={text => this.handleChange("email", text)}
+          onChangeText={(text) => this.handleChange("email", text)}
           placeholder="Email..."
         />
         <Text style={styles.header}>Password</Text>
@@ -90,7 +90,7 @@ class LoginFormClass extends React.Component {
           style={styles.textInput}
           name="password"
           value={this.state.password}
-          onChangeText={text => this.handleChange("password", text)}
+          onChangeText={(text) => this.handleChange("password", text)}
           placeholder="Password..."
           secureTextEntry={true}
         />
@@ -116,10 +116,10 @@ const styles = StyleSheet.create({
     height: "auto",
     marginLeft: 30,
     marginRight: 30,
-    textAlign: "center"
+    textAlign: "center",
   },
   formContainer: {
-    flex: 1
+    flex: 1,
   },
   header: {
     backgroundColor: Colors.darkBlue,
@@ -131,7 +131,7 @@ const styles = StyleSheet.create({
     marginVertical: 5,
     paddingLeft: 5,
     textAlign: "left",
-    width: 130
+    width: 130,
   },
   textInput: {
     backgroundColor: "#fff",
@@ -142,7 +142,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 40,
     marginBottom: 20,
     paddingLeft: 20,
-    paddingRight: 20
+    paddingRight: 20,
   },
   submitButton: {
     margin: 40,
@@ -151,12 +151,12 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.lightBlue,
     borderRadius: 10,
     borderWidth: 1,
-    borderColor: Colors.lightBlue
+    borderColor: Colors.lightBlue,
   },
   submitButtonText: {
     fontSize: 25,
     fontWeight: "bold",
     color: "#fff",
-    textAlign: "center"
-  }
+    textAlign: "center",
+  },
 });
