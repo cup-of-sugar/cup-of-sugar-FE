@@ -1,7 +1,6 @@
 import * as WebBrowser from "expo-web-browser";
 import * as React from "react";
 import {
-  ScrollView,
   Image,
   StyleSheet,
   Text,
@@ -10,6 +9,7 @@ import {
   View
 } from "react-native";
 import Colors from "../constants/Colors";
+import { ScrollView } from "react-native-gesture-handler";
 import { gql } from "apollo-boost";
 import { useMutation } from "@apollo/react-hooks";
 import plane from "../assets/images/plane.png";

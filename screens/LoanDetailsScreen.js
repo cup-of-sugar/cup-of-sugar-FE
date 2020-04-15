@@ -10,6 +10,7 @@ import {
 import Colors from "../constants/Colors";
 import { gql } from "apollo-boost";
 import { useMutation } from "@apollo/react-hooks";
+import { OFFERS } from "./OffersAndRequestsScreen";
 
 export default function LoanDetailsScreen(props) {
   let name = props.route.params.name;
@@ -56,7 +57,12 @@ export default function LoanDetailsScreen(props) {
       quantity,
       measurement,
       timeDuration
-    }
+    },
+    refetchQueries: () => [
+      {
+        query: OFFERS
+      }
+    ]
   });
 
   return (

@@ -1,14 +1,8 @@
 import * as WebBrowser from "expo-web-browser";
 import * as React from "react";
-import {
-  ScrollView,
-  Image,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View
-} from "react-native";
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import Colors from "../constants/Colors";
+import { ScrollView } from "react-native-gesture-handler";
 
 export default function MessageDetailsScreen(props) {
   const message = props.route.params.message;

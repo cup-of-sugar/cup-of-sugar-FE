@@ -1,16 +1,10 @@
 import * as WebBrowser from "expo-web-browser";
 import * as React from "react";
-import {
-  ScrollView,
-  Image,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View
-} from "react-native";
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import Colors from "../constants/Colors";
 import Inbox from "../components/Inbox";
 import Outbox from "../components/Outbox";
+import { ScrollView } from "react-native-gesture-handler";
 import { gql } from "apollo-boost";
 import { useQuery } from "@apollo/react-hooks";
 
