@@ -14,21 +14,21 @@ import { useQuery } from "@apollo/react-hooks";
 import borrower from "../assets/images/borrower.png";
 import lender from "../assets/images/lender.png";
 
-export default function Inbox(props) {
-  const navigation = props.navigation;
-
-  const INBOX_MESSAGES = gql`
-    {
-      userInbox(userId: "1") {
-        title
-        body
-        recipient {
-          firstName
-          email
-        }
+export const INBOX_MESSAGES = gql`
+  {
+    userInbox(userId: "1") {
+      title
+      body
+      recipient {
+        firstName
+        email
       }
     }
-  `;
+  }
+`;
+
+export default function Inbox(props) {
+  const navigation = props.navigation;
 
   let { loading, error, data } = useQuery(INBOX_MESSAGES, {
     fetchPolicy: "network-only"
