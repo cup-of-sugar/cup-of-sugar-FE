@@ -24,7 +24,7 @@ export default function MessageDetailsScreen(props) {
           style={styles.replyButton}
           onPress={() =>
             props.navigation.navigate("Compose", {
-              recipient: message.recipient.firstName,
+              recipient: message.recipient,
               userId: props.route.params.userId
             })
           }
