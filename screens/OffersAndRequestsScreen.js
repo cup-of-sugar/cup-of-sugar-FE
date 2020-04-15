@@ -17,6 +17,7 @@ export const REQUESTS = gql`
       measurement
       timeDuration
       posting {
+        id
         title
       }
       category {
@@ -37,6 +38,7 @@ export const OFFERS = gql`
       measurement
       timeDuration
       posting {
+        id
         title
       }
       category {
@@ -133,7 +135,9 @@ export default function OffersAndRequestsScreen(props) {
         variables: {
           id: postingId
         }
-      }).catch(error => console.log(error));
+      })
+        .then(response => console.log(response))
+        .catch(error => console.log(error));
     };
 
     if (loading) {
@@ -158,7 +162,7 @@ export default function OffersAndRequestsScreen(props) {
             {data.itemsUserOfferedToLend.length ? (
               data.itemsUserOfferedToLend.map(item => {
                 return item.available ? (
-                  <View style={styles.item} key={item.id + item.name}>
+                  <View style={styles.item} key={item.id}>
                     <Text style={styles.itemName}>
                       {item.name.toLowerCase()},{" "}
                       {item.measurement
@@ -169,7 +173,7 @@ export default function OffersAndRequestsScreen(props) {
                     </Text>
                     <TouchableOpacity
                       style={styles.messageButton}
-                      onPress={() => handleDelete(item.postingId || "1")}
+                      onPress={() => handleDelete(item.posting.id)}
                     >
                       <Text style={styles.messageButtonText}>Delete</Text>
                     </TouchableOpacity>

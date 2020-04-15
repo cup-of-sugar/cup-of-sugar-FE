@@ -78,7 +78,10 @@ export default function RequestScreen(props) {
     },
     refetchQueries: () => [
       {
-        query: REQUESTS
+        query: REQUESTS,
+        variables: {
+          userId: userId
+        }
       }
     ]
   });
