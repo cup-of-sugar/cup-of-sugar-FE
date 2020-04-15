@@ -1,14 +1,22 @@
 import React from "react";
 import { LoginFormClass } from "../LoginForm";
 
-import renderer from "react-test-renderer";
+import renderer, { act } from "react-test-renderer";
+import { MockedProvider } from "@apollo/react-testing";
 
-test("should render component", () => {
+it("should render component", async () => {
   const props = {
     navigation: { navigate: jest.fn() },
     userLogin: jest.fn(),
     action: "lend",
   };
-  const tree = renderer.create(<LoginFormClass {...props} />).toJSON();
+  let tree;
+  await act(async () => {
+    tree = await renderer.create(
+      <MockedProvider mocks={[]}>
+        <LoginFormClass {...props} />
+      </MockedProvider>
+    );
+  });
   expect(tree).toMatchSnapshot();
 });
