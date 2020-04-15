@@ -5,13 +5,13 @@ import {
   View,
   Text,
   TouchableOpacity,
-  Image,
+  Image
 } from "react-native";
 import Colors from "../constants/Colors";
 import { useNavigation } from "@react-navigation/native";
 
 export default function MenuItems({ closeMenu, action, userId }) {
-  const handlePress = (path) => {
+  const handlePress = path => {
     const navigation = useNavigation();
     navigation.navigate(path, { action, userId });
     closeMenu();
@@ -30,6 +30,9 @@ export default function MenuItems({ closeMenu, action, userId }) {
 
   return (
     <View style={styles.drawerItems}>
+      <TouchableOpacity onPress={() => handlePress("Home", { action, userId })}>
+        <Text style={styles.drawerText}>Home</Text>
+      </TouchableOpacity>
       <TouchableOpacity onPress={() => handlePress("Path")}>
         <Text style={styles.drawerText}>
           Go to {action === "borrow" ? "Lending" : "Borrowing"}
@@ -43,7 +46,7 @@ export default function MenuItems({ closeMenu, action, userId }) {
         </Text>
       </TouchableOpacity>
       <TouchableOpacity
-        onPress={() => handlePress("OffersAndRequests", { action, userId })}
+        onPress={() => handlePress("Offers/Requests", { action, userId })}
       >
         <Text style={styles.drawerText}>
           {action === "borrow" ? "My Item Requests" : "Items I'm Offering"}
@@ -78,8 +81,8 @@ export default function MenuItems({ closeMenu, action, userId }) {
 const styles = StyleSheet.create({
   drawerItems: {
     backgroundColor: Colors.lightBlue,
-    height: 420,
-    width: 260,
+    height: 490,
+    width: 260
   },
   drawerText: {
     borderColor: "#fff",
@@ -89,6 +92,6 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     height: 70,
     padding: 20,
-    width: "100%",
-  },
+    width: "100%"
+  }
 });
