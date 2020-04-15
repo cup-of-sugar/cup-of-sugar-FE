@@ -31,6 +31,5 @@ it("should render component when action is borrow", () => {
       </MockedProvider>
     )
     .toJSON();
-  console.log(tree);
   expect(tree).toMatchSnapshot();
 });
