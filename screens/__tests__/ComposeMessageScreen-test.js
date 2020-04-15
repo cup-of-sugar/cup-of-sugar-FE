@@ -6,7 +6,13 @@ import ReactTestRenderer from "react-test-renderer";
 it("should render without error if on borrowing path", async () => {
   const props = {
     navigation: { navigate: jest.fn() },
-    route: { params: { action: "borrow", userId: "4" } },
+    route: {
+      params: {
+        action: "borrow",
+        userId: "4",
+        recipient: { firstName: "Carole", email: "carole@tigers.com" }
+      }
+    }
   };
   let tree = await ReactTestRenderer.create(
     <MockedProvider mocks={[]}>
@@ -20,7 +26,13 @@ it("should render without error if on borrowing path", async () => {
 it("should render without error if on lending path", async () => {
   const props = {
     navigation: { navigate: jest.fn() },
-    route: { params: { action: "lend", userId: "4" } },
+    route: {
+      params: {
+        action: "lend",
+        userId: "4",
+        recipient: { firstName: "Carole", email: "carole@tigers.com" }
+      }
+    }
   };
   let tree = await ReactTestRenderer.create(
     <MockedProvider mocks={[]}>
