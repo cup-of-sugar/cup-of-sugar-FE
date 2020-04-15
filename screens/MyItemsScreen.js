@@ -1,15 +1,7 @@
 import * as WebBrowser from "expo-web-browser";
 import * as React from "react";
-import {
-  Image,
-  Platform,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View
-} from "react-native";
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import Colors from "../constants/Colors";
-import { useNavigation } from "@react-navigation/native";
 import { ScrollView } from "react-native-gesture-handler";
 
 import { gql } from "apollo-boost";
@@ -17,7 +9,6 @@ import { useMutation } from "@apollo/react-hooks";
 import { useQuery } from "@apollo/react-hooks";
 
 export default function MyItemsScreen(props) {
-  const navigation = useNavigation();
   const action = props.route.params.action;
   const userId = props.route.params.userId;
   let id, available, name;
@@ -109,7 +100,7 @@ export default function MyItemsScreen(props) {
                               name: item.name
                             }
                           }) &&
-                            navigation.navigate("Success!", {
+                            props.navigation.navigate("Success!", {
                               action: "return",
                               userId: userId,
                               name: item.name,

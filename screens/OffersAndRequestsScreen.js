@@ -1,9 +1,10 @@
 import * as React from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
 import Colors from "../constants/Colors";
 import { ScrollView } from "react-native-gesture-handler";
 import { gql } from "apollo-boost";
 import { useQuery } from "@apollo/react-hooks";
+import { useMutation } from "@apollo/react-hooks";
 
 export const REQUESTS = gql`
   query {
@@ -45,11 +46,10 @@ export const OFFERS = gql`
   }
 `;
 
-const OffersAndRequestsScreen = (props) => {
+export default function OffersAndRequestsScreen(props) {
   const navigation = props.navigation;
   const action = props.route.params.action;
   const userId = props.route.params.userId;
-  let id, available, name;
 
   if (action === "borrow") {
     const { loading, error, data } = useQuery(REQUESTS);
@@ -71,7 +71,7 @@ const OffersAndRequestsScreen = (props) => {
             style={styles.itemsContainer}
           >
             {data.itemsUserLookingToBorrow.length ? (
-              data.itemsUserLookingToBorrow.map((item) => {
+              data.itemsUserLookingToBorrow.map(item => {
                 return (
                   <View style={styles.item} key={item.id + item.name}>
                     <Text style={styles.itemName}>
@@ -99,6 +99,33 @@ const OffersAndRequestsScreen = (props) => {
   } else if (action === "lend") {
     const { loading, error, data } = useQuery(OFFERS);
 
+    const DELETE_ITEM = gql`
+      mutation DeletePosting($id: ID!) {
+        posting: deletePosting(input: { id: $id }) {
+          title
+        }
+      }
+    `;
+
+    let [deleteItem] = useMutation(DELETE_ITEM, {
+      variables: {
+        id
+      },
+      refetchQueries: () => [
+        {
+          query: OFFERS
+        }
+      ]
+    });
+
+    const handleDelete = postingId => {
+      deleteItem({
+        variables: {
+          id: postingId
+        }
+      }).catch(error => console.log(error));
+    };
+
     if (loading) {
       return <Text style={styles.loadingText}>Loading...</Text>;
     }
@@ -116,21 +143,25 @@ const OffersAndRequestsScreen = (props) => {
             style={styles.itemsContainer}
           >
             {data.itemsUserOfferedToLend.length ? (
-              data.itemsUserOfferedToLend.map((item) => {
+              data.itemsUserOfferedToLend.map(item => {
                 return (
                   <View style={styles.item} key={item.id + item.name}>
                     <Text style={styles.itemName}>
-                      {item.name.toLowerCase()}
-                    </Text>
-                    <Text style={styles.itemName}>
+                      {item.name.toLowerCase()},{" "}
                       {item.measurement
                         ? item.quantity + " " + item.measurement
-                        : item.quantity &&
-                          item.timeDuration &&
-                          !item.timeDuration.includes(item.quantity)
-                        ? item.quantity + " " + item.timeDuration
+                        : item.quantity && item.timeDuration
+                        ? item.timeDuration
                         : item.timeDuration || item.quantity}
                     </Text>
+                    {item.available ? (
+                      <TouchableOpacity
+                        style={styles.messageButton}
+                        onPress={() => handleDelete(item.postingId || "1")}
+                      >
+                        <Text style={styles.messageButtonText}>Delete</Text>
+                      </TouchableOpacity>
+                    ) : null}
                   </View>
                 );
               })
@@ -144,7 +175,7 @@ const OffersAndRequestsScreen = (props) => {
   } else {
     return <Text style={styles.errorText}>No Items Found!</Text>;
   }
-};
+}
 
 const styles = StyleSheet.create({
   errorText: {
@@ -152,15 +183,15 @@ const styles = StyleSheet.create({
     color: "red",
     fontSize: 20,
     fontWeight: "bold",
-    margin: 10,
+    margin: 10
   },
   container: {
     flex: 1,
     backgroundColor: "#fff",
-    paddingTop: 20,
+    paddingTop: 20
   },
   itemsContainer: {
-    flex: 1,
+    flex: 1
   },
   itemsMessage: {
     fontSize: 22,
@@ -168,7 +199,7 @@ const styles = StyleSheet.create({
     color: "black",
     lineHeight: 35,
     margin: 20,
-    textAlign: "center",
+    textAlign: "center"
   },
   item: {
     alignSelf: "center",
@@ -182,13 +213,13 @@ const styles = StyleSheet.create({
     padding: 20,
     height: 70,
     overflow: "hidden",
-    width: 330,
+    width: 330
   },
   itemName: {
     fontSize: 23,
     fontWeight: "bold",
     color: Colors.darkBlue,
-    textAlign: "left",
+    textAlign: "left"
   },
   returnButton: {
     backgroundColor: Colors.darkBlue,
@@ -198,13 +229,13 @@ const styles = StyleSheet.create({
     color: "#fff",
     height: 50,
     paddingTop: 10,
-    width: 100,
+    width: 100
   },
   returnButtonText: {
     fontSize: 20,
     fontWeight: "bold",
     color: "#fff",
-    textAlign: "center",
+    textAlign: "center"
   },
   messageButton: {
     backgroundColor: Colors.darkBlue,
@@ -214,19 +245,17 @@ const styles = StyleSheet.create({
     color: "#fff",
     height: 50,
     paddingTop: 12,
-    width: 190,
+    width: 80
   },
   messageButtonText: {
     fontSize: 18,
     fontWeight: "bold",
     color: "#fff",
-    textAlign: "center",
+    textAlign: "center"
   },
   loadingText: {
     alignSelf: "center",
     fontSize: 20,
-    fontWeight: "bold",
-  },
+    fontWeight: "bold"
+  }
 });
-
-export default OffersAndRequestsScreen;
