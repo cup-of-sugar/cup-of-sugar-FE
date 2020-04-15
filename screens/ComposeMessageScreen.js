@@ -7,7 +7,7 @@ import {
   Text,
   TextInput,
   TouchableOpacity,
-  View,
+  View
 } from "react-native";
 import Colors from "../constants/Colors";
 import { gql } from "apollo-boost";
@@ -52,7 +52,7 @@ export default function ComposeMessageScreen(props) {
   );
 }
 
-export class ComposeForm extends React.Component {
+class ComposeForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = { subject: "", body: "", error: "", sent: false };
@@ -97,7 +97,7 @@ export class ComposeForm extends React.Component {
                 style={styles.subjectInput}
                 name="subject"
                 value={this.state.subject}
-                onChangeText={(text) => this.handleChange("subject", text)}
+                onChangeText={text => this.handleChange("subject", text)}
                 placeholder="Subject..."
               />
             </View>
@@ -108,7 +108,7 @@ export class ComposeForm extends React.Component {
                 value={this.state.body}
                 multiline={true}
                 numberOfLines={40}
-                onChangeText={(text) => this.handleChange("body", text)}
+                onChangeText={text => this.handleChange("body", text)}
                 placeholder="Message..."
               />
             </View>
@@ -129,7 +129,7 @@ export class ComposeForm extends React.Component {
               onPress={() =>
                 this.props.navigation.navigate("Home", {
                   action: this.props.action,
-                  userId: this.state.userId,
+                  userId: this.state.userId
                 })
               }
             >
@@ -148,23 +148,23 @@ const styles = StyleSheet.create({
     color: "red",
     fontSize: 20,
     fontWeight: "bold",
-    margin: 10,
+    margin: 10
   },
   formContainer: {
     backgroundColor: "#fff",
     flex: 1,
     padding: 16,
-    paddingTop: 30,
+    paddingTop: 30
   },
   toContainer: {
     backgroundColor: Colors.darkBlue,
     borderTopLeftRadius: 7,
     borderTopRightRadius: 7,
-    padding: 5,
+    padding: 5
   },
   subjectContainer: {
     backgroundColor: Colors.darkBlue,
-    padding: 5,
+    padding: 5
   },
   subjectInput: {
     backgroundColor: "#fff",
@@ -172,7 +172,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     height: 50,
     fontSize: 22,
-    paddingHorizontal: 15,
+    paddingHorizontal: 15
   },
   header: {
     color: "#fff",
@@ -180,7 +180,7 @@ const styles = StyleSheet.create({
     textAlign: "left",
     fontWeight: "bold",
     padding: 7,
-    marginLeft: 10,
+    marginLeft: 10
   },
   textInput: {
     borderColor: "#CCCCCC",
@@ -190,7 +190,7 @@ const styles = StyleSheet.create({
     margin: 10,
     marginTop: 20,
     paddingLeft: 20,
-    paddingRight: 20,
+    paddingRight: 20
   },
   sendButton: {
     marginHorizontal: 40,
@@ -200,34 +200,34 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.lightBlue,
     borderRadius: 10,
     borderWidth: 1,
-    borderColor: "#fff",
+    borderColor: "#fff"
   },
   sendButtonText: {
     fontSize: 25,
     fontWeight: "bold",
     color: "#fff",
-    textAlign: "center",
+    textAlign: "center"
   },
   textAreaContainer: {
     borderColor: Colors.darkBlue,
     borderWidth: 5,
     borderBottomLeftRadius: 7,
     borderBottomRightRadius: 7,
-    borderTopWidth: 0,
+    borderTopWidth: 0
   },
   textArea: {
     fontSize: 22,
     height: 400,
     justifyContent: "flex-start",
     padding: 15,
-    paddingTop: 20,
+    paddingTop: 20
   },
   sent: {
     alignSelf: "center",
     fontSize: 60,
     fontWeight: "bold",
     color: Colors.darkBlue,
-    marginTop: 80,
+    marginTop: 80
   },
   plane: {
     alignSelf: "center",
@@ -235,6 +235,6 @@ const styles = StyleSheet.create({
     marginLeft: 20,
     marginRight: 30,
     marginVertical: 50,
-    width: 240,
-  },
+    width: 240
+  }
 });

@@ -1,24 +1,30 @@
 import React from "react";
-import ComposeMessageScreen, { ComposeForm } from "../ComposeMessageScreen";
-
+import { ComposeMessageScreen } from "../ComposeMessageScreen";
+import { create, act } from "react-test-renderer";
+import { MockedProvider } from "@apollo/react-testing";
 import ReactTestRenderer from "react-test-renderer";
+import { gql } from "apollo-boost";
 
-test("should render component", () => {
+it("should render without error", () => {
   const props = {
     navigation: { navigate: jest.fn() },
-    action: "borrow",
+    route: { params: { action: "borrow", userId: "4" } }
   };
-  const tree = ReactTestRenderer.create(
-    <ComposeMessageScreen {...props} />
-  ).toJSON();
-  expect(tree).toMatchSnapshot();
+  ReactTestRenderer.create(
+    <MockedProvider mocks={[]}>
+      <ComposeMessageScreen {...props} />
+    </MockedProvider>
+  );
 });
 
-test("should render component", () => {
+it("should render without error", () => {
   const props = {
     navigation: { navigate: jest.fn() },
-    action: "borrow",
+    route: { params: { action: "lend", userId: "4" } }
   };
-  const tree = ReactTestRenderer.create(<ComposeForm {...props} />).toJSON();
-  expect(tree).toMatchSnapshot();
+  ReactTestRenderer.create(
+    <MockedProvider mocks={[]}>
+      <ComposeMessageScreen {...props} />
+    </MockedProvider>
+  );
 });
