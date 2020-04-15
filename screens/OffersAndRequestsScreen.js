@@ -80,11 +80,9 @@ export default function OffersAndRequestsScreen(props) {
                     <Text style={styles.itemName}>
                       {item.measurement
                         ? item.quantity + " " + item.measurement
-                        : item.quantity &&
-                          item.timeDuration &&
-                          !item.timeDuration.includes(item.quantity)
-                        ? item.quantity + " " + item.timeDuration
-                        : item.timeDuration || item.quantity}
+                        : item.quantity && item.timeDuration
+                        ? item.timeDuration
+                        : item.quantity}
                     </Text>
                   </View>
                 );
@@ -98,6 +96,7 @@ export default function OffersAndRequestsScreen(props) {
     }
   } else if (action === "lend") {
     const { loading, error, data } = useQuery(OFFERS);
+    let id;
 
     const DELETE_ITEM = gql`
       mutation DeletePosting($id: ID!) {
@@ -137,14 +136,17 @@ export default function OffersAndRequestsScreen(props) {
     if (data) {
       return (
         <View style={styles.container}>
-          <Text style={styles.itemsMessage}>Items I'm Offering To Loan:</Text>
+          <Text style={styles.itemsMessage}>
+            Items you have offered to lend that are not currently being
+            borrowed:
+          </Text>
           <ScrollView
             scrollIndicatorInsets={{ right: 1 }}
             style={styles.itemsContainer}
           >
             {data.itemsUserOfferedToLend.length ? (
               data.itemsUserOfferedToLend.map(item => {
-                return (
+                return item.available ? (
                   <View style={styles.item} key={item.id + item.name}>
                     <Text style={styles.itemName}>
                       {item.name.toLowerCase()},{" "}
@@ -154,16 +156,14 @@ export default function OffersAndRequestsScreen(props) {
                         ? item.timeDuration
                         : item.timeDuration || item.quantity}
                     </Text>
-                    {item.available ? (
-                      <TouchableOpacity
-                        style={styles.messageButton}
-                        onPress={() => handleDelete(item.postingId || "1")}
-                      >
-                        <Text style={styles.messageButtonText}>Delete</Text>
-                      </TouchableOpacity>
-                    ) : null}
+                    <TouchableOpacity
+                      style={styles.messageButton}
+                      onPress={() => handleDelete(item.postingId || "1")}
+                    >
+                      <Text style={styles.messageButtonText}>Delete</Text>
+                    </TouchableOpacity>
                   </View>
-                );
+                ) : null;
               })
             ) : (
               <Text style={styles.errorText}>No Items Found!</Text>
@@ -194,12 +194,14 @@ const styles = StyleSheet.create({
     flex: 1
   },
   itemsMessage: {
+    alignSelf: "center",
     fontSize: 22,
     fontWeight: "bold",
     color: "black",
     lineHeight: 35,
     margin: 20,
-    textAlign: "center"
+    textAlign: "center",
+    width: 380
   },
   item: {
     alignSelf: "center",
@@ -210,32 +212,18 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: "row",
     margin: 10,
-    padding: 20,
+    padding: 15,
     height: 70,
     overflow: "hidden",
-    width: 330
+    width: 370
   },
   itemName: {
     fontSize: 23,
     fontWeight: "bold",
     color: Colors.darkBlue,
-    textAlign: "left"
-  },
-  returnButton: {
-    backgroundColor: Colors.darkBlue,
-    borderRadius: 10,
-    borderWidth: 1,
-    borderColor: Colors.darkBlue,
-    color: "#fff",
-    height: 50,
-    paddingTop: 10,
-    width: 100
-  },
-  returnButtonText: {
-    fontSize: 20,
-    fontWeight: "bold",
-    color: "#fff",
-    textAlign: "center"
+    textAlign: "left",
+    overflow: "hidden",
+    width: 220
   },
   messageButton: {
     backgroundColor: Colors.darkBlue,
@@ -245,7 +233,7 @@ const styles = StyleSheet.create({
     color: "#fff",
     height: 50,
     paddingTop: 12,
-    width: 80
+    width: 100
   },
   messageButtonText: {
     fontSize: 18,
