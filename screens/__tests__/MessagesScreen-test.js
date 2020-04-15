@@ -1,10 +1,28 @@
-import React from 'react';
-import MessagesScreen from '../MessagesScreen';
+import React from "react";
+import MessagesScreen from "../MessagesScreen";
+import { MockedProvider } from "@apollo/react-testing";
+import ReactTestRenderer from "react-test-renderer";
 
-import renderer from 'react-test-renderer';
+it("should render without error if on borrowing path", () => {
+  const props = {
+    navigation: { navigate: jest.fn() },
+    route: { params: { action: "borrow", userId: "4" } }
+  };
+  ReactTestRenderer.create(
+    <MockedProvider mocks={[]}>
+      <MessagesScreen {...props} />
+    </MockedProvider>
+  );
+});
 
-test('should render component', () => {
-  const props = { navigation: { navigate: jest.fn() } };
-  const tree = renderer.create(<MessagesScreen {...props} />).toJSON();
-  expect(tree).toMatchSnapshot();
+it("should render without error if on lending path", () => {
+  const props = {
+    navigation: { navigate: jest.fn() },
+    route: { params: { action: "lend", userId: "4" } }
+  };
+  ReactTestRenderer.create(
+    <MockedProvider mocks={[]}>
+      <MessagesScreen {...props} />
+    </MockedProvider>
+  );
 });
