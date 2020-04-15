@@ -11,8 +11,9 @@ import Colors from "../constants/Colors";
 import { useNavigation } from "@react-navigation/native";
 
 export default function MenuItems({ closeMenu, action, userId }) {
+  const navigation = useNavigation();
+
   const handlePress = path => {
-    const navigation = useNavigation();
     navigation.navigate(path, { action, userId });
     closeMenu();
   };
