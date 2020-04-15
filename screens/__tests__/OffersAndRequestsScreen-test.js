@@ -1,7 +1,7 @@
 import React from "react";
 import OffersAndRequestsScreen, {
   REQUESTS,
-  OFFERS,
+  OFFERS
 } from "../OffersAndRequestsScreen";
 import { create, act } from "react-test-renderer";
 
@@ -12,6 +12,9 @@ test("should render component", async () => {
     {
       request: {
         query: REQUESTS,
+        variables: {
+          userId: "1"
+        }
       },
       result: {
         data: {
@@ -25,23 +28,24 @@ test("should render component", async () => {
               timeDuration: null,
               category: {
                 __typename: "CategoryType",
-                name: "food",
+                name: "food"
               },
               description: "",
               available: true,
               posting: {
+                id: "24",
                 __typename: "PostingType",
-                title: "Gimme butter",
-              },
-            },
-          ],
-        },
-      },
-    },
+                title: "Gimme butter"
+              }
+            }
+          ]
+        }
+      }
+    }
   ];
   const props = {
     navigation: { navigate: jest.fn() },
-    route: { params: { action: "borrow" } },
+    route: { params: { action: "borrow", userId: "1" } }
   };
   let tree;
   await act(async () => {
@@ -59,6 +63,9 @@ test("should render component", async () => {
     {
       request: {
         query: OFFERS,
+        variables: {
+          userId: "1"
+        }
       },
       result: {
         data: {
@@ -72,23 +79,24 @@ test("should render component", async () => {
               timeDuration: null,
               category: {
                 __typename: "CategoryType",
-                name: "food",
+                name: "food"
               },
               description: "",
               available: true,
               posting: {
+                id: "24",
                 title: "Gimme butter",
-                __typename: "PostingType",
-              },
-            },
-          ],
-        },
-      },
-    },
+                __typename: "PostingType"
+              }
+            }
+          ]
+        }
+      }
+    }
   ];
   const props = {
     navigation: { navigate: jest.fn() },
-    route: { params: { action: "lend" } },
+    route: { params: { action: "lend", userId: "1" } }
   };
   let tree;
   await act(async () => {
