@@ -6,7 +6,7 @@ import {
   Platform,
   StatusBar,
   StyleSheet,
-  View
+  View,
 } from "react-native";
 import { SplashScreen } from "expo";
 import * as Font from "expo-font";
@@ -32,14 +32,10 @@ import cup from "./assets/images/cup.png";
 import Colors from "./constants/Colors";
 import MenuDrawer from "./components/MenuDrawer";
 import { AppRegistry } from "react-native";
-import ApolloClient from "apollo-boost";
 import { ApolloProvider } from "@apollo/react-hooks";
+import client from "./utilities/client";
 
 const Stack = createStackNavigator();
-
-const client = new ApolloClient({
-  uri: "https://fierce-tundra-54482.herokuapp.com/graphql"
-});
 
 export default function App(props) {
   const [isLoadingComplete, setLoadingComplete] = React.useState(false);
@@ -56,7 +52,7 @@ export default function App(props) {
 
         await Font.loadAsync({
           ...Ionicons.font,
-          "space-mono": require("./assets/fonts/SpaceMono-Regular.ttf")
+          "space-mono": require("./assets/fonts/SpaceMono-Regular.ttf"),
         });
       } catch (e) {
         console.warn(e);
@@ -85,14 +81,14 @@ export default function App(props) {
                 name="Login"
                 component={LoginScreen}
                 options={{
-                  headerShown: false
+                  headerShown: false,
                 }}
               />
               <Stack.Screen
                 name="Path"
                 component={PathScreen}
                 options={{
-                  headerShown: false
+                  headerShown: false,
                 }}
               />
               <Stack.Screen
@@ -101,15 +97,15 @@ export default function App(props) {
                 options={{
                   headerStyle: {
                     backgroundColor: Colors.darkBlue,
-                    height: 120
+                    height: 120,
                   },
                   headerTitleStyle: {
                     color: "white",
-                    fontSize: 25
+                    fontSize: 25,
                   },
                   headerTitle: () => <Image source={cup} style={styles.logo} />,
                   headerRight: () => <MenuDrawer />,
-                  headerTintColor: "white"
+                  headerTintColor: "white",
                 }}
               />
               <Stack.Screen
@@ -118,15 +114,15 @@ export default function App(props) {
                 options={{
                   headerStyle: {
                     backgroundColor: Colors.darkBlue,
-                    height: 120
+                    height: 120,
                   },
                   headerTitleStyle: {
                     color: "white",
-                    fontSize: 25
+                    fontSize: 25,
                   },
                   headerTitle: "Details",
                   headerRight: () => <MenuDrawer />,
-                  headerTintColor: "white"
+                  headerTintColor: "white",
                 }}
               />
               <Stack.Screen
@@ -135,15 +131,15 @@ export default function App(props) {
                 options={{
                   headerStyle: {
                     backgroundColor: Colors.darkBlue,
-                    height: 120
+                    height: 120,
                   },
                   headerTitleStyle: {
                     color: "white",
-                    fontSize: 25
+                    fontSize: 25,
                   },
                   headerTitle: () => <Image source={cup} style={styles.logo} />,
                   headerRight: () => <MenuDrawer />,
-                  headerTintColor: "white"
+                  headerTintColor: "white",
                 }}
               />
               <Stack.Screen
@@ -152,15 +148,15 @@ export default function App(props) {
                 options={{
                   headerStyle: {
                     backgroundColor: Colors.darkBlue,
-                    height: 120
+                    height: 120,
                   },
                   headerTitleStyle: {
                     color: "white",
-                    fontSize: 25
+                    fontSize: 25,
                   },
                   headerTitle: () => <Image source={cup} style={styles.logo} />,
                   headerRight: () => <MenuDrawer />,
-                  headerTintColor: "white"
+                  headerTintColor: "white",
                 }}
               />
               <Stack.Screen
@@ -169,15 +165,15 @@ export default function App(props) {
                 options={{
                   headerStyle: {
                     backgroundColor: Colors.darkBlue,
-                    height: 120
+                    height: 120,
                   },
                   headerTitleStyle: {
                     color: "white",
-                    fontSize: 25
+                    fontSize: 25,
                   },
                   headerTitle: () => <Image source={cup} style={styles.logo} />,
                   headerRight: () => <MenuDrawer />,
-                  headerTintColor: "white"
+                  headerTintColor: "white",
                 }}
               />
               <Stack.Screen
@@ -186,15 +182,15 @@ export default function App(props) {
                 options={{
                   headerStyle: {
                     backgroundColor: Colors.darkBlue,
-                    height: 120
+                    height: 120,
                   },
                   headerTitleStyle: {
                     color: "white",
-                    fontSize: 25
+                    fontSize: 25,
                   },
                   headerTitle: () => <Image source={cup} style={styles.logo} />,
                   headerRight: () => <MenuDrawer />,
-                  headerTintColor: "white"
+                  headerTintColor: "white",
                 }}
               />
               <Stack.Screen
@@ -203,15 +199,15 @@ export default function App(props) {
                 options={{
                   headerStyle: {
                     backgroundColor: Colors.darkBlue,
-                    height: 120
+                    height: 120,
                   },
                   headerTitleStyle: {
                     color: "white",
-                    fontSize: 25
+                    fontSize: 25,
                   },
                   headerTitle: () => <Image source={cup} style={styles.logo} />,
                   headerRight: () => <MenuDrawer />,
-                  headerTintColor: "white"
+                  headerTintColor: "white",
                 }}
               />
               <Stack.Screen
@@ -220,15 +216,15 @@ export default function App(props) {
                 options={{
                   headerStyle: {
                     backgroundColor: Colors.darkBlue,
-                    height: 120
+                    height: 120,
                   },
                   headerTitleStyle: {
                     color: "white",
-                    fontSize: 25
+                    fontSize: 25,
                   },
                   headerTitle: () => <Image source={cup} style={styles.logo} />,
                   headerRight: () => <MenuDrawer />,
-                  headerTintColor: "white"
+                  headerTintColor: "white",
                 }}
               />
               <Stack.Screen
@@ -237,15 +233,15 @@ export default function App(props) {
                 options={{
                   headerStyle: {
                     backgroundColor: Colors.darkBlue,
-                    height: 120
+                    height: 120,
                   },
                   headerTitleStyle: {
                     color: "white",
-                    fontSize: 25
+                    fontSize: 25,
                   },
                   headerTitle: () => <Image source={cup} style={styles.logo} />,
                   headerRight: () => <MenuDrawer />,
-                  headerTintColor: "white"
+                  headerTintColor: "white",
                 }}
               />
               <Stack.Screen
@@ -254,15 +250,15 @@ export default function App(props) {
                 options={{
                   headerStyle: {
                     backgroundColor: Colors.darkBlue,
-                    height: 120
+                    height: 120,
                   },
                   headerTitleStyle: {
                     color: "white",
-                    fontSize: 25
+                    fontSize: 25,
                   },
                   headerTitle: () => <Image source={cup} style={styles.logo} />,
                   headerRight: () => <MenuDrawer />,
-                  headerTintColor: "white"
+                  headerTintColor: "white",
                 }}
               />
               <Stack.Screen
@@ -271,15 +267,15 @@ export default function App(props) {
                 options={{
                   headerStyle: {
                     backgroundColor: Colors.darkBlue,
-                    height: 120
+                    height: 120,
                   },
                   headerTitleStyle: {
                     color: "white",
-                    fontSize: 25
+                    fontSize: 25,
                   },
                   headerTitle: () => <Image source={cup} style={styles.logo} />,
                   headerRight: () => <MenuDrawer />,
-                  headerTintColor: "white"
+                  headerTintColor: "white",
                 }}
               />
               <Stack.Screen
@@ -288,15 +284,15 @@ export default function App(props) {
                 options={{
                   headerStyle: {
                     backgroundColor: Colors.darkBlue,
-                    height: 120
+                    height: 120,
                   },
                   headerTitleStyle: {
                     color: "white",
-                    fontSize: 25
+                    fontSize: 25,
                   },
                   headerTitle: () => <Image source={cup} style={styles.logo} />,
                   headerRight: () => <MenuDrawer />,
-                  headerTintColor: "white"
+                  headerTintColor: "white",
                 }}
               />
             </Stack.Navigator>
@@ -312,11 +308,11 @@ AppRegistry.registerComponent("Cup of Sugar", () => App);
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff"
+    backgroundColor: "#fff",
   },
   logo: {
     margin: 15,
     height: 70,
-    width: 70
-  }
+    width: 70,
+  },
 });
