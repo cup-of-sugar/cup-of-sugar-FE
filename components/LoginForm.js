@@ -5,7 +5,7 @@ import {
   StyleSheet,
   View,
   TextInput,
-  TouchableOpacity,
+  TouchableOpacity
 } from "react-native";
 import Colors from "../constants/Colors";
 import { useNavigation } from "@react-navigation/native";
@@ -16,17 +16,28 @@ export default function LoginForm(props) {
   let email, password;
   const navigation = useNavigation();
 
+  // mutation UserLogin($email: String!, $password: String!) {
+  //   user: userLogin(input: { email: $email, password: $password }) {
+  //     email
+  //   }
+  // }
+
   const USER_LOGIN = gql`
-    mutation UserLogin($email: String!, $password: String!) {
-      user: userLogin(input: { email: $email, password: $password }) {
-        email
+    mutation {
+      user: userLogin(
+        input: {
+          credentials: { email: "carole@tigers.com", password: "password" }
+        }
+      ) {
+        token
+        user {
+          id
+        }
       }
     }
   `;
 
-  const [userLogin] = useMutation(USER_LOGIN, {
-    variables: { email, password },
-  });
+  const [userLogin] = useMutation(USER_LOGIN);
 
   return <LoginFormClass navigation={navigation} userLogin={userLogin} />;
 }
@@ -49,27 +60,23 @@ export class LoginFormClass extends React.Component {
 
   startLogin = () => {
     this.props
-      .userLogin({
-        variables: {
-          email: this.state.email.toLowerCase(),
-          password: this.state.password,
-        },
-      })
-      .then((response) => this.validateLogin(response));
+      .userLogin()
+      .then(response => this.validateLogin(response.data.user.token))
+      .catch(error => console.log(error));
   };
 
-  validateLogin = (response) => {
-    this.setState({ validation: response.data.user.email });
+  validateLogin = response => {
+    this.setState({ validation: response });
     if (this.state.validation) {
-      this.props.navigation.navigate("Path", { userId: "1" });
+      this.props.navigation.navigate("Path", { userId: this.state.validation });
       this.setState({ email: "", password: "", error: "", validation: "" });
-    } else if (this.state.validation === null) {
+    } else if (!this.state.validation) {
       this.setState({
-        error: "Incorrect email or password! Please try again!",
+        error: "Incorrect email or password! Please try again!"
       });
     } else {
       this.setState({
-        error: "Error logging in!",
+        error: "Error logging in!"
       });
     }
   };
@@ -82,7 +89,7 @@ export class LoginFormClass extends React.Component {
           style={styles.textInput}
           name="email"
           value={this.state.email}
-          onChangeText={(text) => this.handleChange("email", text)}
+          onChangeText={text => this.handleChange("email", text)}
           placeholder="Email..."
         />
         <Text style={styles.header}>Password</Text>
@@ -90,7 +97,7 @@ export class LoginFormClass extends React.Component {
           style={styles.textInput}
           name="password"
           value={this.state.password}
-          onChangeText={(text) => this.handleChange("password", text)}
+          onChangeText={text => this.handleChange("password", text)}
           placeholder="Password..."
           secureTextEntry={true}
         />
@@ -116,10 +123,10 @@ const styles = StyleSheet.create({
     height: "auto",
     marginLeft: 30,
     marginRight: 30,
-    textAlign: "center",
+    textAlign: "center"
   },
   formContainer: {
-    flex: 1,
+    flex: 1
   },
   header: {
     backgroundColor: Colors.darkBlue,
@@ -131,7 +138,7 @@ const styles = StyleSheet.create({
     marginVertical: 5,
     paddingLeft: 5,
     textAlign: "left",
-    width: 130,
+    width: 130
   },
   textInput: {
     backgroundColor: "#fff",
@@ -142,7 +149,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 40,
     marginBottom: 20,
     paddingLeft: 20,
-    paddingRight: 20,
+    paddingRight: 20
   },
   submitButton: {
     margin: 40,
@@ -151,12 +158,12 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.lightBlue,
     borderRadius: 10,
     borderWidth: 1,
-    borderColor: Colors.lightBlue,
+    borderColor: Colors.lightBlue
   },
   submitButtonText: {
     fontSize: 25,
     fontWeight: "bold",
     color: "#fff",
-    textAlign: "center",
-  },
+    textAlign: "center"
+  }
 });
