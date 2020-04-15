@@ -13,6 +13,8 @@ import { ScrollView } from "react-native-gesture-handler";
 import { gql } from "apollo-boost";
 import { useMutation } from "@apollo/react-hooks";
 import plane from "../assets/images/plane.png";
+import { SENT_MESSAGES } from "../components/Outbox";
+import { INBOX_MESSAGES } from "../components/Inbox";
 
 export default function ComposeMessageScreen(props) {
   let title, body, recipientId, userId;
@@ -40,7 +42,15 @@ export default function ComposeMessageScreen(props) {
       body,
       userId,
       recipientId
-    }
+    },
+    refetchQueries: () => [
+      {
+        query: SENT_MESSAGES
+      },
+      {
+        query: INBOX_MESSAGES
+      }
+    ]
   });
 
   return (
