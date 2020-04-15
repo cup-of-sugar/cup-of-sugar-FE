@@ -45,7 +45,7 @@ export default function ComposeMessageScreen(props) {
 
   return (
     <ComposeForm
-      {...props}
+      recipient={props.route.params.recipient}
       navigation={props.navigation}
       sendMessage={sendMessage}
     />
@@ -88,7 +88,9 @@ export class ComposeForm extends React.Component {
         {!this.state.sent ? (
           <>
             <View style={styles.toContainer}>
-              <Text style={styles.header}>To: Joe@tigers.com</Text>
+              <Text style={styles.header}>
+                To: {this.props.recipient || "Joe Exotic"}
+              </Text>
             </View>
             <View style={styles.subjectContainer}>
               <TextInput
