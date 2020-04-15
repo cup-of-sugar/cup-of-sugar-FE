@@ -15,8 +15,8 @@ import borrower from "../assets/images/borrower.png";
 import lender from "../assets/images/lender.png";
 
 export const INBOX_MESSAGES = gql`
-  {
-    userInbox(userId: "1") {
+  query UserInbox($userId: ID!) {
+    userInbox(userId: $userId) {
       title
       body
       recipient {
@@ -29,8 +29,12 @@ export const INBOX_MESSAGES = gql`
 
 export default function Inbox(props) {
   const navigation = props.navigation;
+  const userId = props.userId;
 
   let { loading, error, data } = useQuery(INBOX_MESSAGES, {
+    variables: {
+      userId
+    },
     fetchPolicy: "network-only"
   });
 
@@ -99,7 +103,7 @@ const styles = StyleSheet.create({
   },
   errorText: {
     alignSelf: "center",
-    color: "red",
+    color: "#fff",
     fontSize: 20,
     fontWeight: "bold",
     margin: 10,

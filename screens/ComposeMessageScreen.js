@@ -17,15 +17,21 @@ import { SENT_MESSAGES } from "../components/Outbox";
 import { INBOX_MESSAGES } from "../components/Inbox";
 
 export default function ComposeMessageScreen(props) {
-  let title, body, recipientId, userId;
+  let title, body, recipientId;
+  const userId = props.route.params.userId;
 
   const NEW_MESSAGE = gql`
-    mutation SendMessage($title: String!, $body: String!, $recipientId: ID!) {
+    mutation SendMessage(
+      $title: String!
+      $body: String!
+      $userId: ID!
+      $recipientId: ID!
+    ) {
       message: sendMessage(
         input: {
           title: $title
           body: $body
-          userId: "1"
+          userId: $userId
           recipientId: $recipientId
         }
       ) {
@@ -48,13 +54,17 @@ export default function ComposeMessageScreen(props) {
         query: SENT_MESSAGES
       },
       {
-        query: INBOX_MESSAGES
+        query: INBOX_MESSAGES,
+        variables: {
+          userId: userId
+        }
       }
     ]
   });
 
   return (
     <ComposeForm
+      userId={userId}
       recipient={props.route.params.recipient}
       navigation={props.navigation}
       sendMessage={sendMessage}
@@ -83,7 +93,7 @@ class ComposeForm extends React.Component {
       .sendMessage({
         variables: {
           userId: this.props.userId,
-          recipientId: "4",
+          recipientId: this.props.recipient.email || "carole@tigers.com",
           title: this.state.subject,
           body: this.state.body
         }
@@ -99,7 +109,7 @@ class ComposeForm extends React.Component {
           <>
             <View style={styles.toContainer}>
               <Text style={styles.header}>
-                To: {this.props.recipient || "Joe Exotic"}
+                To: {this.props.recipient.firstName || "Joe Exotic"}
               </Text>
             </View>
             <View style={styles.subjectContainer}>

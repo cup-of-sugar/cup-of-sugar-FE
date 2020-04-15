@@ -34,13 +34,13 @@ export default function MessagesScreen(props) {
           </TouchableOpacity>
         </View>
         {messageView === "inbox" ? (
-          <View style={styles.inbox}>
-            <Inbox userID={userId} navigation={props.navigation} />
-          </View>
+          <ScrollView style={styles.inbox}>
+            <Inbox userId={userId} navigation={props.navigation} />
+          </ScrollView>
         ) : (
-          <View style={styles.sent}>
-            <Outbox userID={userId} navigation={props.navigation} />
-          </View>
+          <ScrollView style={styles.sent}>
+            <Outbox userId={userId} navigation={props.navigation} />
+          </ScrollView>
         )}
       </ScrollView>
     </View>
