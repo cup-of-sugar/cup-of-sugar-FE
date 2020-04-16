@@ -18,22 +18,15 @@ import { INBOX_MESSAGES } from "../components/Inbox";
 
 export default function ComposeMessageScreen(props) {
   let title, body, recipientEmail;
-  const userId = props.route.params.userId;
 
   const NEW_MESSAGE = gql`
     mutation SendMessage(
       $title: String!
       $body: String!
-      $userId: ID!
       $recipientEmail: String!
     ) {
       message: sendMessage(
-        input: {
-          title: $title
-          body: $body
-          userId: $userId
-          recipientEmail: $recipientEmail
-        }
+        input: { title: $title, body: $body, recipientEmail: $recipientEmail }
       ) {
         id
         title
@@ -46,29 +39,27 @@ export default function ComposeMessageScreen(props) {
     variables: {
       title,
       body,
-      userId,
       recipientEmail
     },
     refetchQueries: () => [
       {
-        query: SENT_MESSAGES,
-        variables: {
-          userId: userId
-        }
+        query: SENT_MESSAGES
       },
       {
-        query: INBOX_MESSAGES,
-        variables: {
-          userId: userId
-        }
+        query: INBOX_MESSAGES
       }
     ]
   });
 
   return (
     <ComposeForm
-      userId={userId}
-      recipient={props.route.params.recipient}
+      recipient={
+        props.route.params.recipient ||
+        props.route.params.sender || {
+          firstName: "Joe Exotic",
+          email: "joe@tigers.com"
+        }
+      }
       navigation={props.navigation}
       sendMessage={sendMessage}
     />
@@ -95,7 +86,6 @@ class ComposeForm extends React.Component {
     this.props
       .sendMessage({
         variables: {
-          userId: this.props.userId,
           recipientEmail: this.props.recipient.email || "carole@tigers.com",
           title: this.state.subject,
           body: this.state.body
@@ -151,8 +141,7 @@ class ComposeForm extends React.Component {
               style={styles.sendButton}
               onPress={() =>
                 this.props.navigation.navigate("Home", {
-                  action: this.props.action,
-                  userId: this.state.userId
+                  action: this.props.action
                 })
               }
             >

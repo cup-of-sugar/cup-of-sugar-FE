@@ -9,7 +9,6 @@ import { gql } from "apollo-boost";
 import { useQuery } from "@apollo/react-hooks";
 
 export default function MessagesScreen(props) {
-  const userId = props.route.params.userId;
   const [messageView, setMessageView] = React.useState("inbox");
 
   return (
@@ -35,11 +34,11 @@ export default function MessagesScreen(props) {
         </View>
         {messageView === "inbox" ? (
           <ScrollView style={styles.inbox}>
-            <Inbox userId={userId} navigation={props.navigation} />
+            <Inbox navigation={props.navigation} />
           </ScrollView>
         ) : (
           <ScrollView style={styles.sent}>
-            <Outbox userId={userId} navigation={props.navigation} />
+            <Outbox navigation={props.navigation} />
           </ScrollView>
         )}
       </ScrollView>
