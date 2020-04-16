@@ -9,40 +9,40 @@ import { useMutation } from "@apollo/react-hooks";
 import { useQuery } from "@apollo/react-hooks";
 
 export const LOANED_ITEMS = gql`
-  query ItemsUserHasLent($userId: ID!) {
-    itemsUserHasLent(userId: $userId) {
-      id
+  query {
+    itemsUserHasLent {
       name
+      category {
+        name
+      }
       quantity
       available
       description
       measurement
       timeDuration
       posting {
+        id
         title
-      }
-      category {
-        name
       }
     }
   }
 `;
 
 export const BORROWED_ITEMS = gql`
-  query ItemsUserHasBorrowed($userId: ID!) {
-    itemsUserHasBorrowed(userId: $userId) {
-      id
+  query {
+    itemsUserHasBorrowed {
       name
+      category {
+        name
+      }
       quantity
       available
       description
       measurement
       timeDuration
       posting {
+        id
         title
-      }
-      category {
-        name
       }
     }
   }
@@ -50,30 +50,19 @@ export const BORROWED_ITEMS = gql`
 
 export default function MyItemsScreen(props) {
   const action = props.route.params.action;
-  const userId = props.route.params.userId;
   let id, available, name;
 
   if (action === "borrow") {
-    const { loading, error, data } = useQuery(BORROWED_ITEMS, {
-      variables: {
-        userId: userId
-      }
-    });
+    const { loading, error, data } = useQuery(BORROWED_ITEMS);
 
     const UPDATE_ITEM = gql`
       mutation UpdateItemAvailability(
-        $userId: ID!
         $id: ID!
         $available: Boolean!
         $name: String!
       ) {
         item: updateItemAvailability(
-          input: {
-            userId: $userId
-            id: $id
-            available: $available
-            name: $name
-          }
+          input: { id: $id, available: $available, name: $name }
         ) {
           id
           available
@@ -84,17 +73,13 @@ export default function MyItemsScreen(props) {
 
     const [updateItem] = useMutation(UPDATE_ITEM, {
       variables: {
-        userId,
         id,
         available,
         name
       },
       refetchQueries: () => [
         {
-          query: BORROWED_ITEMS,
-          variables: {
-            userId: userId
-          }
+          query: BORROWED_ITEMS
         }
       ]
     });
@@ -126,7 +111,6 @@ export default function MyItemsScreen(props) {
                         onPress={() => {
                           updateItem({
                             variables: {
-                              userId: userId,
                               id: item.id,
                               available: item.available,
                               name: item.name
@@ -134,7 +118,6 @@ export default function MyItemsScreen(props) {
                           }) &&
                             props.navigation.navigate("Success!", {
                               action: "return",
-                              userId: userId,
                               name: item.name,
                               quantity: item.quantity,
                               measurement: item.measurement,
@@ -158,11 +141,7 @@ export default function MyItemsScreen(props) {
       );
     }
   } else if (action === "lend") {
-    const { loading, error, data } = useQuery(LOANED_ITEMS, {
-      variables: {
-        userId: userId
-      }
-    });
+    const { loading, error, data } = useQuery(LOANED_ITEMS);
 
     if (loading) {
       return <Text style={styles.loadingText}>Loading...</Text>;
@@ -197,7 +176,7 @@ export default function MyItemsScreen(props) {
                     <TouchableOpacity
                       style={styles.messageButton}
                       onPress={() =>
-                        props.navigation.navigate("Compose", { action, userId })
+                        props.navigation.navigate("Compose", { action })
                       }
                     >
                       <Text style={styles.messageButtonText}>Message</Text>

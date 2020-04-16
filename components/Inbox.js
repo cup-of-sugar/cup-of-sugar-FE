@@ -15,11 +15,11 @@ import borrower from "../assets/images/borrower.png";
 import lender from "../assets/images/lender.png";
 
 export const INBOX_MESSAGES = gql`
-  query UserInbox($userId: ID!) {
-    userInbox(userId: $userId) {
+  query {
+    userInbox {
       title
       body
-      recipient {
+      sender {
         firstName
         email
       }
@@ -29,12 +29,8 @@ export const INBOX_MESSAGES = gql`
 
 export default function Inbox(props) {
   const navigation = props.navigation;
-  const userId = props.userId;
 
   let { loading, error, data } = useQuery(INBOX_MESSAGES, {
-    variables: {
-      userId
-    },
     fetchPolicy: "network-only"
   });
 
@@ -51,13 +47,12 @@ export default function Inbox(props) {
             style={styles.message}
             onPress={() =>
               navigation.navigate("Message", {
-                message: mail,
-                userId: props.userId
+                message: mail
               })
             }
           >
             <Text style={styles.messageText}>
-              From: {mail.recipient.firstName}
+              From: {mail.sender.firstName}
             </Text>
             <Image source={borrower} style={styles.icon} />
           </TouchableOpacity>
