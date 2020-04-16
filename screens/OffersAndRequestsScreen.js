@@ -7,9 +7,8 @@ import { useQuery } from "@apollo/react-hooks";
 import { useMutation } from "@apollo/react-hooks";
 
 export const REQUESTS = gql`
-  query ItemsUserLookingToBorrow($userId: ID!) {
-    itemsUserLookingToBorrow(userId: $userId) {
-      id
+  query {
+    itemsUserLookingToBorrow {
       name
       quantity
       available
@@ -19,18 +18,14 @@ export const REQUESTS = gql`
       posting {
         id
         title
-      }
-      category {
-        name
       }
     }
   }
 `;
 
 export const OFFERS = gql`
-  query ItemsUserOfferedToLend($userId: ID!) {
-    itemsUserOfferedToLend(userId: $userId) {
-      id
+  query {
+    itemsUserOfferedToLend {
       name
       quantity
       available
@@ -40,9 +35,6 @@ export const OFFERS = gql`
       posting {
         id
         title
-      }
-      category {
-        name
       }
     }
   }
@@ -51,14 +43,9 @@ export const OFFERS = gql`
 export default function OffersAndRequestsScreen(props) {
   const navigation = props.navigation;
   const action = props.route.params.action;
-  const userId = props.route.params.userId;
 
   if (action === "borrow") {
-    const { loading, error, data } = useQuery(REQUESTS, {
-      variables: {
-        userId: userId
-      }
-    });
+    const { loading, error, data } = useQuery(REQUESTS);
 
     if (loading) {
       return <Text style={styles.loadingText}>Loading...</Text>;
@@ -101,11 +88,7 @@ export default function OffersAndRequestsScreen(props) {
       );
     }
   } else if (action === "lend") {
-    const { loading, error, data } = useQuery(OFFERS, {
-      variables: {
-        userId: userId
-      }
-    });
+    const { loading, error, data } = useQuery(OFFERS);
     let id;
 
     const DELETE_ITEM = gql`
@@ -122,10 +105,7 @@ export default function OffersAndRequestsScreen(props) {
       },
       refetchQueries: () => [
         {
-          query: OFFERS,
-          variables: {
-            userId: userId
-          }
+          query: OFFERS
         }
       ]
     });

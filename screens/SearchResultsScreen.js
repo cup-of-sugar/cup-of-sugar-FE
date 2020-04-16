@@ -9,7 +9,6 @@ export default function SearchResultsScreen(props) {
   const category = props.route.params.category;
   const itemName = props.route.params.itemName;
   const action = props.route.params.action;
-  const userId = props.route.params.userId;
 
   return (
     <ScrollView
@@ -19,15 +18,11 @@ export default function SearchResultsScreen(props) {
     >
       <TouchableOpacity
         style={styles.searchButton}
-        onPress={() => props.navigation.navigate("Home", { action, userId })}
+        onPress={() => props.navigation.navigate("Home", { action })}
       >
         <Text style={styles.searchButtonText}>Try Another Search</Text>
       </TouchableOpacity>
-      <SearchResultsContainer
-        items={{ category, itemName }}
-        action={action}
-        userId={userId}
-      />
+      <SearchResultsContainer items={{ category, itemName }} action={action} />
     </ScrollView>
   );
 }

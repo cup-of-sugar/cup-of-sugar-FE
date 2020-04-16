@@ -16,12 +16,12 @@ import menuClosed from "../assets/images/X.png";
 export default class MenuDrawer extends Component {
   constructor() {
     super();
-    this.state = { menuOpen: false, action: "", userId: "" };
+    this.state = { menuOpen: false, action: "" };
   }
 
   findPath = () => {
-    AsyncStorage.multiGet(["action", "userId"]).then(storedData =>
-      this.setState({ action: storedData[0][1], userId: storedData[1][1] })
+    AsyncStorage.getItem("action").then(data =>
+      this.setState({ action: data })
     );
   };
 
@@ -55,7 +55,6 @@ export default class MenuDrawer extends Component {
                 <MenuItems
                   closeMenu={this.closeMenu}
                   action={this.state.action}
-                  userId={this.state.userId}
                 />
               ) : null
             }

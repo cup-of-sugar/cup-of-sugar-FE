@@ -9,7 +9,6 @@ import { useQuery } from "@apollo/react-hooks";
 export default function LenderRequestScreen(props) {
   const navigation = props.navigation;
   const action = props.route.params.action;
-  const userId = props.route.params.userId;
   let id, available, name;
 
   const REQUESTS = gql`
@@ -58,7 +57,6 @@ export default function LenderRequestScreen(props) {
                     onPress={() =>
                       props.navigation.navigate("Details", {
                         action,
-                        userId,
                         item
                       })
                     }

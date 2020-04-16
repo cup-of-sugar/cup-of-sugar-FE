@@ -15,12 +15,10 @@ import { OFFERS } from "./OffersAndRequestsScreen";
 export default function LoanDetailsScreen(props) {
   let name = props.route.params.name;
   let category = props.route.params.category;
-  let userId = props.route.params.userId;
   let title, description, quantity, measurement, timeDuration;
 
   const NEW_ITEM = gql`
     mutation CreatePosting(
-      $userId: ID!
       $title: String!
       $category: String!
       $name: String!
@@ -31,7 +29,6 @@ export default function LoanDetailsScreen(props) {
     ) {
       posting: createPosting(
         input: {
-          userId: $userId
           title: $title
           postingType: "lend"
           categoryName: $category
@@ -52,7 +49,6 @@ export default function LoanDetailsScreen(props) {
 
   let [addNewItem] = useMutation(NEW_ITEM, {
     variables: {
-      userId,
       title,
       category,
       name,
@@ -63,10 +59,7 @@ export default function LoanDetailsScreen(props) {
     },
     refetchQueries: () => [
       {
-        query: OFFERS,
-        variables: {
-          userId: userId
-        }
+        query: OFFERS
       }
     ]
   });
@@ -75,7 +68,6 @@ export default function LoanDetailsScreen(props) {
     <LoanDetailsForm
       category={category}
       item={name}
-      userId={userId}
       action={props.action}
       navigation={props.navigation}
       addNewItem={addNewItem}
@@ -110,7 +102,6 @@ export class LoanDetailsForm extends React.Component {
     this.props
       .addNewItem({
         variables: {
-          userId: this.props.userId,
           title: this.state.title,
           description: this.state.description,
           quantity: this.state.quantity,
@@ -128,8 +119,7 @@ export class LoanDetailsForm extends React.Component {
       timeDuration: this.state.timeDuration,
       measurement: this.state.measurement,
       quantity: this.state.quantity,
-      action: "lend",
-      userId: this.props.userId
+      action: "lend"
     });
     this.setState({
       title: "",

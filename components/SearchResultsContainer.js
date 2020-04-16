@@ -15,25 +15,18 @@ import { useNavigation } from "@react-navigation/native";
 
 export let ITEMS;
 
-function findItemData(data, action, navigation, userId) {
+function findItemData(data, action, navigation) {
   return data.getAllItemsByName ? (
     data.getAllItemsByName.length ? (
       data.getAllItemsByName.map(item => {
-        return (
-          <SearchResult
-            key={item.id}
-            item={item}
-            action={action}
-            userId={userId}
-          />
-        );
+        return <SearchResult key={item.id} item={item} action={action} />;
       })
     ) : (
       <View>
         <Text style={styles.errorText}>No items found!</Text>
         <TouchableOpacity
           style={styles.requestButton}
-          onPress={() => navigation.navigate("Request", { userId })}
+          onPress={() => navigation.navigate("Request", { action })}
         >
           <Text style={styles.requestButtonText}>Request Item</Text>
         </TouchableOpacity>
@@ -42,21 +35,14 @@ function findItemData(data, action, navigation, userId) {
   ) : data.getAllItemsInCategory ? (
     data.getAllItemsInCategory.length ? (
       data.getAllItemsInCategory.map(item => {
-        return (
-          <SearchResult
-            key={item.id}
-            item={item}
-            userId={userId}
-            action={action}
-          />
-        );
+        return <SearchResult key={item.id} item={item} action={action} />;
       })
     ) : (
       <View>
         <Text style={styles.errorText}>No items found!</Text>
         <TouchableOpacity
           style={styles.requestButton}
-          onPress={() => navigation.navigate("Request", { userId })}
+          onPress={() => navigation.navigate("Request", { action })}
         >
           <Text style={styles.requestButtonText}>Request Item</Text>
         </TouchableOpacity>
@@ -67,7 +53,7 @@ function findItemData(data, action, navigation, userId) {
       <Text style={styles.errorText}>No items found!</Text>
       <TouchableOpacity
         style={styles.requestButton}
-        onPress={() => navigation.navigate("Request", { userId })}
+        onPress={() => navigation.navigate("Request", { action })}
       >
         <Text style={styles.requestButtonText}>Request Item</Text>
       </TouchableOpacity>
@@ -79,7 +65,6 @@ export function SearchResultsContainer(props) {
   let category = props.items.category;
   let item = props.items.itemName;
   let action = props.action;
-  let userId = props.userId;
   const navigation = useNavigation();
 
   item
@@ -132,7 +117,7 @@ export function SearchResultsContainer(props) {
           contentContainerStyle={styles.contentContainer}
         >
           <Text style={styles.resultsText}>Results:</Text>
-          {findItemData(data, action, navigation, userId)}
+          {findItemData(data, action, navigation)}
         </ScrollView>
       </View>
     );

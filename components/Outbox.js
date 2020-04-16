@@ -15,8 +15,8 @@ import borrower from "../assets/images/borrower.png";
 import lender from "../assets/images/lender.png";
 
 export const SENT_MESSAGES = gql`
-  query UserOutbox($userId: ID!) {
-    userOutbox(userId: $userId) {
+  query {
+    userOutbox {
       title
       body
       recipient {
@@ -29,12 +29,8 @@ export const SENT_MESSAGES = gql`
 
 export default function Outbox(props) {
   const navigation = props.navigation;
-  const userId = props.userId;
 
   let { loading, error, data } = useQuery(SENT_MESSAGES, {
-    variables: {
-      userId
-    },
     fetchPolicy: "network-only"
   });
 
@@ -51,8 +47,7 @@ export default function Outbox(props) {
             style={styles.message}
             onPress={() =>
               navigation.navigate("Message", {
-                message: mail,
-                userId: props.userId
+                message: mail
               })
             }
           >

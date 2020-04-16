@@ -16,14 +16,13 @@ export default function ItemDetailsScreen(props) {
   const item = props.route.params.item;
   const image = props.route.params.image;
   const action = props.route.params.action;
-  const userId = props.route.params.userId;
 
   const [status, setStatus] = React.useState(true);
 
   const UPDATE_ITEM = gql`
     mutation {
       item: updateItemAvailability(
-        input: { userId: ${userId} id: ${item.id}, available: ${item.available}, name: "${item.name}" }
+        input: { id: ${item.id}, available: ${item.available}, name: "${item.name}" }
       ) {
         id
         available
@@ -39,7 +38,6 @@ export default function ItemDetailsScreen(props) {
           .then(() =>
             props.navigation.navigate("Success!", {
               action: action,
-              userId: userId,
               name: item.name,
               quantity: item.quantity,
               measurement: item.measurement,
@@ -52,7 +50,6 @@ export default function ItemDetailsScreen(props) {
           .then(() =>
             props.navigation.navigate("Success!", {
               action: action,
-              userId: userId,
               name: item.name,
               quantity: item.quantity,
               measurement: item.measurement,
@@ -72,22 +69,13 @@ export default function ItemDetailsScreen(props) {
         }
       },
       {
-        query: OFFERS,
-        variables: {
-          userId: userId
-        }
+        query: OFFERS
       },
       {
-        query: LOANED_ITEMS,
-        variables: {
-          userId: userId
-        }
+        query: LOANED_ITEMS
       },
       {
-        query: BORROWED_ITEMS,
-        variables: {
-          userId: userId
-        }
+        query: BORROWED_ITEMS
       }
     ]
   });
@@ -102,22 +90,13 @@ export default function ItemDetailsScreen(props) {
         }
       },
       {
-        query: OFFERS,
-        variables: {
-          userId: userId
-        }
+        query: OFFERS
       },
       {
-        query: LOANED_ITEMS,
-        variables: {
-          userId: userId
-        }
+        query: LOANED_ITEMS
       },
       {
-        query: BORROWED_ITEMS,
-        variables: {
-          userId: userId
-        }
+        query: BORROWED_ITEMS
       }
     ]
   });
@@ -184,9 +163,7 @@ export default function ItemDetailsScreen(props) {
         ) : (
           <TouchableOpacity
             style={styles.borrowButton}
-            onPress={() =>
-              props.navigation.navigate("Home", { action, userId })
-            }
+            onPress={() => props.navigation.navigate("Home", { action })}
           >
             <Text style={styles.borrowButtonText}>Try Another Search</Text>
           </TouchableOpacity>
@@ -198,9 +175,7 @@ export default function ItemDetailsScreen(props) {
           </Text>
           <TouchableOpacity
             style={styles.borrowButton}
-            onPress={() =>
-              props.navigation.navigate("Compose", { action, userId })
-            }
+            onPress={() => props.navigation.navigate("Compose", { action })}
           >
             <Text style={styles.borrowButtonText}>Message Neighbor</Text>
           </TouchableOpacity>
