@@ -13,13 +13,13 @@ import Colors from "../constants/Colors";
 import cupOfSugar from "../assets/images/cupofsugar.png";
 
 export default function PathScreen(props) {
-  const userId = props.route.params.userId;
+  const token = props.route.params.token;
 
   const handleChoice = action => {
-    const items = [["action", action], ["userId", userId]];
+    const items = [["action", action], ["token", token]];
     try {
       AsyncStorage.multiSet(items).then(() =>
-        props.navigation.navigate("Home", { action, userId })
+        props.navigation.navigate("Home", { action })
       );
     } catch (error) {
       console.log("error saving choice");
