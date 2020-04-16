@@ -11,10 +11,7 @@ test("should render component", async () => {
   const mocks = [
     {
       request: {
-        query: REQUESTS,
-        variables: {
-          userId: "1"
-        }
+        query: REQUESTS
       },
       result: {
         data: {
@@ -45,7 +42,7 @@ test("should render component", async () => {
   ];
   const props = {
     navigation: { navigate: jest.fn() },
-    route: { params: { action: "borrow", userId: "1" } }
+    route: { params: { action: "borrow" } }
   };
   let tree;
   await act(async () => {
@@ -62,10 +59,7 @@ test("should render component", async () => {
   const mocks = [
     {
       request: {
-        query: OFFERS,
-        variables: {
-          userId: "1"
-        }
+        query: OFFERS
       },
       result: {
         data: {
@@ -96,7 +90,7 @@ test("should render component", async () => {
   ];
   const props = {
     navigation: { navigate: jest.fn() },
-    route: { params: { action: "lend", userId: "1" } }
+    route: { params: { action: "lend" } }
   };
   let tree;
   await act(async () => {

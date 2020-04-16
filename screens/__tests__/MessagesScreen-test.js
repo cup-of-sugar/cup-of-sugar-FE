@@ -6,7 +6,7 @@ import ReactTestRenderer, { act } from "react-test-renderer";
 it("should render without error if on borrowing path", async () => {
   const props = {
     navigation: { navigate: jest.fn() },
-    route: { params: { action: "borrow", userId: "4" } },
+    route: { params: { action: "borrow" } }
   };
   let tree;
   await act(async () => {
@@ -22,7 +22,7 @@ it("should render without error if on borrowing path", async () => {
 it("should render without error if on lending path", async () => {
   const props = {
     navigation: { navigate: jest.fn() },
-    route: { params: { action: "lend", userId: "4" } },
+    route: { params: { action: "lend" } }
   };
   let tree;
   await act(async () => {

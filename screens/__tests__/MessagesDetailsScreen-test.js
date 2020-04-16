@@ -9,7 +9,6 @@ it("should render without error if on borrowing path", () => {
     route: {
       params: {
         action: "borrow",
-        userId: "4",
         message: {
           title: "hi",
           body: "how are you",
@@ -31,7 +30,6 @@ it("should render without error if on lending path", () => {
     route: {
       params: {
         action: "lend",
-        userId: "4",
         message: {
           title: "hi",
           body: "how are you",

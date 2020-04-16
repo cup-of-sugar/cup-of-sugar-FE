@@ -9,7 +9,6 @@ it("should render without error if on borrowing path", async () => {
     route: {
       params: {
         action: "borrow",
-        userId: "4",
         recipient: { firstName: "Carole", email: "carole@tigers.com" }
       }
     }
@@ -29,7 +28,6 @@ it("should render without error if on lending path", async () => {
     route: {
       params: {
         action: "lend",
-        userId: "4",
         recipient: { firstName: "Carole", email: "carole@tigers.com" }
       }
     }
