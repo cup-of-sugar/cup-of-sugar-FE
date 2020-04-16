@@ -57,7 +57,7 @@ export default function ComposeMessageScreen(props) {
         props.route.params.recipient ||
         props.route.params.sender || {
           firstName: "Joe Exotic",
-          email: "joe@tigers.com"
+          email: "joe4president@gmail.com"
         }
       }
       navigation={props.navigation}
