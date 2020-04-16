@@ -16,12 +16,6 @@ export default function LoginForm(props) {
   let email, password;
   const navigation = useNavigation();
 
-  // mutation UserLogin($email: String!, $password: String!) {
-  //   user: userLogin(input: { email: $email, password: $password }) {
-  //     email
-  //   }
-  // }
-
   const USER_LOGIN = gql`
     mutation {
       user: userLogin(
@@ -49,8 +43,7 @@ export class LoginFormClass extends React.Component {
       email: "",
       password: "",
       error: "",
-      token: "",
-      userId: ""
+      token: ""
     };
   }
 
@@ -73,14 +66,13 @@ export class LoginFormClass extends React.Component {
 
   validateLogin = response => {
     this.setState({
-      token: response.data.user.token,
-      userId: response.data.user.user.id
+      token: response.data.user.token
     });
     if (this.state.token) {
       this.props.navigation.navigate("Path", {
-        userId: this.state.userId
+        token: this.state.token
       });
-      this.setState({ email: "", password: "", error: "", validation: "" });
+      this.setState({ email: "", password: "", error: "", token: "" });
     } else if (!this.state.token) {
       this.setState({
         error: "Incorrect email or password! Please try again!"
