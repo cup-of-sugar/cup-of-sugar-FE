@@ -1,7 +1,7 @@
 # Cup of Sugar (Front End)
 ## Contributors: Carla Geglio & Tristan Holtz
 
-## Back End: https://github.com/cup-of-sugar/cup-of-sugar-BE
+## Back End Repo: https://github.com/cup-of-sugar/cup-of-sugar-BE
 
 ## About
 Cup of Sugar is an app that allows neighbors to communicate about items they have to lend or would like to borrow. Users can choose to login as a Lender or Borrower. As a Borrower, neighbors can post item requests for items they need or browse available items. As a Lender, neighbors can post items they have to lend or browse item requests in their neighborhood.
@@ -21,7 +21,7 @@ Cup of Sugar is an app that allows neighbors to communicate about items they hav
 - To view on your phone: download the Expo app and use the QR code from your terminal or browser
 
 ## Wireframe Design
-![Wireframe](assests/images/wireframes.png)
+![Wireframe](assets/images/wireframes.png)
 
 ## In Action
 
